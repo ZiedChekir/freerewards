@@ -1,0 +1,28 @@
+<div id="logincontainer">
+{{#if errors}}
+<div class="alert alert-danger">
+  {{#each msg}}
+  <p>{{this}}</p>
+  {{/each}}
+</div>
+{{/if}}
+<div id="loginbox">
+<h2 class="page-header">Login</h2>
+<form method="post" action="/user/login">
+  
+    {{!-- <label> <p>Username</p> </label> --}}
+    <input type="text" class="" name="username" placeholder="Username">
+  
+  
+    {{!-- <label> <p>Password</p> </label> --}}
+    <input type="password" class="" name="password" placeholder="Password">
+  
+  <button type="submit" class="">Submit</button><br>
+  <a href="#">Forgot password ?</a><br>
+  <a href="/user/register">Dont have an account yet ?</a>
+</form>
+
+</div>
+<link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
+
+</div>

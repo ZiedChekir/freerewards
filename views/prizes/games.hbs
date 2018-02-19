@@ -1,0 +1,70 @@
+
+
+
+<div class="prizes-container">
+    <div class="container">
+        <div class="row">
+            {{#each games}}
+            <div class="col-md-4">
+                <a class="test" href="/prizes/{{this.title}}"style="text-decoration:none;">
+                    <div class="card game" style="width: 304px;height:380px;">
+                        <img class="card-img-top game-img" src="{{this.imgPath}}" width="302px" height="200px" alt="{{this.title}}">
+                       <div class="card-block game-info">
+                        <h4 class="game-title"style="color:black;">{{this.title}}</h4>
+                        <p class="game-description"style="color:black;">{{this.description}}</p>
+                        <p style="color:black;">{{this.price}} Redeem</p>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/games.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!--
+<section>
+
+        <div class="row">
+
+            {{# each games}}
+            <div class="col-4">
+                <div class="card" style="width: 280px;">
+                  <img class="card-img-top" src="{{this.imgPath}}" width="280px" height="300px">
+                  <div class="card-block">
+                    <h5 class="card-title">{{this.title}}</h4>
+
+                        <div class="clearfix">
+                            <div class="price pull-left">
+                                {{this.price}} coins
+                            </div>
+                            <div class="pull-right buy-sec"><a href="/add-to-cart/" class="btn btn-default btn-success " role="button">Buy</a><a href="#" class="btn btn-default" role="button">More</a></div>
+                        </div>
+                    </div>
+                </div>
+                {{/each }}
+            </div>
+        
+        </section>--}}
+
+
+

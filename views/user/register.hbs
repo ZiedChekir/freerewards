@@ -1,0 +1,39 @@
+<div id="register-container">
+
+  
+ 
+  <div id="register-box">
+     {{#if errors}}
+  <div class="alert alert-danger">
+    {{#each errors}}
+    <p>{{msg}}</p>
+    {{/each}}
+  </div>
+  {{/if}}
+    <h2 class="page-header">Register</h2>
+    <form method="post" action="/user/register">
+
+      {{!-- <label>Name</label> --}}
+      <input type="text" class="" placeholder="Name" name="name">
+    
+  
+      {{!-- <label>Username</label> --}}
+      <input type="text" class="" placeholder="Username" name="username">
+    
+   
+      {{!-- <label>Email</label> --}}
+      <input type="email" class="" placeholder="Email" name="email">
+    
+    {{!-- 
+      <label>Password</label> --}}
+      <input type="password" class="" placeholder="Password" name="password">
+
+      {{!-- <label>Confirm Password</label>--}} 
+     <input type="password" class="" placeholder="Password" name="password2">
+    
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+<a href="/user/login">Already have an account ?</a>
+</div>
+</div>
+<link rel="stylesheet" type="text/css" href="/stylesheets/register.css">
