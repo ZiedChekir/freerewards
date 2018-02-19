@@ -1,0 +1,101 @@
+
+
+
+<section class="heading">
+	<div id="heading-content">
+		<h1>The Best and most trusted platform </h1>
+		<h3>to win Steam Games, Riot Points and much more!</h3>
+		{{#if logged}}
+		<h3>Earn Coins Now</h3>
+		<a href="https://www.google.com" class="btn btn-success">Earn Coins</a>
+		{{else}}
+		<h3>Join us now</h3>
+		<a href="/user/register" class="btn btn-success">Register</a>
+		<a href="/user/login" class="btn btn-success">Login</a>
+		{{/if}}
+		
+	</div>
+</section>
+<section id="about">
+	<div class="container">
+		<div class="row">
+			<div class="col col-5">
+				<h3>What is FreeRewards ?</h3>
+				<p>FreeRewards is a plateform where you can get the latests steam games, origin games, Riot Points and gift cards for FREE !<br>
+					All you have to do is earn coins by completing daily missions,surveys, watching vidoes check <a href="/earncoins">Earncoins</a> for more information.<br>
+
+				</p>
+			</div>
+		<div class="col col-2">
+		</div>
+		
+			<div class="col col-5">
+				<h3>Why You Should Trust us ?</h3>
+				<p>FreeRewards is a Trusted plateform. We deliver the best missions and daily quizes to provide our users with the best experience and to catch up with the latest Game !<br>
+				We have 24/7 support to help you if you have any problem or contact us at <a href="#">info@freerewards.com</a>
+				</p>
+			</div>
+		</div>
+		
+	</div>
+</section >
+
+<section id="win-coins">
+	<hr >
+	<div class="container">
+
+	<h1>Win Coins With Easy Methods</h1>
+	<div class="row">
+		<div class="col col-3">
+			<div class="circle">
+				<img width="90px" height="90px"src="/images/youtube (1).svg" alt=" coins">
+			</div><br>
+			<h5>Videos</h5>
+		</div>
+		<div class="col col-3">
+						<div class="circle">
+							<img  class="rounded-circle" width="90px" height="90px"src="/images/survey.svg" alt=" coins">
+						</div><br>
+
+			<h5>surveys</h5>
+		</div>
+		<div class="col col-3">
+			<div class="circle">
+				<img class="rounded-circle" width="90px" height="90px"src="/images/money.svg" alt=" coins">
+			</div><br>
+
+			<h5>Complete missions</h5>
+		</div>
+		<div class="col col-3">
+						<div class="circle">
+							<img class="rounded-circle" width="90px" height="90px"src="/images/coupon.svg" alt=" coins">
+						</div><br>
+
+			<h5>redeem prizes</h5>
+		</div>	
+	</div>
+</div>
+
+</section>
+
+
+
+<script type="text/javascript">
+if({{home}}){
+	$('nav').removeClass('black')
+}
+$(window).on('scroll',function(){
+	if($(window).scrollTop()){
+		$('nav').addClass('black')
+	}else{
+		$('nav').removeClass('black')
+	}
+})
+</script>
+
+
+
+
+<link rel="stylesheet" href="/stylesheets/index.css"> 
+
+

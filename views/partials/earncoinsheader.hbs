@@ -1,0 +1,37 @@
+{{!--   <link rel="stylesheet" type="text/css" href="/stylesheets/earncoins">
+ --}}  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Earn Coins</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {{#if missions}} active{{/if}}" href="/earncoins/missions">Missions </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if daily}} active{{/if}}" href="/earncoins/daily">Daily Bonus </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if videos}} active{{/if}}" href="/earncoins/videos">Watch Videos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if invite}} active{{/if}}" href="/earncoins/invite">Invite Friends</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if code}} active{{/if}}" href="/earncoins/code">Redeem Code</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link {{#if buy}} active{{/if}}" href="/earncoins/Buy">Buy Coins</a>
+        </li>
+      </ul>
+     {{!--  <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link">Right Link 1</a>
+        </li>
+        <li class="navbar-item">
+          <a class="nav-link">Right Link 2</a>
+        </li>
+      </ul> --}}
+    </div>
+  </nav>

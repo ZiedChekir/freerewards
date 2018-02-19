@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="/stylesheets/gameinfo.css">
+
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-4">
+				<img src="{{game.imgPath}}" alt="{{game.title}}" height="386px" width="320px">
+			</div>
+			<div class="col-8">
+				<h3 style="color:black;" class="title">{{game.title}}</h3>
+				<p  style="color:black;" class="description">{{game.description}}</p>
+				<p 	style="color:black;">category:{{game.category}}</p>
+				<p 	style="color:black;">{{game.price}}coins</p>
+				{{#if ableToBuy}}
+				<a 	style="color:black;" class="btn btn-success" href="/prizes/{{game.title}}/redeem">Redeem</a>
+					
+					{{else}}
+					<a 	style="color:black;" class="btn btn-danger disabled" href="#">Redeem</a>
+				{{/if}}
+				
+			</div>
+
+		</div>
+
+	</div>
+</section>
+
+

@@ -1,0 +1,83 @@
+div#register-container{
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ),url('../images/gaming.jpg');
+  background-size:cover;
+  background-position: center;
+  background-attachment: fixed;
+  text-align: center;
+  font-family: 'Quicksand';
+
+}
+#register-box{
+	width: 40%;
+	height: 80vh;
+	background-color: rgba(250,250,250,0.7);
+	left:50%;
+	top:50%;
+	position: absolute;
+	transform: translate(-50%,-50%);
+	box-sizing:border-box;
+	margin-top:50px;
+	padding:30px 50px;
+	text-align: center;
+
+}
+h2{
+	margin:0;
+	padding:0,0,20px;
+	text-align: center;
+	font-size: 22px;
+	color:black;
+}
+#register-box p{
+	margin:0;
+	padding:0;
+	font-weight: bold;
+	color:black;
+}
+
+
+#register-box input{
+width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	color:black;
+	border:none;
+	border-bottom: 2px solid #fff;
+	background:transparent;
+	outline: none;
+	height: 40px;
+	color: black;
+	font-size:16px;
+}
+#register-box button{
+	background:black;
+	color:white;
+	border:none;
+	outline: none;
+	height: 40px;
+	width: 50%;
+	border-radius: 20px;
+	transition: .3s;
+	margin-bottom:5px;
+}
+#register-box button:hover{
+	
+	background-color: white;
+	color:black;
+	cursor: pointer;
+	transition: .3s;
+}
+#register-box a{
+
+	text-decoration: none;
+	font-size:16px;
+	line-height: 30px;
+	color: black;
+	transition: .3s;
+}
+#register-box a:hover{
+	transition: .3s;
+	color:grey;
+}
