@@ -30,7 +30,7 @@ var app = express();
 app.use(helmet());
 
 
-const MONGO_URL = process.env.MONGODB_URI ||'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards';
+const MONGO_URL = 'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards';
 
 
 
