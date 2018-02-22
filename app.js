@@ -46,8 +46,7 @@ mongoose.connect(MONGO_URL,{
     keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
-}).then(() => console.log('connected to DB'))
- .catch(err => console.log(err));
+})
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');
