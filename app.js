@@ -42,7 +42,7 @@ app.use(helmet());
 var MONGO_URL = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
 
-mongoose.connect(process.env.MONGODB_URI,{
+mongoose.connect(process.env.MONGODB_URI.toString(),{
     keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
