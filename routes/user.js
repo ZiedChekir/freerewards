@@ -1,11 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/users');
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
-var Coins = require('../functionManagement/coins');
+var moment = require('moment')
+
+//models && functions && operatins
+const User = require('../models/users');
+const Coins = require('../functionManagement/coins');
+const userOperation= require('../Operations/userOperations')
+
+
 // Register
 router.get('/register',ensureLoggedOut, function(req, res){
 	res.render('user/register');
@@ -17,7 +23,7 @@ router.get('/login',ensureLoggedOut, function(req, res){
 });
 
 // Register User
-router.post('/register', function(req, res){
+router.post('/register', async function(req, res,next){
 	var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
@@ -38,56 +44,53 @@ router.post('/register', function(req, res){
 	
 	if(valErrors){
 		for (var i = 0; i < valErrors.length; i++) {
-		 	errors.push(valErrors[i])
+			errors.push(valErrors[i])
 		}
 		
 		return res.render('user/register',{errors:errors})
 		
 	}
+	try{var emailExist = await userOperation.queryByEmail(email)
+		var usernameExist = await userOperation.queryByUsername(username)
 
-	User.findOne({'username':username}, function (err, user) {	
-	 	if (err) return handleError(err);	
-		if(user)
-			{
-				errors.push({msg:"username is already in use!"})				
-				res.render('user/register',{
-					errors:errors
-				});
-			}
-			else {
-				User.findOne({'email':email}, function (err, user) {
-					if (err) return handleError(err);
-					if(user){
-						errors.push({msg:'email is already in use !'})		
-						res.render('user/register',{
-							errors:errors
-						});			
-					}	
-					else{
-						var coins = new Coins()
-						var newUser = new User({
-						name: name,
-						email:email,
-						username: username,
-						password: password,
-						coins:coins.initializeCoins(),
-						joindate:getDate(),
-						lastdailybonus:getPreviousDate()
-						});
-						
-						User.createUser(newUser, function(err, user){
-							if(err) throw err;		
-						});
-						req.flash('success_msg', 'You are registered and can now login');
-						res.redirect('/user/login');
-						}	
-					
-
-				});
-			}
+	}catch(err){
+		next(err)
+	}
+	if(emailExist){
+		errors.push({msg:'email is already in use !'})		
+		return res.render('user/register',{
+			errors:errors
+		});			
+		
+	}
+	if(usernameExist){
+		errors.push({msg:"username is already in use!"})				
+		return res.render('user/register',{
+			errors:errors
+		});
+	}
+	var coins = new Coins()
+	var newUser = new User({
+		name: name,
+		email:email,
+		username: username,
+		password: password,
+		coins:coins.initializeCoins(),
+		joindate:getDate(),
+		lastdailybonus:getPreviousDate()
 	});
-			
+
+	User.createUser(newUser, function(err, user){
+		if(err) throw err;		
+	});
+	req.flash('success_msg', 'You are registered and can now login');
+	res.redirect('/user/login');
 })
+
+
+	
+
+
 
 
 passport.use(new LocalStrategy(
@@ -141,7 +144,7 @@ module.exports = router;
 
 
 
-var moment = require('moment')
+
 function getDate(){
 	return moment().format('DD/MM/YYYY HH:mm')
 }

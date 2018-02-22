@@ -8,8 +8,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/users');
 const crypto = require('crypto')
 //DAta base connection
+
 mongoose.Promise = global.Promise;
-mongoose.connect('localhost:27017/ebonus');
+// mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
 //routing
 router.get('/',  function(req, res, next) {
 

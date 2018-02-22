@@ -15,6 +15,7 @@ var coinsModel = require('./functionManagement/coins');
 var compression = require('compression')
 var helmet = require('helmet')
 var debug = require('debug')('http')
+
 // --------------ROUTES--------------------
 
 const index = require('./routes/index');
@@ -28,7 +29,34 @@ const profile = require('./routes/profile');
 var app = express();
 app.use(helmet());
 
-mongoose.createConnection('localhost:27017/ebonus');
+
+const MONGO_URL = 'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards';
+
+
+
+
+
+const options = {
+
+
+    keepAlive: true,
+  reconnectTries: Number.MAX_VALUE,
+  useMongoClient: true
+  // useMongoClient: true,
+  // autoIndex: false, // Don't build indexes
+  // reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  // reconnectInterval: 500, // Reconnect every 500ms
+  // poolSize: 10, // Maintain up to 10 socket connections
+  // // If not connected, return errors immediately rather than waiting for reconnect
+  // bufferMaxEntries: 0
+
+
+
+}
+
+
+
+mongoose.connect(MONGO_URL,options);
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');

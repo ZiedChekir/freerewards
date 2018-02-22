@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-mongoose.connect('localhost:27017/ebonus')
+mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
 var CouponsModel = require('../models/couponsData')
 var Coupons = require('../functionManagement/coupons')
 var coinsTran = require('../functionManagement/coins')
