@@ -43,6 +43,7 @@ var MONGO_URL = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151
 console.log(process.env.MONGODB_URI)
 console.log(MONGO_URL)
 console.log(typeof(process.env.MONGODB_URI))
+
 mongoose.connect(MONGO_URL,{
     keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
