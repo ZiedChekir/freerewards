@@ -40,15 +40,14 @@ app.use(helmet());
 
 
 var MONGO_URL = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
-console.log(process.env.MONGODB_URI)
-console.log(MONGO_URL)
-console.log(typeof(process.env.MONGODB_URI))
+
 
 mongoose.connect(MONGO_URL,{
     keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
-});
+}).then(() => console.log('connected to DB'))
+ .catch(err => console.log(err));
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');
