@@ -25,6 +25,10 @@ const earncoins = require('./routes/earncoins');
 const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
+var mongourl = 'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards'
+
+
+mongoose.connect(mongourl)
 //-----------------BEGIN-----------------
 var app = express();
 app.use(helmet());
@@ -39,14 +43,6 @@ app.use(helmet());
 // .catch(err => console.log(err));
 
 
-var MONGO_URL = process.env.PROD_MONGODB ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
-
-
-mongoose.connect(MONGO_URL,{
-    keepAlive: true,
-  reconnectTries: Number.MAX_VALUE,
-  useMongoClient: true
-})
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');
