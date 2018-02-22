@@ -25,7 +25,7 @@ const earncoins = require('./routes/earncoins');
 const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
-// var mongourl = 'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards'
+var mongodburl = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {
