@@ -39,10 +39,10 @@ app.use(helmet());
 // .catch(err => console.log(err));
 
 
-var MONGO_URL = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
+var MONGO_URL = process.env.PROD_MONGODB ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
 
-mongoose.connect(MONGO_URL,{
+mongoose.connect(MONGO_URL.toString(),{
     keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
