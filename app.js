@@ -26,6 +26,11 @@ const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
 //-----------------BEGIN-----------------
+mongoose.connect(MONGO_URL.toString(),{
+    keepAlive: true,
+  reconnectTries: Number.MAX_VALUE,
+  useMongoClient: true
+});
 var app = express();
 app.use(helmet());
 
@@ -35,16 +40,13 @@ app.use(helmet());
 
 
 
+// mongoose.connect(uri, { useMongoClient: true }).then(() => console.log('connected to DB'))
+// .catch(err => console.log(err));
 
 
+var MONGO_URL = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
-var MONGO_URL = process.env.MONGODB_URI ||'mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards';
 
-mongoose.connect(MONGO_URL,{
-    keepAlive: true,
-  reconnectTries: Number.MAX_VALUE,
-  useMongoClient: true
-});
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');
