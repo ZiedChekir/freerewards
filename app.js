@@ -9,13 +9,13 @@ const expressHbs  = require('express-handlebars');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
-var flash = require('connect-flash');
-var expressValidator = require('express-validator')
-var coinsModel = require('./functionManagement/coins');
-var compression = require('compression')
-var helmet = require('helmet')
-var debug = require('debug')('http')
-var mongodb = require('mongodb')
+const flash = require('connect-flash');
+const expressValidator = require('express-validator')
+const coinsModel = require('./functionManagement/coins');
+const compression = require('compression')
+const helmet = require('helmet')
+const debug = require('debug')('http')
+const mongodb = require('mongodb')
 // --------------ROUTES--------------------
 
 const index = require('./routes/index');
@@ -27,7 +27,16 @@ const profile = require('./routes/profile');
 
 var mongodburl = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
-mongoose.connect(mongodburl);
+const options = {
+  useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
+mongoose.connect(mongodburl,options);
 
 //-----------------BEGIN-----------------
 var app = express();
@@ -39,8 +48,6 @@ app.use(helmet());
 
 
 
-// mongoose.connect(uri, { useMongoClient: true }).then(() => console.log('connected to DB'))
-// .catch(err => console.log(err));
 
 
 // view engine setup
