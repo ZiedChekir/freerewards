@@ -2,8 +2,6 @@ const Coins = require('./coins')
 const mongoose = require('mongoose')
 const Users = require('../models/users')
 const coinsInstance = new Coins()
-mongoose.Promise = global.Promise
-mongoose.createConnection('localhost:27017/ebonus')
 const missions = require('../models/missions')
 const moment = require('moment')
 const userOperations = require('../Operations/userOperations')
