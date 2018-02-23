@@ -25,7 +25,7 @@ const earncoins = require('./routes/earncoins');
 const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
-var mongodburl = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
+var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
 
 const options = {
   useMongoClient: true,
@@ -41,14 +41,6 @@ mongoose.connect(mongodburl,options);
 //-----------------BEGIN-----------------
 var app = express();
 app.use(helmet());
-
-
-
-
-
-
-
-
 
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
