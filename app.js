@@ -27,13 +27,7 @@ const profile = require('./routes/profile');
 
 var mongodburl = process.env.MONGODB_URI ||"mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards"
 
-// mongodb.MongoClient.connect(mongodburl, function (err, database) {
-//   if (err) {
-//     console.log(err);
-//     process.exit(1);
-//   }
-
-// });
+mongoose.connect(mongodburl);
 
 //-----------------BEGIN-----------------
 var app = express();
