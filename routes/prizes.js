@@ -11,8 +11,6 @@ var coinsInstance = new coinsModel();
 
 var gameInfo
 
-mongoose.Promise = global.Promise;
-mongoose.createConnection('localhost:27017/ebonus');
 
 
 router.get('/',ensureLoggedIn,  function(req, res)  {
