@@ -7,13 +7,12 @@ var Users = require('../models/users')
 var Videos = require('../models/videos')
 var Missions = require('../models/missions')
 var couponsModel = require('../models/couponsData')
-var Coupons = require('../functionManagement/coupons')
-var coinsTran = require('../functionManagement/coinsTransaction')
+var Coupons = require('../Operations/couponOperations')
+var coinsTran = require('../Operations/coinOperations')
 var missionOperations = require('../Operations/missionOperations')
 var userOperations = require('../Operations/userOperations')
 ///INSTANCES
-var coinsTranInstance =  new coinsTran()
-var couponsInstance = new Coupons()
+// var coinsTranInstance =  new coinsTran()
 
 
 router.get('/',ensureLoggedIn,  function(req, res)  {
@@ -72,22 +71,23 @@ router.get('/daily',ensureLoggedIn,function(req,res){
 
 
 router.post('/daily',ensureLoggedIn,async function(req,res){
-	await coinsTranInstance.updateDailyCoins(res.locals.user._id)
+	await coinsTran.updateDailyCoins(res.locals.user._id)
 	res.redirect('/earncoins/daily')
 })
 
 
 
 
-router.get('/videos',ensureLoggedIn,function(req,res){
-	Videos.getVideos(function(err,vids){		
-		let vid = vids[RandomVideo(0,vids.length )]	
+router.get('/videos',ensureLoggedIn,async function(req,res){
+	var f = await missionOperations.queryVideos()
+	console.log(f)
+		// let vid = vids[RandomVideo(0,vids.length )]	
 		res.render('earncoins/videos',{videos:true,videoToDisplay:vid})
 	})
 	
-})
-router.post('/videos',ensureLoggedIn,function(req,res){
-	coinsTranInstance.updateVideoCoins(res.locals.user._id)
+
+router.post('/videos',ensureLoggedIn,async function(req,res){
+	await coinsTran.updateVideoCoins(res.locals.user._id)
 	res.redirect('/earncoins/videos')
 })
 
@@ -105,23 +105,19 @@ router.get('/code',ensureLoggedIn,function(req,res){
 
 })
 
-router.post('/code',ensureLoggedIn,function(req,res){
+router.post('/code',ensureLoggedIn,async  function(req,res){
 	let code = req.body.redeemcode
  	
-	if(couponsInstance.validateCoupons(code)){
-		couponsModel.queryCoupon(code,function(err,result){
-			if(err) return handleError(err)
-				if(!result){
-					res.redirect('/earncoins/code')
-				}else{
-					coinsTranInstance.updateCouponCoin(res.locals.user._id,result.couponCoins)
-					result.remove()
-					res.redirect('/earncoins/code')
-				}
-				
-			
-			
-		})
+	if(Coupons.validateCoupons(code)){
+		try{
+		var coupon = await couponsModel.findOne({couponCode:code})
+		await coinsTran.updateCouponCoin(res.locals.user._id,coupon.couponCoins)
+		await coupon.remove()
+		res.redirect('/earncoins/code')
+		}catch(error) {
+			console.log("Failed!", error);
+			res.redirect('/earncoins/code')
+		  }
 	
 	}else{
 		res.redirect('/earncoins/code')

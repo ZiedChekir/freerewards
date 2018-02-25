@@ -42,7 +42,14 @@
 
 
 
+var a = {
+    cow:"hsan",
+    dog:"ahmed",
+    ant:"fourat",
+    elephant:"hamza"
+}
 
+console.log(a)
 
 
 

@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/wwws",
-    "start_prod": "set NODE_ENV=production&&npm start"
+    "startd": "nodemon ./bin/wwws"
   },
   "dependencies": {
     "auth0": "^2.6.0",
