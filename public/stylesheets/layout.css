@@ -4,10 +4,10 @@ html, body {
  	 margin:0px;
 	height: 100%;
 }
-.body-content{
+main{
 	 width: 100%;
     word-wrap: break-word;
-     min-height: 80vh;
+     min-height: 85vh;
 }
 
 

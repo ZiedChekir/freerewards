@@ -5,7 +5,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const expressHbs  = require('express-handlebars');
+const expressHbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
@@ -27,7 +27,7 @@ const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
- var mongodburl ="mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards"
+var mongodburl = "mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards"
 
 const options = {
   useMongoClient: true,
@@ -45,7 +45,7 @@ var app = express();
 app.use(helmet());
 
 // view engine setup
-app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
+app.engine('.hbs', expressHbs({ defaultLayout: 'layout', extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
@@ -65,20 +65,20 @@ app.use(
     resave: false,
     saveUninitialized: false
   })
-  );
+);
 app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
+  errorFormatter: function (param, msg, value) {
     var namespace = param.split('.')
-    , root    = namespace.shift()
-    , formParam = root;
+      , root = namespace.shift()
+      , formParam = root;
 
-    while(namespace.length) {
+    while (namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
     return {
-      param : formParam,
-      msg   : msg,
-      value : value
+      param: formParam,
+      msg: msg,
+      value: value
     };
   }
 }));
@@ -88,20 +88,20 @@ app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 
 //------------Global VARIABLES-------------------------
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
 
-  
+
   if (req.user) {
-    
-	  console.log(req.user)
+
+
     res.locals.logged = true;
-    res.locals.user = 
-    {
+    res.locals.user =
+      {
         _id: req.user._id,
         name: req.user.name,
         email: req.user.email,
@@ -111,14 +111,14 @@ app.use(function(req, res, next) {
         lastdailybonus: req.user.lastdailybonus,
         __v: req.user.__v,
         completedMissions: req.user.completedMissions,
-        orders: req.user.orders 
+        orders: req.user.orders
       }
-     
 
-    
+
+
     res.locals.usercoins = coinsEncryption.decryptcoins(req.user.coins)
-    
-  }else{
+
+  } else {
     res.locals.logged = false;
   }
   next();
@@ -130,21 +130,21 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/user', user);
 app.use('/prizes', prizes);
-app.use('/earncoins',earncoins);//
-app.use('/invite',invite);
-app.use('/profile',profile);
+app.use('/earncoins', earncoins);//
+app.use('/invite', invite);
+app.use('/profile', profile);
 
 
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

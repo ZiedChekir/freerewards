@@ -1,39 +1,55 @@
-<div id="register-container">
+<div class="row">
+  <div class=" register-box z-depth-3 col s12 m6 offset-m3 ">
 
-  
- 
-  <div id="register-box">
-     {{#if errors}}
-  <div class="alert alert-danger">
-    {{#each errors}}
-    <p>{{msg}}</p>
-    {{/each}}
+    {{#if errors}}
+    <div class="alert alert-danger">
+      {{#each errors}}
+      <p>{{msg}}</p>
+      {{/each}}
+    </div>
+    {{/if}}
+    <form class="col s12" method="post" action="/user/register">
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="last_name" type="text" name="name" class="validate">
+          <label for="last_name">name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" name="username" class="validate">
+          <label for="last_name">username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" name="email" class="validate">
+          <label for="email" data-error="wrong" data-success="right">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="password" type="password" name="password" class="validate">
+          <label for="password">Password</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="password" type="password" name="password2" class="validate">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <input type="checkbox" id="indeterminate-checkbox" />
+      <label for="indeterminate-checkbox">I HAVE READ AND ACCEPT THE TERMS OF SERVICE</label>
+      <br>
+      <br>
+      <button type="submit" class="btn">Register</button>
+
+    </form>
+
+
+
   </div>
-  {{/if}}
-    <h2 class="page-header">Register</h2>
-    <form method="post" action="/user/register">
 
-      {{!-- <label>Name</label> --}}
-      <input type="text" class="" placeholder="Name" name="name">
-    
-  
-      {{!-- <label>Username</label> --}}
-      <input type="text" class="" placeholder="Username" name="username">
-    
-   
-      {{!-- <label>Email</label> --}}
-      <input type="email" class="" placeholder="Email" name="email">
-    
-    {{!-- 
-      <label>Password</label> --}}
-      <input type="password" class="" placeholder="Password" name="password">
 
-      {{!-- <label>Confirm Password</label>--}} 
-     <input type="password" class="" placeholder="Password" name="password2">
-    
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
-<a href="/user/login">Already have an account ?</a>
-</div>
-</div>
-<link rel="stylesheet" type="text/css" href="/stylesheets/register.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/register.css">

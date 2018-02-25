@@ -1,28 +1,41 @@
-<div id="logincontainer">
-{{#if errors}}
-<div class="alert alert-danger">
-  {{#each msg}}
-  <p>{{this}}</p>
-  {{/each}}
-</div>
-{{/if}}
-<div id="loginbox">
-<h2 class="page-header">Login</h2>
-<form method="post" action="/user/login">
-  
-    {{!-- <label> <p>Username</p> </label> --}}
-    <input type="text" class="" name="username" placeholder="Username">
-  
-  
-    {{!-- <label> <p>Password</p> </label> --}}
-    <input type="password" class="" name="password" placeholder="Password">
-  
-  <button type="submit" class="">Submit</button><br>
-  <a href="#">Forgot password ?</a><br>
-  <a href="/user/register">Dont have an account yet ?</a>
-</form>
+<div class="row">
+  <div class="login-box z-depth-3 col s12 m6 offset-m3 ">
+    {{#if errors}}
+    <div class="alert alert-danger">
+      {{#each msg}}
+      <p>{{this}}</p>
+      {{/each}}
+    </div>
+    {{/if}}
+    <form class="col s12" method="post" action="/user/login">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="username" type="text" name="username" class="validate">
+          <label for="username">Username</label>
+        </div>
+      </div>
 
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" name="password" class="validate">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <input type="checkbox" id="indeterminate-checkbox" />
+      <label for="indeterminate-checkbox">Remember me</label>
+      <br>
+      <br>
+      <button type="submit" class="btn">Login</button>
+      <br>
+      <a href="#">Forgot password ?</a>
+      <br>
+      <a href="/user/register">Dont have an account yet ?</a>
+
+    </form>
+
+
+
+  </div>
 </div>
+
 <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
-
-</div>
