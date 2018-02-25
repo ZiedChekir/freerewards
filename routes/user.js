@@ -8,7 +8,7 @@ var moment = require('moment')
 
 //models && functions && operatins
 const User = require('../models/users');
-const Coins = require('../functionManagement/coins');
+const Coins = require('../Operations/encryptCoins');
 const userOperation= require('../Operations/userOperations')
 
 
@@ -114,6 +114,8 @@ passport.use(new LocalStrategy(
 	}));
 
 passport.serializeUser(function(user, done) {
+	
+	
 	done(null, user.id);
 });
 

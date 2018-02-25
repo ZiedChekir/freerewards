@@ -7,6 +7,11 @@ module.exports ={
 		let missions
 		missions= await Missions.find({})
 		return missions
+	},
+	queryVideos: async function(){
+		let videos
+		videos= await Missions.find({})
+		return videos[0].videos
 	}
 }
 

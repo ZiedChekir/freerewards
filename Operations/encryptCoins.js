@@ -13,17 +13,17 @@ const ENCRYPTION_KEY = "kjhszol125sdjn65893vbnaze4rg56b2"; // Must be 256 bytes 
 const IV_LENGTH = 16; // For AES, this is always 16
 
 
- module.exports = function coins(){
-		//
-	this.encryptcoins = function(value){
+ module.exports = {
+		
+	encryptcoins : function(value){
  		let iv = crypto.randomBytes(IV_LENGTH);
  		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
  		let encrypted = cipher.update(value);
 
  		encrypted = Buffer.concat([encrypted, cipher.final()]);
  		return iv.toString('hex') + ':' + encrypted.toString('hex');
-	}
-	this.decryptcoins = function(value){
+	},
+	decryptcoins : function(value){
  		let textParts = value.split(':');
  		let iv = new Buffer(textParts.shift(), 'hex');
  		let encryptedText = new Buffer(textParts.join(':'), 'hex');
@@ -33,8 +33,8 @@ const IV_LENGTH = 16; // For AES, this is always 16
  		decrypted = Buffer.concat([decrypted, decipher.final()]);
 
 		 return decrypted.toString();
-	}
-	this.initializeCoins = function(){
+	},
+	initializeCoins : function(){
 		let iv = crypto.randomBytes(IV_LENGTH);
  		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
  		let encrypted = cipher.update('0');

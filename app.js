@@ -11,11 +11,12 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
 const expressValidator = require('express-validator')
-const coinsModel = require('./functionManagement/coins');
 const compression = require('compression')
 const helmet = require('helmet')
 const debug = require('debug')('http')
 const mongodb = require('mongodb')
+const coinsEncryption = require('./Operations/encryptCoins');
+
 // --------------ROUTES--------------------
 
 const index = require('./routes/index');
@@ -25,7 +26,8 @@ const earncoins = require('./routes/earncoins');
 const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
-var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
+// var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
+ var mongodburl ="mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards"
 
 const options = {
   useMongoClient: true,
@@ -36,7 +38,7 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
 };
-mongoose.connect(mongodburl,options);
+mongoose.connect(mongodburl);
 
 //-----------------BEGIN-----------------
 var app = express();
@@ -45,7 +47,6 @@ app.use(helmet());
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('view engine', '.hbs');
-var coinsInstance = new coinsModel();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -83,7 +84,7 @@ app.use(expressValidator({
 }));
 app.use(flash());
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 
 //------------Global VARIABLES-------------------------
@@ -93,11 +94,29 @@ app.use(function(req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
+
   
   if (req.user) {
+    
+	  console.log(req.user)
     res.locals.logged = true;
-    res.locals.user = req.user;
-    res.locals.usercoins = coinsInstance.decryptcoins(req.user.coins)
+    res.locals.user = 
+    {
+        _id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+        username: req.user.username,
+        coins: req.user.coins,
+        joindate: req.user.joindate,
+        lastdailybonus: req.user.lastdailybonus,
+        __v: req.user.__v,
+        completedMissions: req.user.completedMissions,
+        orders: req.user.orders 
+      }
+     
+
+    
+    res.locals.usercoins = coinsEncryption.decryptcoins(req.user.coins)
     
   }else{
     res.locals.logged = false;
