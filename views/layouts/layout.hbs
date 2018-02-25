@@ -3,39 +3,34 @@
 
 <head>
 	<title>{{title}}</title>
-	<link rel="stylesheet" href="/stylesheets/layout.css"> 
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+	<link rel="stylesheet" href="/stylesheets/layout.css">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-	{{!-- JQyery 3.2.1 and Ajax --}}
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-    {{!-- BOOTSTRAP 4.0.0 --}}
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
-
-
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{!-- BOOTSTRAP 4.0.0 --}} {{!--
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"> --}} {{!--
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> --}} {{!--
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script> --}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+	 crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-
-	{{!-- <div class="wrapper"> --}}
+	<header>
 		{{> header}}
-		<div class="body-content">
-			{{{body}}}
-		</div>
-		{{>footer}}
-		{{!-- <div class="push"></div> --}} <!-- This pushes the footer off -->  
-	{{!-- </div> --}}
+	</header>
+	<main>
 
+		{{{body}}}
+
+	</main>
+
+	{{>footer}} {{!-- JQyery 3.2.1 and Ajax --}}
 	<script src="https://use.fontawesome.com/c3b6c7d70e.js"></script>
-	<script src="https://cdn.auth0.com/w2/auth0-7.6.1.min.js"></script>
-	<script src="https://cdn.auth0.com/js/lock/10.14/lock.min.js"></script>
-	<script src="https://use.fontawesome.com/c3b6c7d70e.js"></script>
+	<script src="https://use.fontawesome.com/c3b6c7d70e.js"></script> {{!-- materialize--}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
 </body>
 

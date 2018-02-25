@@ -13,35 +13,35 @@ const ENCRYPTION_KEY = "kjhszol125sdjn65893vbnaze4rg56b2"; // Must be 256 bytes 
 const IV_LENGTH = 16; // For AES, this is always 16
 
 
- module.exports = {
-		
-	encryptcoins : function(value){
- 		let iv = crypto.randomBytes(IV_LENGTH);
- 		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
- 		let encrypted = cipher.update(value);
+module.exports = {
 
- 		encrypted = Buffer.concat([encrypted, cipher.final()]);
- 		return iv.toString('hex') + ':' + encrypted.toString('hex');
-	},
-	decryptcoins : function(value){
- 		let textParts = value.split(':');
- 		let iv = new Buffer(textParts.shift(), 'hex');
- 		let encryptedText = new Buffer(textParts.join(':'), 'hex');
- 		let decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
- 		let decrypted = decipher.update(encryptedText);
-		
- 		decrypted = Buffer.concat([decrypted, decipher.final()]);
-
-		 return decrypted.toString();
-	},
-	initializeCoins : function(){
+	encryptcoins: function (value) {
 		let iv = crypto.randomBytes(IV_LENGTH);
- 		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
- 		let encrypted = cipher.update('0');
+		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
+		let encrypted = cipher.update(value);
 
- 		encrypted = Buffer.concat([encrypted, cipher.final()]);
+		encrypted = Buffer.concat([encrypted, cipher.final()]);
+		return iv.toString('hex') + ':' + encrypted.toString('hex');
+	},
+	decryptcoins: function (value) {
+		let textParts = value.split(':');
+		let iv = new Buffer(textParts.shift(), 'hex');
+		let encryptedText = new Buffer(textParts.join(':'), 'hex');
+		let decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
+		let decrypted = decipher.update(encryptedText);
 
- 		return iv.toString('hex') + ':' + encrypted.toString('hex');
+		decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+		return decrypted.toString();
+	},
+	initializeCoins: function () {
+		let iv = crypto.randomBytes(IV_LENGTH);
+		let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(ENCRYPTION_KEY), iv);
+		let encrypted = cipher.update('0');
+
+		encrypted = Buffer.concat([encrypted, cipher.final()]);
+
+		return iv.toString('hex') + ':' + encrypted.toString('hex');
 	}
 }
 

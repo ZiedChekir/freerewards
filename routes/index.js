@@ -12,18 +12,18 @@ const crypto = require('crypto')
 
 // mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
 //routing
-router.get('/',  function(req, res, next) {
+router.get('/', function (req, res, next) {
 
-     res.render('index',{home:true});
+  res.render('index', { home: true });
 })
 
-router.get('/checkcoins', async function(req, res,next)  {
+router.get('/checkcoins', async function (req, res, next) {
   // `new` is a reserved keyword, so we can't use `new` as a variable name.
- 
- 
+
+
 
   const newCurrency = req.query['new']
-  
+
   const {
     id,
     uid,
@@ -31,10 +31,10 @@ router.get('/checkcoins', async function(req, res,next)  {
     total,
     sig
   } = req.query
-    // console.log(req.query)
-// Empty Object ...
+  // console.log(req.query)
+  // Empty Object ...
 
-//so this obviously throws error..
+  //so this obviously throws error..
   // const secretHash = crypto.createHash('md5').update('8335728bcaf48908975f99e44b4d2840').digest('hex')
   // if (secretHash !== sig) {
   //   throw new Error('Invalid transaction')
