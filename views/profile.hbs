@@ -1,83 +1,131 @@
-
 <link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
 
-<div class="profile-container">
 
-  <div class="page-header text-center">
-    <h1><span class="fa fa-anchor"></span> Profile</h1>
+
+<h1 style="text-align: center;">
+  <span class="fa fa-anchor"></span> Profile</h1>
+<div class="container">
+
+  <div class="row">
+    <div style="text-align: center;" class="col s12 m4">
+      <img src={{user.profileimgurl}} height="140px" width="140px" class="circle center" alt="profile picture">
+      <h2>Hello {{user.username}}</h2>
+      <div class="profile-userbuttons">
+        <a class="btn #c62828 red darken-3" href="/user/logout">Logout</a>
+        <a class="btn btn-warning" href="/profile/addcoin">add coin</a>
+      </div>
+    </div>
+    <div class="col s12 m8">
+
+
+
+
+
+      <div class="col s12">
+        <ul class="tabs ">
+          <li class="tab col s4">
+            <a class="active" href="#overview">Overview</a>
+          </li>
+          <li class="tab col s4">
+            <a href="#orders">Orders</a>
+          </li>
+          <li class="tab col s4">
+            <a href="#settings">Settings</a>
+          </li>
+        </ul>
+      </div>
+      <div id="overview" class="col s12">
+        <p>overview</p>
+      </div>
+      <div id="orders" class="col s12">
+        <table class="bordered">
+          <thead>
+            <tr>
+              <th>Orders</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#each orders}}
+            <tr>
+              <td>{{this.game.title}}</td>
+              <td>{{this.game.price}}</td>
+              <td>{{this.status}}</td>
+            </tr>
+            {{else}}
+            <td>no orders!</td>
+            {{/each}}
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div id="settings" class="col s12">
+        <div class="row">
+          {{#if errors}}
+            {{#each errors}}
+              <p>{{this}}</p>
+            {{/each}}
+          {{/if}}
+          {{#if successMsg}}
+            {{#each successMsg}}
+              <p>{{this}}</p>
+            {{/each}}
+          {{/if}}
+
+          <form method="post"action="/profile/updatepicture" encType="multipart/form-data">
+            <div class="col s8">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>image</span>
+                <input type="file" name="image">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div></div>
+            <div style="margin-top:20px;"class="col s4">
+              <button class="btn" type="submit"> change </button>
+            </div>
+          </form>
+
+
+
+          <form class="col s12" method="post" action="/profile/update" autocomplete="nope">
+
+            <div class="input-field col s12">
+              <input value="" autocomplete="nope" placeholder={{user.username}} id="editusername" name="editusername" type="text" class="validate">
+              <label class="active" for="username">edit username</label>
+            </div>
+            <div class="input-field col s12">
+              <input autocomplete="nope" placeholder={{user.email}} id="editemail" name="editemail" type="email" class="validate">
+              <label class="active" for="editemail">edit Email(needs to be confirmed)</label>
+            </div>
+
+            <div class="input-field col s12">
+              <input placeholder="********" autocomplete="new-password" id="editpassword" name="editpassword" type="password" class="validate">
+              <label class="active" for="editpassword">edit Password</label>
+            </div>
+            <h6 style="color:orange;">
+              <strong>confrim your current password before updating.</strong>
+            </h6>
+            <div class="input-field col s12">
+              <input placeholder="confirm your current password" autocomplete="new-password" id="pass" name="pass" type="password" class="validate">
+              <label class="active" for="pass">current password</label>
+            </div>
+
+
+
+            <button type="submit" class="btn">update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
 
   </div>
-  <div class="container">
-    <div class="row profile">
-      <div class="col-md-3">
-        <div class="profile-sidebar">
-          <!-- SIDEBAR USERPIC -->
-          <div class="profile-userpic">
-            <img src="{{user.picture}}" class="img-responsive" alt="">
-          </div>
-          <!-- END SIDEBAR USERPIC -->
-          <!-- SIDEBAR USER TITLE -->
-          <div class="profile-usertitle">
-            <div class="profile-usertitle-name">
-              {{user.displayName}}
-            </div>
-            <div class="profile-usertitle-job">
-
-            </div>
-          </div>
-          <!-- END SIDEBAR USER TITLE -->
-          <!-- SIDEBAR BUTTONS -->
-          <h2>Hello {{user.name}}</h2>
-          <div class="profile-userbuttons">
-           <a class="btn btn-success btn-sm" href="/">Add picture</a>
-           <a class="btn btn-danger btn-sm" href="/user/logout">Logout</a>
-           <a class="btn btn-warning" href="/profile/addcoin">add coin</a>
-         </div>
-         <!-- END SIDEBAR BUTTONS -->
-         <!-- SIDEBAR MENU -->
-
-         <!-- END MENU -->
-       </div>
-     </div>
- {{!--            <div class="col-md-9">
-
-                <div class="profile-content">
-                  Account Status: {{#if info.email_verified}}<h1>Verified</h1>{{/if}}
-                  Account Details:
-                  <ul>
-                    <li><strong>Full Name: </strong>{{info.user_metadata.full_name}}</li>
-                    <li><strong>Email:</strong> {{info.email}}</li>
-                    <li><strong>Username:</strong> {{info.name}}</li>
-                    <li><strong>Adress:</strong> {{info.user_metadata.address}}</li>
-                    <li><strong>Created at:</strong> {{info.created_at}}</li>
-                  </ul>
-<button type="button" name="button">Edit user informations</button>
-
-
-
-
-
-                  
-                </div>
-              </div> --}}
-            </div>
-          </div>
-        </div>
-        <center>
-
-          
-            {{#each orders}}
-            <h3>orders</h3>
-            <p>{{this.game.title}}</p>
-            <p>{{this.game.price}}</p>
-            <p>{{this.status}}</p>
-            {{else}}
-            <h3>no orders!</h3>
-            {{/each}}
-          
-          
-
-          <strong>Powered by <a href="http://j.mp/metronictheme" target="_blank">KeenThemes</a></strong>
-        </center>
-        <br>
-        <br>
+</div>

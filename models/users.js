@@ -39,6 +39,10 @@ var UserSchema = mongoose.Schema({
 	completedMissions:{
 		type:Array,
 		required:false
+	},
+	profileimgurl:{
+		type:String,
+		required:true
 	}
 },{collection:'Users'});
 
@@ -53,7 +57,14 @@ module.exports.createUser = function(newUser, callback){
 	});
 
 }
-
+module.exports.hashandsave = function(user,passToHash,callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(passToHash, salt, function(err, hash) {
+	        user.password = hash;
+	        user.save(callback);
+	    });
+	});
+}
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};
 	User.findOne(query, callback);

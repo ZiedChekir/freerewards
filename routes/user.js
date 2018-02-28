@@ -14,12 +14,13 @@ const userOperation = require('../Operations/userOperations')
 
 // Register
 router.get('/register', ensureLoggedOut, function (req, res) {
-	res.render('user/register');
+	res.render('user/register',{errors:req.flash('errors')});
 });
 
 // Login
 router.get('/login', ensureLoggedOut, function (req, res) {
-	res.render('user/login');
+	console.log(req.flash())
+	res.render('user/login',{errors:req.flash('error')});
 });
 
 // Register User
@@ -36,20 +37,23 @@ router.post('/register', async function (req, res, next) {
 	req.checkBody('email', 'Email is not valid').isEmail();
 	req.checkBody('username', 'Username is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
 	//Error handling
-	var errors = [];
+	
 	var valErrors = req.validationErrors()
 
 	if (valErrors) {
-		for (var i = 0; i < valErrors.length; i++) {
-			errors.push(valErrors[i])
-		}
-
-		return res.render('user/register', { errors: errors })
+		
+		req.flash('errors',"fill all the blanks")
+		return res.redirect('/user/register')
 
 	}
+	if(password != password2){
+		req.flash('errors',"passwords don't match")
+		return res.redirect('/user/register')
+
+	}
+
 	try {
 		var emailExist = await userOperation.queryByEmail(email)
 		var usernameExist = await userOperation.queryByUsername(username)
@@ -58,19 +62,14 @@ router.post('/register', async function (req, res, next) {
 		next(err)
 	}
 	if (emailExist) {
-		errors.push({ msg: 'email is already in use !' })
-		return res.render('user/register', {
-			errors: errors
-		});
-
+		req.flash('errors',"email already in use")
+		return res.redirect('/user/register')
 	}
 	if (usernameExist) {
-		errors.push({ msg: "username is already in use!" })
-		return res.render('user/register', {
-			errors: errors
-		});
-	}
+		req.flash('errors',"username already in use")
+		return res.redirect('/user/register')
 
+	}
 	var newUser = new User({
 		name: name,
 		email: email,
@@ -78,11 +77,17 @@ router.post('/register', async function (req, res, next) {
 		password: password,
 		coins: Coins.initializeCoins(),
 		joindate: getDate(),
-		lastdailybonus: getPreviousDate()
+		lastdailybonus: getPreviousDate(),
+		profileimgurl:"http://res.cloudinary.com/dyy9ovwcv/image/upload/v1519766192/sw6calmlh1hjnqfbszch.png"
 	});
 
 	User.createUser(newUser, function (err, user) {
-		if (err) throw err;
+		if (err) {
+			next(err)
+			req.flash('errors',"a problem has occured. Please register again")
+			return res.redirect('/user/register')
+
+		}
 	});
 	req.flash('success_msg', 'You are registered and can now login');
 	res.redirect('/user/login');
@@ -99,7 +104,7 @@ passport.use(new LocalStrategy(
 		User.getUserByUsername(username, function (err, user) {
 			if (err) throw err;
 			if (!user) {
-				return done(null, false, { message: 'Unknown User' });
+				return done(null, false, { message: 'Invalid User or password' });
 			}
 
 			User.comparePassword(password, user.password, function (err, isMatch) {
@@ -108,7 +113,7 @@ passport.use(new LocalStrategy(
 					return done(null, user);
 
 				} else {
-					return done(null, false, { message: 'Invalid password' });
+					return done(null, false, { message: 'Invalid User or password' });
 				}
 			});
 		});
@@ -127,10 +132,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.post('/login',
-	passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: true }),
-	function (req, res) {
-		res.redirect('/');
-	});
+	passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }));
 
 router.get('/logout', ensureLoggedIn, function (req, res) {
 	req.logout();
