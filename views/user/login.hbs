@@ -1,8 +1,8 @@
 <div class="row">
   <div class="login-box z-depth-3 col s12 m6 offset-m3 ">
-    {{#if errors}}
+   {{#if errors}}
     <div class="alert alert-danger">
-      {{#each msg}}
+      {{#each errors}}
       <p>{{this}}</p>
       {{/each}}
     </div>
@@ -33,7 +33,7 @@
 
     </form>
 
-
+ 
 
   </div>
 </div>

@@ -82,11 +82,11 @@ app.use(expressValidator({
     };
   }
 }));
-app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(flash());
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
 
@@ -111,7 +111,8 @@ app.use(function (req, res, next) {
         lastdailybonus: req.user.lastdailybonus,
         __v: req.user.__v,
         completedMissions: req.user.completedMissions,
-        orders: req.user.orders
+        orders: req.user.orders,
+        profileimgurl:req.user.profileimgurl
       }
 
 

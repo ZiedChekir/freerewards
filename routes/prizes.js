@@ -12,13 +12,13 @@ var gameInfo
 
 
 
-router.get('/', ensureLoggedIn, function (req, res) {
+router.get('/', function (req, res) {
 	games.find(function (err, aviableGames) {
 		res.render('prizes/games', { games: aviableGames, prizes: true });
 	})
 
 });
-router.get('/:game', ensureLoggedIn, function (req, res) {
+router.get('/:game', function (req, res) {
 	var game = req.params.game;
 
 	games.findOne({ title: game }, function (err, game) {
