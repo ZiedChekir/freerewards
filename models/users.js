@@ -32,10 +32,7 @@ var UserSchema = mongoose.Schema({
 		type:String,
 		required:true
 	},
-	orders: {
-		type:Array,
-		required:false
-	},
+
 	completedMissions:{
 		type:Array,
 		required:false
@@ -44,9 +41,9 @@ var UserSchema = mongoose.Schema({
 		type:String,
 		required:true
 	}
-},{collection:'Users'});
+},{collection:'users'});
 
-var User = module.exports = mongoose.model('User', UserSchema);
+var User = module.exports = mongoose.model('user', UserSchema);
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {

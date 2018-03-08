@@ -9,6 +9,8 @@ var userOp = require('../Operations/userOperations')
 var User = require('../models/users')
 var cloudinary = require('cloudinary');
 var multer = require('multer')
+var Orders = require('../models/orders')
+
 var upload = multer({
 	dest: 'uploads/'
 })
@@ -24,22 +26,18 @@ cloudinary.config({
 });
 
 /* GET users listing. */
-router.get('/', ensureLoggedIn, function (req, res, next) {
-	console.log(req.flash())
-	User.findOne({
-		'_id': res.locals.user._id
-	}, function (err, user) {
-		orders = user.orders
-		res.render('profile', {
+router.get('/', ensureLoggedIn, async function (req, res, next) {
+	
+	// let user = await User.findOne({_id: res.locals.user._id})
+	let orders = await Orders.find({email:res.locals.user.email})
+
+	res.render('profile', {
 			profile: true,
 			user: res.locals.user,
-			userProfile: JSON.stringify(res.locals.user, null, '  '),
 			orders: orders,
 			errors: req.flash('errors'),
 			successMsg: req.flash('successMsg')
 		})
-	})
-
 });
 
 router.post('/updatepicture', upload.single('image'), function (req, res, next) {
@@ -123,9 +121,8 @@ router.get('/addcoin', ensureLoggedIn, function (req, res, next) {
 		if (err) return handleError(err);
 		//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
 		user.coins = coinsEncryption.encryptcoins((Number(coinsEncryption.decryptcoins(user.coins)) + 10000).toString());
-		user.completedMissions.push('clas of clans')
 		user.save(function (err) { // user coins saved to database
-			if (err) return handleError(err);
+			if (err) return console.log(err);
 
 		});
 	});
