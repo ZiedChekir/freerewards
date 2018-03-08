@@ -7,8 +7,7 @@ const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
 var User = require('../models/users');
 var coinsEncryption = require('../Operations/encryptCoins');
 
-
-var gameInfo
+var Orders = require('../models/orders')
 
 
 
@@ -23,8 +22,7 @@ router.get('/:game', function (req, res) {
 
 	games.findOne({ title: game }, function (err, game) {
 
-		gameInfo = game;
-
+		
 		res.render('prizes/gameinfo', { game: game, ableToBuy: ableToBuy(res.locals.usercoins, game.price) });
 	})
 });
@@ -44,29 +42,45 @@ router.get('/:game/redeem', ensureLoggedIn, function (req, res) {
 	})
 
 })
-router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res) {
-	if (gameInfo) {
-		User.findOne({ '_id': res.locals.user._id }, function (err, user) {
-			if (err) return handleError(err);
-			if (Number(coinsEncryption.decryptcoins(user.coins)) >= gameInfo.price) {
+router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
+	var game = req.params.game;
 
+	games.findOne({ title: game }, function (err, game) {
+		if(err){
+			next(err)
+			req.flash('errors','game not found')
+			return 	res.redirect('/prizes')
+		}
+		User.findOne({ '_id': res.locals.user._id }, async function (err, user) {
+			if (err) return handleError(err);
+			if (Number(coinsEncryption.decryptcoins(user.coins)) >= game.price) {
+				
 				//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
-				user.coins = coinsEncryption.encryptcoins((Number(coinsEncryption.decryptcoins(user.coins)) - gameInfo.price).toString());
-				user.orders.push({
-					game: gameInfo,
-					status: "pending"
-				})
+				user.coins = await coinsEncryption.encryptcoins((Number(coinsEncryption.decryptcoins(user.coins)) - game.price).toString());									
 				user.save(function (err) { // user coins saved to database
 					if (err) handleError(err)
-					res.redirect('/profile')
+					return res.redirect('/profile')
 				});
+				var order = new Orders({
+					username:user.username,
+					email:user.email,
+					game:game.title,
+					gameId:game._id,
+					price :game.price,
+					completed:false
+				})
+				order.save(function(err){
+					if(err) return next(err)
+				})
 			}
 		});
+	})
+
+	
+
 	}
-	else {
-		res.redirect('/prizes');
-	}
-})
+	
+)
 
 function ableToBuy(usercoins, gameprice) {
 	return usercoins >= gameprice ? true : false;

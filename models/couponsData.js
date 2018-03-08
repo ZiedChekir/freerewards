@@ -11,9 +11,9 @@ var CouponsSchema = mongoose.Schema({
 		type:String
 	}
 
-},{collection:'Coupons'})
+},{collection:'coupons'})
 
-var Coupons = module.exports = mongoose.model('Coupons',CouponsSchema)
+var Coupons = module.exports = mongoose.model('coupons',CouponsSchema)
 module.exports.queryCoupon = function(code,callback){
 	Coupons.findOne({couponCode:code},callback)
 }

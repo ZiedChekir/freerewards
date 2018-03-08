@@ -50,9 +50,14 @@
           <tbody>
             {{#each orders}}
             <tr>
-              <td>{{this.game.title}}</td>
-              <td>{{this.game.price}}</td>
-              <td>{{this.status}}</td>
+              <td>{{this.game}}</td>
+              <td>{{this.price}}</td>
+              {{#if this.completed }}
+                <td class="completed">Approved <span class="textbubble">Check your emails</span> </td>
+                {{else}}
+                <td>Pending</td>
+              {{/if}}
+              
             </tr>
             {{else}}
             <td>no orders!</td>
