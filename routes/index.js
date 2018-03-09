@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
   res.render('index', { home: true });
 })
 
-router.get('/checkcoins', async function (req, res, next) {
+router.post('/checkcoins', async function (req, res, next) {
   // `new` is a reserved keyword, so we can't use `new` as a variable name.
 
 
