@@ -31,7 +31,8 @@ router.get('/checkcoins', async function (req, res, next) {
     total,
     sig
   } = req.query
-  // console.log(req.query)
+  console.log(req.query)
+  res.send(req.query)
   // Empty Object ...
 
   //so this obviously throws error..
@@ -41,7 +42,7 @@ router.get('/checkcoins', async function (req, res, next) {
   // }else{
   // 	console.log('success')
   // }
-  res.redirect('/')
+ 
 })
 module.exports = router;
 
