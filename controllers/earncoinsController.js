@@ -9,6 +9,9 @@ var missionOperations = require('../Operations/missionOperations')
 var userOperations = require('../Operations/userOperations')
 
 
+var Videos = require('../models/videos')
+
+
 module.exports = {
     GET_offerwall: async function (req, res, next) {
         try {
@@ -67,17 +70,26 @@ module.exports = {
         await coinsTran.updateDailyCoins(res.locals.user._id)
         res.redirect('/earncoins/daily')
     },
-    ////////////// VIDEOS /////////////////////
-    GET_videos:async function (req, res) {
-        var f = await missionOperations.queryVideos()
     
-        // let vid = vids[RandomVideo(0,vids.length )]	
-        res.render('earncoins/videos', { videos: true, videoToDisplay: vid })
+    ////////////// VIDEOS /////////////////////
+
+
+
+    GET_videos:async function (req, res) {
+       var videoArray = await Videos.find()
+       var video = videoArray[RandomVideo(0,videoArray.length )]
+        res.render('earncoins/videos', { videos: true, video: video })
     },
+
+
+
     POST_videos:async function (req, res) {
         await coinsTran.updateVideoCoins(res.locals.user._id)
-        res.redirect('/earncoins/videos')
+        res.send('success')
     },
+
+
+
     ////////////////// INVITE //////////////////////////
     GET_invite:function (req, res) {
         res.render('earncoins/invite', { invite: true })

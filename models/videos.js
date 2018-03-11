@@ -10,11 +10,15 @@ var VideosSchema = mongoose.Schema({
 		required:true,
 		type:String
 	},
-	youtubeLink:{
+	videoId:{
 		required:true,
 		type:String
 	},
-	coins:{
+	viewsCount:{
+		required:true,
+		type:Number
+	},
+	maxViews:{
 		required:true,
 		type:Number
 	}
@@ -23,6 +27,6 @@ var VideosSchema = mongoose.Schema({
 
 var Videos = module.exports = mongoose.model('Videos',VideosSchema)
 
-module.exports.getVideos = function(callback){
-	Videos.find(callback)
+module.exports.getVideos = function(){
+	Videos.find()
 }
