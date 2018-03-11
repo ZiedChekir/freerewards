@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
+mongoose.connect('mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards');
+
 var Videos = require('../models/videos')
 
 var videos = [
@@ -8,43 +9,49 @@ new Videos(
 {
 	title:'The Phone Is Changed Forever',
 	owner:'Beme news',
-	youtubeLink:'https://www.youtube.com/watch?v=scc6_qcMKJI',
-	coins:2
+	videoId:'scc6_qcMKJI',
+	viewsCount:0,
+	maxViews:1000
 }),
 new Videos(
 {
 	title:"WHAT'S INSIDE A $6,000.00 CAMERA?!",
 	owner:'Peter McKinnon',
-	youtubeLink:'https://www.youtube.com/watch?v=scc6_qcMKJI',
-	coins:2
+	videoId:'scc6_qcMKJI',
+	viewsCount:0,
+	maxViews:1000
 }),
 new Videos(
 {
 	title:'This table basically floats',
 	owner:'INSIDER',
-	youtubeLink:'https://www.youtube.com/watch?v=h-9wEMa1a2E',
-	coins:2
+	videoId:'h-9wEMa1a2E',
+	viewsCount:0,
+	maxViews:1000
 }),
 new Videos(
 {
 	title:'We Did 100 Squats Every Day For 30 Days',
 	owner:'BuzzFeedBlue',
-	youtubeLink:'https://www.youtube.com/watch?v=c8Q8AyFjWZM',
-	coins:2
+	videoId:'c8Q8AyFjWZM',
+	viewsCount:0,
+	maxViews:1000
 }),
 new Videos(
 {
 	title:'The Most Satisfying Video in the World 2',
 	owner:'Melted Fusion',
-	youtubeLink:'https://www.youtube.com/watch?v=0rsjxzPbTGc',
-	coins:2
+	videoId:'0rsjxzPbTGc',
+	viewsCount:0,
+	maxViews:1000
 }),
 new Videos(
 {
 	title:'The Most Satisfying Video in the World',
 	owner:'Melted Fusion',
-	youtubeLink:'https://www.youtube.com/watch?v=Zv4NnN2g7tk',
-	coins:2
+	videoId:'Zv4NnN2g7tk',
+	viewsCount:0,
+	maxViews:1000
 })
 ]
 
