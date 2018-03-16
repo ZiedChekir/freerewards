@@ -1,55 +1,14 @@
- {{> earncoinsheader}} {{!--
-<iframe id="player" src="https://www.youtube.com/embed/DjB1OvEYMhY?enablejsapi=1"></iframe>
-<p id="display"></p>
-<script type="text/javascript">
-  var player, timer, timeSpent = [], display = document.getElementById('display');
+ {{> earncoinsheader}}
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      events: { 'onStateChange': onPlayerStateChange }
-    });
-  }
-  console.logg()
-
-  function onPlayerStateChange(event) {
-    console.log('onPlayerStateChange running')
-    if (event.data === 1) { // Started playing
-      if (!timeSpent.length) {
-        for (var i = 0, l = parseInt(player.getDuration()); i < l; i++) timeSpent.push(false);
-      }
-      timer = setInterval(record, 100);
-    } else {
-      clearInterval(timer);
-    }
-  }
-
-  function record() {
-    console.log('record running')
-    timeSpent[parseInt(player.getCurrentTime())] = true;
-    showPercentage();
-
-  }
-
-  function showPercentage() {
-    console.log('ShowPercentage running')
-    var percent = 0;
-    for (var i = 0, l = timeSpent.length; i < l; i++) {
-      if (timeSpent[i]) percent++;
-    }
-    percent = Math.round(percent / timeSpent.length * 100);
-    display.innerHTML = percent + "%";
-  }
-</script> --}}
-
-
+<meta name="_csrf" content="{{csrfToken}}">
 
 
 <div id="player"></div>
 <p id="display"></p>
 
 <script>
-
-  var player, timer, timeSpent = [],AbleToPost=true, display = document.getElementById('display');
+{{!-- var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content') --}}
+  var player, timer, timeSpent = [], AbleToPost = true, display = document.getElementById('display');
   // 2. This code loads the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
 
@@ -74,7 +33,7 @@
 
   // 4. The API will call this function when the video player is ready.
   function onPlayerReady(event) {
-  
+
     event.target.playVideo();
   }
 
@@ -87,7 +46,7 @@
       if (!timeSpent.length) {
         for (var i = 0, l = parseInt(player.getDuration()); i < l; i++) timeSpent.push(false);
       }
-      timer = setInterval(record,100 );
+      timer = setInterval(record, 100);
     } else {
       clearInterval(timer);
     }
@@ -101,60 +60,97 @@
 
   function showPercentage() {
     var percent = 0;
-    
+
     for (var i = 0, l = timeSpent.length; i < l; i++) {
       if (timeSpent[i]) percent++;
     }
     percent = Math.round(percent / timeSpent.length * 100);
     display.innerHTML = percent + "%";
-    if(percent >= 27 && AbleToPost){
-      AbleToPost=false
-      
-      axios.post('/earncoins/videos')
-      .then(function(response){
-        console.log(response.data); // ex.: { user: 'Your User'}
-        console.log(response.status); 
-  swal({
-  title: "Good job!",
-  text: "You Earned 5 coins",
-  icon: "success",
-   buttons: {
-       continue: {
-      text:'continue watching',
-      value:'continue'
-    },
-    next: {
-      text:'Next Video!',
-      value:'next'
-    }
-     
-  }
-}).then(function(value){
- if(value == 'next'){
-   location.reload();
- }
-})
+    if (percent >=30 && AbleToPost) {
+      AbleToPost = false
+
+
+
+
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
+    });
+        $.post(
+            "/earncoins/videos",
+            {
+                _csrf : $('meta[name="_csrf"]').attr('content')
+            }, function (response) {
         
-      }); 
+          console.log(response); // ex.: { user: 'Your User'}
+          
+          swal({
+            title: "Good job!",
+            text: "You Earned 5 coins",
+            icon: "success",
+            buttons: {
+              continue: {
+                text: 'continue watching',
+                value: 'continue'
+              },
+              next: {
+                text: 'Next Video!',
+                value: 'next'
+              }
+
+            }
+          }).then(function (value) {
+            if (value == 'next') {
+              location.reload();
+            }
+          })
+
+        });
+
     }
   }
 
 </script> {{!-- function onPlayerStateChange(event) { if (event.data == YT.PlayerState.ENDED) { document.body.innerHTML += '
-<form
-  id="formv" action="/earncoins/videos" method="post">
+<form id="formv" action="/earncoins/videos" method="post">
   <input type="hidden" name="q" value="a">
-  </form>'; document.getElementById("formv").submit(); } } --}} {{!--
-  <iframe width="420" onended="function a(){console.log('hi')}"
-    height="315" src="https://www.youtube.com/embed/{{videoToDisplay.youtubeLink}}?autoplay=1">
-  </iframe>
-  {{videoToDisplay.title}}
+</form>'; document.getElementById("formv").submit(); } } --}} {{!--
+<iframe width="420" onended="function a(){console.log('hi')}" height="315" src="https://www.youtube.com/embed/{{videoToDisplay.youtubeLink}}?autoplay=1">
+</iframe>
+{{videoToDisplay.title}}
 
-  <script type="text/javascript">
-    function onendVideo() {
+<script type="text/javascript">
+  function onendVideo() {
 
 
-      document.body.innerHTML += '<form id="formv" action="http://example.com/" method="post"><input type="hidden" name="q" value="a"></form>';
-      document.getElementById("formv").submit();
+    document.body.innerHTML += '<form id="formv" action="http://example.com/" method="post"><input type="hidden" name="q" value="a"></form>';
+    document.getElementById("formv").submit();
 
-    }
-  </script> --}}
+  }
+</script> --}}
+
+{{!-- 
+      .then(function (response) {
+        
+          console.log(response.data); // ex.: { user: 'Your User'}
+          console.log(response.status);
+          swal({
+            title: "Good job!",
+            text: "You Earned 5 coins",
+            icon: "success",
+            buttons: {
+              continue: {
+                text: 'continue watching',
+                value: 'continue'
+              },
+              next: {
+                text: 'Next Video!',
+                value: 'next'
+              }
+
+            }
+          }).then(function (value) {
+            if (value == 'next') {
+              location.reload();
+            }
+          })
+
+        }); --}}

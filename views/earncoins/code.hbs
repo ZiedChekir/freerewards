@@ -1,5 +1,7 @@
 {{> earncoinsheader}}
 <form method="post" action="/earncoins/code">
+<input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
 <input type="text" class="form-control" name="redeemcode">
 <button type='submit' class="btn btn-primary">Submit</button>
 </form>

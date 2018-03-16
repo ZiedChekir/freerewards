@@ -5,7 +5,6 @@ var games = require('../models/games');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
 var User = require('../models/users');
-var coinsEncryption = require('../Operations/encryptCoins');
 
 var Orders = require('../models/orders')
 
@@ -53,10 +52,10 @@ router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 		}
 		User.findOne({ '_id': res.locals.user._id }, async function (err, user) {
 			if (err) return handleError(err);
-			if (Number(coinsEncryption.decryptcoins(user.coins)) >= game.price) {
+			if (user.coins >= game.price) {
 				
 				//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
-				user.coins = await coinsEncryption.encryptcoins((Number(coinsEncryption.decryptcoins(user.coins)) - game.price).toString());									
+				user.coins =  user.coins - game.price;									
 				user.save(function (err) { // user coins saved to database
 					if (err) handleError(err)
 					return res.redirect('/profile')

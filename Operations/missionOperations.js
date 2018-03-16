@@ -1,5 +1,3 @@
-
-
 const Missions = require('../models/missions')
 
 module.exports = {
@@ -8,10 +6,8 @@ module.exports = {
 		missions = await Missions.find({})
 		return missions
 	},
-	queryVideos: async function () {
-		let videos
-		videos = await Missions.find({})
-		return videos[0].videos
+	updateMissionCoins:async function(){
+		
 	}
 }
 

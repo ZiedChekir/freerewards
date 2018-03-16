@@ -1,62 +1,64 @@
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
+mongoose.connect('mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards');
 
 var Missions = require('../models/missions')
+var shortid = require('shortid');
+
+
 
 var missions = [
-	new Missions({
-			missions:[
+				new Missions(
+			
 				{
 					title:'clas of clans',
 					description:'bdazleazeqsdbqsdqsdsqdqs',
 					link:'www.example.com',
-					coins:'84a8bffbee7b26905e4db5417bb00b5f:7bde3a43646d7fdfa170a24d3bdaee9c',
-					id:uniqueId()
-				},
-				{
+					coins: 50,
+					id:shortid.generate()
+				}),
+				new Missions({
 					title:'Meeting site',
 					description:'sdqsqd',
 					link:'www.exa15623mple.com',
-					coins:'84a8bffbee7b26905e4db5417bb00b5f:7bde3a43646d7fdfa170a24d3bdaee9c',
-					id:uniqueId()
-				},
-				{
+					coins:10,
+					id:shortid.generate()
+				}),
+
+				new Missions({
 					title:'car.forlive account',
 					description:'bdazsqdqsdqsdbqsdqsdsqdqs',
 					link:'www.45230.com',
-					coins:'84a8bffbee7b26905e4db5417bb00b5f:7bde3a43646d7fdfa170a24d3bdaee9c',
-					id:uniqueId()
-				},
-				{
+					coins:30,
+					id:shortid.generate()
+				}),
+				new Missions({
 					title:'happy night',
 					description:'bcouccous',
 					link:'www.ferrari.com',
-					coins:'84a8bffbee7b26905e4db5417bb00b5f:7bde3a43646d7fdfa170a24d3bdaee9c',
-					id:uniqueId()
-				},
-				{
+					coins:50,
+					id:shortid.generate()
+				}),
+				new Missions({
 					title:'world of warcraft',
 					description:"sdqsjldkjp^jzaijnf",
 					link:'www.haudsik.com',
-					coins:'64f84d0d88d443a75c972c5c4fa8f418:227e9f493cd2b5ebece17b8567a19113',
-					id:uniqueId()
-				}
+					coins:50,
+					id:shortid.generate()
+				})
 
-			],
-			daily:'0ba8e7d9a980150da7f772d0fa79a311:bef064dbcd8772306604cfc81bcfca94',
-			videos:'e0671db050832865720237ceb0210c80:6117e517d7811785e620a29959daadc9'
-	})
-]
+			
+			
+			]
 
-missions[0].save(function(err,result){
-	if(err) return handleError(err)
-		console.log(result)
-		console.log(err)
-		mongoose.disconnect();
-})
 
-   function uniqueId() {
-  return 'id-' + Math.random().toString(36).substr(2, 16);
-};
-
+for (var i = 0; i < missions.length; i++) {
+	missions[i].save(function(err,result){
+		if(err) console.log(err)
+		if (i == missions.length){
+			
+			console.log(result);
+			mongoose.disconnect();
+		}
+	});
+}

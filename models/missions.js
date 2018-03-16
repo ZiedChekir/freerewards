@@ -1,22 +1,30 @@
 var mongoose = require('mongoose')
 
 var MissionsSchema = mongoose.Schema({
-	missions:{
-		type:Array,
-		required:true		
+	id:{
+		type:String,
+		required:true
 	},
-	daily:{
-		required:true,
-		type:String
+	coins:{
+		type:Number,
+		required:true
 	},
-	videos:{
-		required:true,
-		type:String
-	}
+	link:{
+		type:String,
+		required:true
+	},
+	description:{
+		type:String,
+		required:true
+	},
+	title:{
+		type:String,
+		required:true
+	}	
 },{collection:'Missions'})
 
 var Missions = module.exports = mongoose.model('Missions',MissionsSchema)
 
-module.exports.getMissions = function(callback){
-	Missions.findOne({'_id':'5a7c250f05f40134e477f549'},callback)
+module.exports.getMissions = function(id,callback){
+	Missions.find(id,callback)
 }

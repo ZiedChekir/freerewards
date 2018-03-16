@@ -21,7 +21,7 @@ var UserSchema = mongoose.Schema({
 		required:true
 	},
 	coins: {
-		type:String,
+		type:Number,
 		required:true
 	},
 	joindate: {
