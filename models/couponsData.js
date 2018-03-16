@@ -8,7 +8,7 @@ var CouponsSchema = mongoose.Schema({
 	},
 	couponCoins:{
 		required:true,
-		type:String
+		type:Number
 	}
 
 },{collection:'coupons'})

@@ -41,16 +41,9 @@
 // // console.log((d.getDate()+"/"+(d.getMonth()+1)+"/" +d.getFullYear()).toString())
 
 
-
-var a = {
-    cow:"hsan",
-    dog:"ahmed",
-    ant:"fourat",
-    elephant:"hamza"
-}
-
-console.log(a)
-
+// var shortid = require('shortid');
+ 
+// console.log(shortid.generate);
 
 
 
@@ -206,3 +199,58 @@ console.log(a)
 // //     charset: voucher_codes.charset("alphanumeric")
 // // }))
 // console.log(cc.generate({parts:4}))
+
+
+// function truncateString(str, num) {
+//     // Clear out that junk in your trunk
+    
+//     if(str.length < num){
+//       console.log(str)
+//     } 
+   
+    
+//     if(num <= 3){
+//        str +='...';
+//        console.log(str)
+//     }
+    
+//     if(num >3){
+//       var b = str.substring(0,(num-3));
+//       b += '...';
+//       console.log(b)
+//     }
+//   }
+  
+//   truncateString("A-tisket a-tasket A green and yellow basket", 11);
+
+
+
+
+
+// function mutation(arr) {
+//     var a = arr[0].toLowerCase();
+//     var b = arr[1].toLowerCase();
+//     for(var i = 0; i < a.length; i ++){
+        
+//         if(b.indexOf(a.charAt(i)) == -1){
+            
+//             return console.log('no')
+
+//         }
+    
+//   }
+//   return console.log('yes')
+// }
+
+  
+// mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])
+  
+
+function bouncer(arr) {
+    // Don't show a false ID to this bouncer.
+   var a =  arr.filter(Boolean)
+   console.log(a)
+  }
+  
+  bouncer([false, null, 0, NaN, undefined, "","sd"])
+  

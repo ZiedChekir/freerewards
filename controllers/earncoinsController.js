@@ -4,10 +4,10 @@ var Videos = require('../models/videos')
 var Missions = require('../models/missions')
 var couponsModel = require('../models/couponsData')
 var Coupons = require('../Operations/couponOperations')
-var coinsTran = require('../Operations/coinOperations')
+var CoinOperations = require('../Operations/coinOperations')
 var missionOperations = require('../Operations/missionOperations')
 var userOperations = require('../Operations/userOperations')
-
+var videoOperations = require('../Operations/videoOperations')
 
 var Videos = require('../models/videos')
 
@@ -15,18 +15,18 @@ var Videos = require('../models/videos')
 module.exports = {
     GET_offerwall: async function (req, res, next) {
         try {
-            let missionObject = await missionOperations.queryMissions()
+            let missionArray = await missionOperations.queryMissions()
             let user = await userOperations.queryById(res.locals.user._id)
             let missionsToFilter
-            let missions = missionObject[0]
-
+            let missions = missionArray
+            
             if (user.completedMissions.length == 0) {
                 res.render('earncoins/missions', {
                     missions: true,
-                    missionsToDisplay: missions.missions
+                    missionsToDisplay: missions
                 })
             } else {
-                missionsToFilter = missions.missions.filter(function (mission) {
+                missionsToFilter = missions.filter(function (mission) {
                     for (let i = 0; i < user.completedMissions.length; i++) {
                         if (mission.title == user.completedMissions[i]) {
                             return false
@@ -45,20 +45,33 @@ module.exports = {
     },
     POST_offerwall_mission_id: async function (req, res) {
         let id = req.params.id
+        
         let missionToPush
+        let missionCoins = 0;
         try {
-            let miss = await missionOperations.queryMissions()
-            let missions = miss[0].missions
-            for (let i = 0; i < missions.length; i++) {
-                if (missions[i].id == id)
-                    missionToPush = missions[i]
-            }
-            let user = await userOperations.queryById(res.locals.user._id)
-            user.completedMissions.push(missionToPush.title)
-            user.save()
-            res.redirect('/earncoins/missions')
+            let mission = await  Missions.findOne({id:id})   
+                 
+            let user = await Users.findOne({_id:res.locals.user._id})
+            user.completedMissions.map(function(x){
+                if(x == mission.title){
+                    console.log("mission already done")
+                    return res.redirect('/earncoins/offerwall')
+                }
+            })
+          
+            console.log('after for loop')      
+            user.completedMissions.push(mission.title)
+            console.log("before updating user coins")
+             user.coins += mission.coins
+            await user.save()
+           
+            res.redirect('/earncoins/offerwall')
+
         } catch (err) {
             next(err)
+            console.log('Error Catched ')
+            res.redirect('/earncoins/offerwall')
+
         }
     },
 
@@ -67,7 +80,7 @@ module.exports = {
         res.render('earncoins/daily', { daily: true })
     },
     POST_daily: async function (req, res,next) {
-        await coinsTran.updateDailyCoins(res.locals.user._id)
+        await CoinOperations.updateDailyCoins(res.locals.user._id)
         res.redirect('/earncoins/daily')
     },
     
@@ -83,8 +96,10 @@ module.exports = {
 
 
 
-    POST_videos:async function (req, res) {
-        await coinsTran.updateVideoCoins(res.locals.user._id)
+    POST_videos:async function (req, res,next) {
+        console.log('what s going on ')
+        await videoOperations.updateVideoCoins(res.locals.user._id)
+       
         res.send('success')
     },
 
@@ -104,7 +119,7 @@ module.exports = {
         if (Coupons.validateCoupons(code)) {
             try {
                 var coupon = await couponsModel.findOne({ couponCode: code })
-                await coinsTran.updateCouponCoin(res.locals.user._id, coupon.couponCoins)
+                await Coupons.updateCouponCoins(res.locals.user._id, coupon.couponCoins)
                 await coupon.remove()
                 res.redirect('/earncoins/code')
             } catch (error) {

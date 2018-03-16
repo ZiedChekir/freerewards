@@ -15,8 +15,10 @@ const compression = require('compression')
 const helmet = require('helmet')
 const debug = require('debug')('http')
 const mongodb = require('mongodb')
-const coinsEncryption = require('./Operations/encryptCoins');
+const csrf = require('csurf')
 
+
+var csrfProtection = csrf({ cookie: true })
 // --------------ROUTES--------------------
 
 const index = require('./routes/index');
@@ -55,6 +57,7 @@ app.set('view engine', '.hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(compression())
 
@@ -64,8 +67,14 @@ app.use(
     secret: 'shhhhhhhhh',
     resave: false,
     saveUninitialized: false
+    // cookie: {
+    //   httpOnly: true,
+    //   secure: true
+    // }
   })
 );
+
+
 app.use(expressValidator({
   errorFormatter: function (param, msg, value) {
     var namespace = param.split('.')
@@ -87,6 +96,7 @@ app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
+app.use(csrfProtection)
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
 
@@ -94,7 +104,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
-
+  res.locals.csrfToken = req.csrfToken()
 
   if (req.user) {
 
@@ -114,11 +124,7 @@ app.use(function (req, res, next) {
         orders: req.user.orders,
         profileimgurl:req.user.profileimgurl
       }
-
-
-
-    res.locals.usercoins = coinsEncryption.decryptcoins(req.user.coins)
-
+    res.locals.usercoins = req.user.coins;
   } else {
     res.locals.logged = false;
   }
@@ -147,6 +153,7 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

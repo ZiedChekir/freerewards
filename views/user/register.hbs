@@ -12,27 +12,27 @@
 
       <div class="row">
         <div class="input-field col s6">
-          <input id="last_name" type="text" name="name" class="validate">
+          <input id="last_name" type="text" name="name" class="validate" required>
           <label for="last_name">name</label>
         </div>
         <div class="input-field col s6">
-          <input id="last_name" type="text" name="username" class="validate">
+          <input id="last_name" type="text" name="username" class="validate" required>
           <label for="last_name">username</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" name="email" class="validate">
+          <input id="email" type="email" name="email" class="validate" required>
           <label for="email" data-error="wrong" data-success="right">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="password" type="password" name="password" class="validate">
+          <input id="password" type="password" name="password" class="validate" required>
           <label for="password">Password</label>
         </div>
         <div class="input-field col s6">
-          <input id="password" type="password" name="password2" class="validate">
+          <input id="password" type="password" name="password2" class="validate" required>
           <label for="password">Password</label>
         </div>
       </div>
@@ -40,6 +40,8 @@
       <label for="indeterminate-checkbox">I HAVE READ AND ACCEPT THE TERMS OF SERVICE</label>
       <br>
       <br>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
       <button type="submit" class="btn">Register</button>
 
     </form>

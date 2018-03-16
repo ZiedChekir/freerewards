@@ -8,6 +8,7 @@
     </div>
     {{/if}}
     <form class="col s12" method="post" action="/user/login">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
       <div class="row">
         <div class="input-field col s12">
           <input  placeholder=""id="username" type="text" name="username" class="validate">

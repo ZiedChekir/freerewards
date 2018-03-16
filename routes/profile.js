@@ -4,7 +4,6 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
 var mongoose = require('mongoose');
 var User = require('../models/users');
-var coinsEncryption = require('../Operations/encryptCoins');
 var userOp = require('../Operations/userOperations')
 var User = require('../models/users')
 var cloudinary = require('cloudinary');
@@ -113,21 +112,16 @@ router.post('/update', ensureLoggedIn, async function (req, res, next) {
 
 
 
-router.get('/addcoin', ensureLoggedIn, function (req, res, next) {
+router.get('/addcoin', ensureLoggedIn,async  function (req, res, next) {
 	//access Database anc check for this user's coin
-	User.findOne({
-		'_id': res.locals.user._id
-	}, function (err, user) {
-		if (err) return handleError(err);
-		//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
-		user.coins = coinsEncryption.encryptcoins((Number(coinsEncryption.decryptcoins(user.coins)) + 10000).toString());
-		user.save(function (err) { // user coins saved to database
-			if (err) return console.log(err);
+	try{
+		var user = await User.findOne(res.locals.user._id);
+		user.coins += 10000;
+		await user.save();
+		res.redirect('/profile')
+	}catch(err){
+		next(err)
+	}
 
-		});
-	});
-
-
-	res.redirect('/profile')
 })
 module.exports = router;

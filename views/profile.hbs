@@ -83,6 +83,8 @@
           {{/if}}
 
           <form method="post"action="/profile/updatepicture" encType="multipart/form-data">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
             <div class="col s8">
             <div class="file-field input-field">
               <div class="btn">
@@ -101,6 +103,7 @@
 
 
           <form class="col s12" method="post" action="/profile/update" autocomplete="nope">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
             <div class="input-field col s12">
               <input value="" autocomplete="nope" placeholder={{user.username}} id="editusername" name="editusername" type="text" class="validate">

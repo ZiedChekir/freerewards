@@ -22,7 +22,7 @@ for (var i = 0; i < CouponsToGenerate; i++) {
 	new CouponsModel(
 	{
 		couponCode:	Coupons.generateCoupons(),
-		couponCoins:coinsEncryption.encryptcoins(coinsToAdd.toString())
+		couponCoins:1000
 	})
 	
 	

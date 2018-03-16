@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
-var ECHandler = require('../controllers/earncoinsController')
+var earncoinsHandler = require('../controllers/EarncoinsController')
 
 
 
@@ -11,22 +11,22 @@ router.get('/', ensureLoggedIn, function (req, res) {
 });
 
 router.route('/offerwall')
-	.get( ensureLoggedIn,ECHandler.GET_offerwall )
+	.get( ensureLoggedIn,earncoinsHandler.GET_offerwall )
 
-router.post('/missions/:id', ensureLoggedIn,ECHandler.POST_offerwall_mission_id)
+router.post('/missions/:id', ensureLoggedIn,earncoinsHandler.POST_offerwall_mission_id)
 
 
 
 router.route('/daily')
-	.get(  ensureLoggedIn,ECHandler.GET_daily )
-	.post( ensureLoggedIn,ECHandler.POST_daily)
+	.get(  ensureLoggedIn,earncoinsHandler.GET_daily )
+	.post( ensureLoggedIn,earncoinsHandler.POST_daily)
 
 
 
 
 router.route('/videos')
-	.get( ensureLoggedIn,ECHandler.GET_videos)
-	.post( ensureLoggedIn,ECHandler.POST_videos)
+	.get( ensureLoggedIn,earncoinsHandler.GET_videos)
+	.post( ensureLoggedIn,earncoinsHandler.POST_videos)
 
 
 
@@ -34,19 +34,19 @@ router.route('/videos')
 
 
 router.route('/invite')
-	.get(ECHandler.GET_invite)
+	.get(earncoinsHandler.GET_invite)
 
 
 
 router.route('/code')
-	.get( ensureLoggedIn,ECHandler.GET_code)
-	.post( ensureLoggedIn,ECHandler.POST_code)
+	.get( ensureLoggedIn,earncoinsHandler.GET_code)
+	.post( ensureLoggedIn,earncoinsHandler.POST_code)
 
 
 
 
 router.route('/buy')
-	.get( ensureLoggedIn,ECHandler.GET_buy)
+	.get( ensureLoggedIn,earncoinsHandler.GET_buy)
 
 
 module.exports = router;
