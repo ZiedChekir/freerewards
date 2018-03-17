@@ -22,7 +22,10 @@ router.route('/register')
 // Login
 router.route('/login')
 	.get( ensureLoggedOut,UsersController.GET_login)
-	.post( ensureLoggedOut, passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
+	.post( ensureLoggedOut,function(req,res,next){
+			console.log(req.query)
+			console.log(req.params)
+	},passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
 
 
 router.get('/logout', ensureLoggedIn,UsersController.GET_logout);
