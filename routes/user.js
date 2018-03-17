@@ -32,9 +32,14 @@ router.route('/login')
 			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 			
 			console.log('before request')
-			var Apireq = await request(verificationUrl)
-			console.log(Apireq)
-			next()
+			 request(verificationUrl,function(error,res,body){
+				console.log(error)
+				console.log(res)
+				console.log(body)
+				
+				next()
+			 })
+			
 	},passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
 
 
