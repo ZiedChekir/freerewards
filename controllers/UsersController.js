@@ -4,7 +4,6 @@ var moment = require('moment')
 const User = require('../models/users');
 const Coins = require('../Operations/encryptCoins');
 const userOperation = require('../Operations/userOperations')
-const UsersController = require('../controllers/UsersController')
 
 
 
