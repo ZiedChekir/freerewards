@@ -22,18 +22,18 @@ router.route('/register')
 // Login
 router.route('/login')
 	.get( ensureLoggedOut,UsersController.GET_login)
-	.post( ensureLoggedOut,function(req,res,next){
+	.post( ensureLoggedOut,async function(req,res,next){
 		var recapatcha  = req.body['g-recaptcha-response'] 
 			if(recapatcha =='' || recapatcha==null || recapatcha == undefined  || recapatcha){
+				console.log('capatcher not checked')
 				return res.redirect('/user/login')
 			}
 			var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
 			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-			request(verificationUrl,function(error,res,body){
-				console.log(error)
-				console.log(res)
-				console.log(body)
-			})
+			
+			console.log('before request')
+			var Apireq = await request(verificationUrl)
+			console.log(Apireq)
 			next()
 	},passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
 
