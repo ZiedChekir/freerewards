@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
-const earncoinsHandler = require('../controllers/EarncoinsController')
-const UsersController = require('../controllers/UsersController')
+const earncoinsHandler = require('../controllers/controller')
 
 
 
