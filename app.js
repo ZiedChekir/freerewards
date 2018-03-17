@@ -24,7 +24,7 @@ var csrfProtection = csrf({ cookie: true })
 const index = require('./routes/index');
 const user = require('./routes/user');
 const prizes = require('./routes/prizes');
-const earncoins = require('./routes/earncoins');
+// const earncoins = require('./routes/earncoins');
 const invite = require('./routes/invite');
 const profile = require('./routes/profile');
 
