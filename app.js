@@ -137,7 +137,7 @@ app.use(function (req, res, next) {
 app.use('/', index);
 app.use('/user', user);
 app.use('/prizes', prizes);
-// app.use('/earncoins', earncoins);
+app.use('/earncoins', earncoins);
 app.use('/invite', invite);
 app.use('/profile', profile);
 
