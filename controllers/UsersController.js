@@ -14,9 +14,8 @@ const userOperation = require('../Operations/userOperations')
 
 module.exports = {
     GET_register: function (req, res) {
-        console.log(req.query)
         var url = req.query
-        res.render('user/register',{username:url.username,name:url.name,email:url.email,errors:req.flash('errors')});
+        res.render('user/register',{username:url.username,name:url.name,email:url.email});
     },
     POST_register:async function (req, res, next) {
         var name = req.body.name;
@@ -35,7 +34,6 @@ module.exports = {
         //Error handling
         
         var valErrors = req.validationErrors()
-    console.log()
         if (valErrors) {
             var errors = []
             valErrors.map(function(x){
@@ -87,7 +85,7 @@ module.exports = {
                 
             }
         });
-        req.flash('success_msg', 'You are registered and can now login');
+        req.flash('success', 'You are registered and can now login');
         res.redirect('/user/login');
        
     },
@@ -98,7 +96,7 @@ module.exports = {
 
     GET_login: function (req, res) {
         
-        res.render('user/login',{errors:req.flash('error')});
+        res.render('user/login');
     },
 
 
