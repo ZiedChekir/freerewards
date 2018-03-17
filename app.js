@@ -76,6 +76,11 @@ app.use(
 
 
 app.use(expressValidator({
+  customValidators: {
+    isEqual: (value1, value2) => {
+      return value1 === value2
+    }
+  },
   errorFormatter: function (param, msg, value) {
     var namespace = param.split('.')
       , root = namespace.shift()
