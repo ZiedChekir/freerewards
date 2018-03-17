@@ -25,6 +25,7 @@ router.route('/login')
 	.post( ensureLoggedOut,function(req,res,next){
 			console.log(req.query)
 			console.log(req.params)
+			next()
 	},passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
 
 
