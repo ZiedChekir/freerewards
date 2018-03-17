@@ -246,11 +246,19 @@
 // mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])
   
 
-function bouncer(arr) {
-    // Don't show a false ID to this bouncer.
-   var a =  arr.filter(Boolean)
-   console.log(a)
+// function bouncer(arr) {
+//     // Don't show a false ID to this bouncer.
+//    var a =  arr.filter(Boolean)
+//    console.log(a)
+//   }
+  
+//   bouncer([false, null, 0, NaN, undefined, "","sd"])
+  function person(bool,t){
+    this.bool= bool
+    this.t = t
   }
-  
-  bouncer([false, null, 0, NaN, undefined, "","sd"])
-  
+
+  var a = new person(false,'hi')
+
+
+console.log(a)
