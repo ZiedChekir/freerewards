@@ -14,7 +14,9 @@ const userOperation = require('../Operations/userOperations')
 
 module.exports = {
     GET_register: function (req, res) {
-        res.render('user/register',{errors:req.flash('errors')});
+        console.log(req.query)
+        var url = req.query
+        res.render('user/register',{username:url.username,name:url.name,email:url.email,errors:req.flash('errors')});
     },
     POST_register:async function (req, res, next) {
         var name = req.body.name;
@@ -24,25 +26,29 @@ module.exports = {
         var password2 = req.body.password2;
     
         // Validation
-        req.checkBody('name', 'Name is required').notEmpty();
-        req.checkBody('email', 'Email is required').notEmpty();
-        req.checkBody('email', 'Email is not valid').isEmail();
-        req.checkBody('username', 'Username is required').notEmpty();
-        req.checkBody('password', 'Password is required').notEmpty();
+        req.checkBody('name', 'invalid name').notEmpty().len({ min: 6 , max:20})
+        req.checkBody('email', 'invalid email').notEmpty().isEmail()
+        req.checkBody('username', 'invalid username').notEmpty().len({ min: 6 , max:20})
+        req.checkBody('password', 'invalid password').notEmpty().len({ min: 8 , max:20})
+        req.checkBody('password2','passwords don\'t match').isEqual(password)
     
         //Error handling
         
         var valErrors = req.validationErrors()
-    
+    console.log()
         if (valErrors) {
+            var errors = []
+            valErrors.map(function(x){
+                errors.push(x.msg)
+            })
+            req.flash('errors',errors)
             
-            req.flash('errors',"fill all the blanks")
-            // return res.redirect('/user/register')
+            return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
     
         }
         if(password != password2){
             req.flash('errors',"passwords don't match")
-            // return res.redirect('/user/register')
+            return res.redirect('/user/register')
     
         }
     
@@ -55,11 +61,11 @@ module.exports = {
         }
         if (emailExist) {
             req.flash('errors',"email already in use")
-            // return res.redirect('/user/register')
+            return res.redirect('/user/register')
         }
         if (usernameExist) {
             req.flash('errors',"username already in use")
-            // return res.redirect('/user/register')
+            return res.redirect('/user/register')
     
         }
         var newUser = new User({
@@ -77,7 +83,7 @@ module.exports = {
             if (err) {
                 next(err)
                 req.flash('errors',"a problem has occured. Please register again")
-                // return res.redirect('/user/register')
+                return res.redirect('/user/register')
                 
             }
         });
