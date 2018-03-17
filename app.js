@@ -40,7 +40,7 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
 };
-mongoose.connect(mongodburl);
+mongoose.connect(mongodburl,options);
 
 //-----------------BEGIN-----------------
 var app = express();
