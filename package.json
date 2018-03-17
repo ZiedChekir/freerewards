@@ -47,6 +47,7 @@
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "passport-local": "^1.0.0",
+    "request": "^2.85.0",
     "serve-favicon": "^2.4.5",
     "sha1": "^1.1.1",
     "shortid": "^2.2.8",
