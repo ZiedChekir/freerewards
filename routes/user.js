@@ -10,43 +10,49 @@ const request = require('request')
 const User = require('../models/users');
 const userOperation = require('../Operations/userOperations')
 const UsersController = require('../controllers/UsersController')
-const debug = require('debug')
+const debug = require('debug')('http')
+  , http = require('http')
 
 // Register
 
 router.route('/register')
-	.get( ensureLoggedOut,UsersController.GET_register)
-	.post( ensureLoggedOut,UsersController.POST_register)
+	.get(ensureLoggedOut, UsersController.GET_register)
+	.post(ensureLoggedOut, UsersController.POST_register)
 
 
 
 // Login
 router.route('/login')
-	.get( ensureLoggedOut,UsersController.GET_login)
-	.post( ensureLoggedOut,async function(req,res,next){
-		var recapatcha  = req.body['g-recaptcha-response'] 
-			if(recapatcha =='' || recapatcha==null || recapatcha == undefined ){
-				debug('recapatcha wasnt checked')
+	.get(ensureLoggedOut, UsersController.GET_login)
+	.post(ensureLoggedOut, async function (req, res, next) {
+		var recapatcha = req.body['g-recaptcha-response']
+		if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
+			debug('recapatcha wasnt checked')
+			return res.redirect('/user/login')
+		}
+		var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
+		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+
+		console.log('before request')
+		request(verificationUrl, function (error, res, body) {
+			if (body.success !== undefined && !body.success) {
+				debug('success is false')
 				return res.redirect('/user/login')
 			}
-			var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
-			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-			
-			console.log('before request')
-			 request(verificationUrl,function(error,res,body){
-				if(body.success !== undefined && !body.success ){
-					debug('success is false')
-					return res.redirect('/user/login')
-				}
-				
-				
+			if (body.success) {
 				next()
-			 })
-			
-	},passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/user/login', failureFlash: "invalid motherfucker" }))
+			}
+
+		})
+
+	}, passport.authenticate('local', {
+		successReturnToOrRedirect: '/',
+		failureRedirect: '/user/login',
+		failureFlash: "invalid motherfucker"
+	}))
 
 
-router.get('/logout', ensureLoggedIn,UsersController.GET_logout);
+router.get('/logout', ensureLoggedIn, UsersController.GET_logout);
 
 module.exports = router;
 
@@ -57,7 +63,9 @@ passport.use(new LocalStrategy(
 		User.getUserByUsername(username, function (err, user) {
 			if (err) throw err;
 			if (!user) {
-				return done(null, false, { message: 'Invalid User or password' });
+				return done(null, false, {
+					message: 'Invalid User or password'
+				});
 			}
 
 			User.comparePassword(password, user.password, function (err, isMatch) {
@@ -66,7 +74,9 @@ passport.use(new LocalStrategy(
 					return done(null, user);
 
 				} else {
-					return done(null, false, { message: 'Invalid User or password' });
+					return done(null, false, {
+						message: 'Invalid User or password'
+					});
 				}
 			});
 		});
