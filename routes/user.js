@@ -24,7 +24,7 @@ router.route('/login')
 	.get( ensureLoggedOut,UsersController.GET_login)
 	.post( ensureLoggedOut,async function(req,res,next){
 		var recapatcha  = req.body['g-recaptcha-response'] 
-			if(recapatcha =='' || recapatcha==null || recapatcha == undefined  || recapatcha){
+			if(recapatcha =='' || recapatcha==null || recapatcha == undefined ){
 				console.log('capatcher not checked')
 				return res.redirect('/user/login')
 			}
