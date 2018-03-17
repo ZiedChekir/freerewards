@@ -10,6 +10,7 @@ const request = require('request')
 const User = require('../models/users');
 const userOperation = require('../Operations/userOperations')
 const UsersController = require('../controllers/UsersController')
+const debug = require('debug')
 
 // Register
 
@@ -25,7 +26,7 @@ router.route('/login')
 	.post( ensureLoggedOut,async function(req,res,next){
 		var recapatcha  = req.body['g-recaptcha-response'] 
 			if(recapatcha =='' || recapatcha==null || recapatcha == undefined ){
-				console.log('capatcher not checked')
+				debug('recapatcha wasnt checked')
 				return res.redirect('/user/login')
 			}
 			var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
@@ -33,9 +34,11 @@ router.route('/login')
 			
 			console.log('before request')
 			 request(verificationUrl,function(error,res,body){
-				console.log(error)
-				console.log(res)
-				console.log(body)
+				if(body.success !== undefined && !body.success ){
+					debug('success is false')
+					return res.redirect('/user/login')
+				}
+				
 				
 				next()
 			 })
