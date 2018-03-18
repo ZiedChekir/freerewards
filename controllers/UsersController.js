@@ -171,7 +171,7 @@ if(password == password2)
         
             console.log('before request')
             request(verificationUrl, function (error, res, body) {
-                console.log('inside request')
+                console.log(body)
                 if (body.success !== undefined && !body.success) {
                     console.log('success is false')
                     req.flash('errors', 'something went wrong with recapatcha!')
@@ -179,13 +179,14 @@ if(password == password2)
         
                 }
                 if(body.success){
+                    req.flash('success', 'capatcher done')
                     console.log(body)
-                    next()
+                    
                 }
-                
+                next()
               
                     
-                    req.flash('success', 'capatcher done')
+                   
                     
                 
         
