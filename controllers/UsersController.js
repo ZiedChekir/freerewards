@@ -42,7 +42,7 @@ module.exports = {
             max: 20
         })
         req.checkBody('password2', 'passwords don\'t match').isEqual(password)
-        req.checkbody('username','username = name').isEqual(name)
+        req.checkBody('username','username = name').isEqual(name)
         //Error handling
 console.log(password)
 console.log(password2)
