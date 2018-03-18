@@ -71,8 +71,9 @@ module.exports = {
             
                 console.log('before request')
                 request(verificationUrl, function (error, res, body) {
+                    console.log('inside request')
                     if (body.success !== undefined && !body.success) {
-                        debug('success is false')
+                        console.log('success is false')
                         req.flash('errors', 'something went wrong with recapatcha!')
                         return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
             
@@ -153,7 +154,7 @@ module.exports = {
         if (process.env.NODE_ENV == 'production') {
             var recapatcha = req.body['g-recaptcha-response']
             if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
-                debug('recapatcha wasnt checked')
+                console.log('recapatcha wasnt checked')
                 req.flash('errors', 'Make sure to check recapatcha')
                 return res.redirect(`/user/login?username=${username}`)
         
@@ -163,8 +164,9 @@ module.exports = {
         
             console.log('before request')
             request(verificationUrl, function (error, res, body) {
+                console.log('inside request')
                 if (body.success !== undefined && !body.success) {
-                    debug('success is false')
+                    console.log('success is false')
                     req.flash('errors', 'something went wrong with recapatcha!')
                     return res.redirect(`/user/login?username=${username}`)
         
