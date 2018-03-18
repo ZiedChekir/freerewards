@@ -171,31 +171,21 @@ if(password == password2)
         
             console.log('before request')
             request(verificationUrl, function (error, res, body) {
-                var B = body
-                var A = JSON.parse(body)
-                console.log(JSON.parse(body))
-                console.log(body.success)
-                console.log(B.success)
-                console.log(A.success)
-                if (body.success !== undefined && !body.success) {
+              
+                var bodyParsed = JSON.parse(body)
+
+                console.log(bodyParsed.success)
+                if (bodyParsed.success !== undefined && !bodyParsed.success) {
                     console.log('success is false')
                     req.flash('errors', 'something went wrong with recapatcha!')
                     return res.redirect(`/user/login?username=${username}`)
         
                 }
                 
-                if(body.success){
+                if(bodyParsed.success){
                     req.flash('success', 'capatcher done')
-                
-                    
-                }
-                next()
-              
-                    
-                   
-                    
-                
-        
+                    next()                   
+                }      
             })
         } else {
             next()
