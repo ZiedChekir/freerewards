@@ -16,6 +16,20 @@ router.get('/', function (req, res) {
 	})
 
 });
+router.get('/search', async function (req, res) {
+	var searchquery = req.query.search
+	if(searchquery == '' ||!searchquery|| searchquery == undefined ){
+		var aviableGames = await games.find()
+	}else{
+		var aviableGames = await games.find({"$or":[{"title": { "$regex": searchquery, "$options": "i" }},{"description": { "$regex": searchquery, "$options": "i" }}]})
+	}
+
+
+
+		res.render('prizes/games', { games: aviableGames, prizes: true })
+	
+
+});
 router.get('/:game', function (req, res) {
 	var game = req.params.game;
 

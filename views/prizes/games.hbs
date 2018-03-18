@@ -4,11 +4,12 @@
 
  <nav class="#f5f5f5 grey lighten-4">
     <div class="nav-wrapper">
-      <form>
+      <form method="get" action='/prizes/search'>
         <div class="input-field">
-          <input id="search" type="search" required>
+          <input id="search" type="search" name="search" >
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
           <i class="material-icons">close</i>
+          <button type="submit">search</button>
         </div>
       </form>
     </div>
