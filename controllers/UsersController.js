@@ -178,12 +178,15 @@ if(password == password2)
                     return res.redirect(`/user/login?username=${username}`)
         
                 }
-
-                console.log(body)
+                if(body.success){
+                    console.log(body)
+                    next()
+                }
+                
               
                     
                     req.flash('success', 'capatcher done')
-                    next()
+                    
                 
         
             })
