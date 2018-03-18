@@ -122,17 +122,16 @@ try{
 		console.log('before request')
 		request(verificationUrl, function (error, res, body) {
 			console.log('inside request')
-			if (body.success !== undefined && !body.success) {
+			var bodyParsed = JSON.parse(body)
+			if (bodyParsed.success !== undefined && !bodyParsed.success) {
 				console.log('success is false')
 				req.flash('errors', 'something went wrong with recapatcha!')
 				return res.redirect(`/profile#settings`)
 	
 			}
-		  
-				req.flash('success', 'capatcher done')
-				
-			
-	
+		  if(bodyParsed.success){
+			req.flash('success', 'capatcher done')
+		  }
 		})
 	} 
 	else {
