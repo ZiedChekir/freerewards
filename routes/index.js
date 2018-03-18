@@ -15,7 +15,7 @@ const debug = require('debug')('http')
 // mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
 //routing
 router.get('/', function (req, res, next) {
-  debug('HIIIIIIIIIIIIIIIIII')
+
   res.render('index', { home: true });
 })
 router.get('/a',function(req,res){

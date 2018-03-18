@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressHbs = require('express-handlebars');
@@ -13,9 +13,11 @@ const flash = require('connect-flash');
 const expressValidator = require('express-validator')
 const compression = require('compression')
 const helmet = require('helmet')
-const debug = require('debug')('http')
 const mongodb = require('mongodb')
 const csrf = require('csurf')
+const loggerr = require('./config/logger').debug
+
+
 
 
 var csrfProtection = csrf({ cookie: true })
@@ -54,7 +56,7 @@ app.set('view engine', '.hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -104,13 +106,12 @@ app.use(flash());
 app.use(csrfProtection)
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
-
-  res.locals.success= req.flash('success');
+  
+   res.locals.success= req.flash('success');
   res.locals.errors = req.flash('errors');
-  res.locals.error = req.flash('error');
+
   res.locals.user = req.user || null;
   res.locals.csrfToken = req.csrfToken()
-
   if (req.user) {
 
 

@@ -34,8 +34,8 @@ router.get('/', ensureLoggedIn, async function (req, res, next) {
 			profile: true,
 			user: res.locals.user,
 			orders: orders,
-			errors: req.flash('errors'),
-			successMsg: req.flash('successMsg')
+			
+		
 		})
 });
 
@@ -66,20 +66,54 @@ router.post('/updatepicture', upload.single('image'), function (req, res, next) 
 
 })
 
-router.post('/update', ensureLoggedIn, async function (req, res, next) {
+router.post('/update', ensureLoggedIn, async  function (req, res, next) {
+	
+	var errors = []
+
+	// req.checkBody('email', 'invalid email').isEmail()
 	var username = req.body.editusername
 	var email = req.body.editemail
 	var newpassword = req.body.editpassword
 	var passcofirm = req.body.pass
 
+	
+if(!passcofirm || passcofirm == ''){
+	req.flash('errors','Please confirm your current password')
+	return res.redirect('/profile#settings')
+}
+
+
+	if(username ){
+		req.checkBody('editusername', 'username length must be between 6 and 20 characters').notEmpty().len({ min: 6 , max:20})
+
+	}
+	if(email){
+		req.checkBody('editemail', 'invalid email').isEmail()
+
+	}
+	if(newpassword){
+		req.checkBody('editpassword', 'new password length must be between 8 and 20 characters').notEmpty().len({ min: 8 , max:20})
+	}
+	
+	if(req.validationErrors()){	
+		req.validationErrors().map(function(x){
+			errors.push(x.msg)
+		})
+		req.flash('errors',errors)	
+		 return res.redirect(`/profile#settings`)
+	}
+
 
 	//if any of the fields was updated
 	if ((username || email || newpassword) && passcofirm) {
 		//query the user and store it for later use 
-		var user = await userOp.queryById(res.locals.user._id)
+	
+try{
+		
 
+		var user = await userOp.queryById(res.locals.user._id)
 		User.comparePassword(passcofirm, user.password, async function (err, isMatch) {
-			if (err) throw err;
+			if (err) next(err);
 			if (isMatch) {
 				if (username) {
 					user.username = username
@@ -103,7 +137,11 @@ router.post('/update', ensureLoggedIn, async function (req, res, next) {
 
 			res.redirect('/profile#settings')
 		})
-
+	}catch(err){
+		req.flash('errors','something went wrong please retry later')
+		next(err)
+	}
+	
 	} else {
 		console.log('nothing was touched')
 		res.redirect('/profile#settings')
