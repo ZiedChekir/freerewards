@@ -78,16 +78,16 @@ module.exports = {
                         return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
             
                     }
-                    if (body.success) {
+                  
                         req.flash('success', 'you are now logged in!')
                         next()
-                    }
+                    
             
                 })
             } 
-            // else {
-            //     next()
-            // }
+            else {
+                next()
+            }
         
         try {
             var emailExist = await userOperation.queryByEmail(email)
@@ -172,8 +172,8 @@ module.exports = {
                     return res.redirect(`/user/login?username=${username}`)
         
                 }
+
                 console.log(body)
-                console.log(body.success)
               
                     
                     req.flash('success', 'you are now logged in!')
