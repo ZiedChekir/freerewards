@@ -62,7 +62,8 @@ module.exports = {
             return res.redirect('/user/register')
 
         }
-        recapatcha(req,res,next)
+        
+   
         try {
             var emailExist = await userOperation.queryByEmail(email)
             var usernameExist = await userOperation.queryByUsername(username)
