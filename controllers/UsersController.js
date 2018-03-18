@@ -42,7 +42,7 @@ module.exports = {
             max: 20
         })
         req.checkBody('password2', 'passwords don\'t match').isEqual(password)
-        req.checkBody('username','username = name').isEqual(name)
+
         //Error handling
 console.log(password)
 console.log(password2)
@@ -64,7 +64,7 @@ if(password == password2)
  
        
             if (process.env.NODE_ENV == 'production') {
-
+                console.log('inside the recp if')
                 var recapatcha = req.body['g-recaptcha-response']
                 if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
                     
