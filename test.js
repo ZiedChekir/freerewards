@@ -253,12 +253,22 @@
 //   }
   
 //   bouncer([false, null, 0, NaN, undefined, "","sd"])
-  function person(bool,t){
-    this.bool= bool
-    this.t = t
-  }
+//   function person(bool,t){
+//     this.bool= bool
+//     this.t = t
+//   }
 
-  var a = new person(false,'hi')
+//   var a = new person(false,'hi')
 
 
-console.log(a)
+// console.log(a)
+
+
+
+var body = {
+  "success": true,
+   "challenge_ts": "2018-03-18T15:54:01Z",
+   "hostname": "freereward.herokuapp.com"
+ }
+ console.log(body)
+ console.log(body['success'])
