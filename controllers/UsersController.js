@@ -140,6 +140,7 @@ module.exports = {
     POST_login: async function (req, res, next) {
         req.checkBody('username', 'username at least 6 characters').notEmpty().len({min:6})
         req.checkBody('password', 'password at least 8 characters').notEmpty()
+        var username = req.body.username
         var valErrors = req.validationErrors()
         if (valErrors) {
             var errors = []
