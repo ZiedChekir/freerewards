@@ -85,7 +85,7 @@ if(password == password2)
             
                     }
                   
-                        req.flash('success', 'you are now logged in!')
+                        req.flash('success', 'capatcher done')
                         
                     
             

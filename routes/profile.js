@@ -9,7 +9,7 @@ var User = require('../models/users')
 var cloudinary = require('cloudinary');
 var multer = require('multer')
 var Orders = require('../models/orders')
-
+var request = require('request')
 var upload = multer({
 	dest: 'uploads/'
 })
