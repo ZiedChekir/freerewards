@@ -129,8 +129,8 @@ try{
 	
 			}
 		  
-				req.flash('success', 'you are now logged in!')
-				next()
+				req.flash('success', 'capatcher done')
+				
 			
 	
 		})
