@@ -1,7 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
 
 
-
 <h1 style="text-align: center;">
   <span class="fa fa-anchor"></span> Profile</h1>
 <div class="container">
@@ -71,19 +70,10 @@
 
       <div id="settings" class="col s12">
         <div class="row">
-          {{#if errors}}
-            {{#each errors}}
-              <p>{{this}}</p>
-            {{/each}}
-          {{/if}}
-          {{#if successMsg}}
-            {{#each successMsg}}
-              <p>{{this}}</p>
-            {{/each}}
-          {{/if}}
+
 
           <form method="post"action="/profile/updatepicture" encType="multipart/form-data">
-                <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                
 
             <div class="col s8">
             <div class="file-field input-field">

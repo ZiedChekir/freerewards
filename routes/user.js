@@ -5,7 +5,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
 var moment = require('moment')
-const request = require('request')
+
+
 //models && functions && operatins
 const User = require('../models/users');
 const userOperation = require('../Operations/userOperations')
@@ -24,45 +25,7 @@ router.route('/register')
 // Login
 router.route('/login')
 	.get(ensureLoggedOut, UsersController.GET_login)
-	.post(ensureLoggedOut, async function (req, res, next) {
-		req.checkBody('username','username at least 6 characters').notEmpty().isLength({min:6,max:20})
-		req.checkBody('password','password at least 8 characters').notEmpty().isLength({min:8,max:20})
-		var valErrors = req.validationErrors()
-		if(valErrors){
-			var errors = []
-			valErrors.map(function(error){errors.push(error)})
-			req.flash('errors',errors)
-			return res.redirect('/user/login')
-		}
-		if(proccess.env.enableRecapatcha)
-		{	
-		var recapatcha = req.body['g-recaptcha-response']
-		if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
-			debug('recapatcha wasnt checked')
-		req.flash('errors','Make sure to check recapatcha')
-			return res.redirect('/user/login')
-		}
-		var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
-		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-
-		console.log('before request')
-		request(verificationUrl, function (error, res, body) {
-			if (body.success !== undefined && !body.success) {
-				debug('success is false')
-				req.flash('errors','something went wrong with recapatcha!')
-				return res.redirect('/user/login')
-			}
-			if (body.success) {
-		req.flash('success','you are now logged in!')
-				next()
-			}
-
-		})
-	}else{
-
-	}
-next()
-	}, passport.authenticate('local', {
+	.post(ensureLoggedOut, UsersController.POST_login, passport.authenticate('local', {
 		successReturnToOrRedirect: '/',
 		failureRedirect: '/user/login',
 		failureFlash: "invalid motherfucker"
