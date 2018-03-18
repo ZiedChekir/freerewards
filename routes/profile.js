@@ -131,6 +131,7 @@ try{
 			}
 		  if(bodyParsed.success){
 			req.flash('success', 'capatcher done')
+			next()
 		  }
 		})
 	} 
