@@ -182,7 +182,7 @@ if(password == password2)
                 console.log(body)
               
                     
-                    req.flash('success', 'you are now logged in!')
+                    req.flash('success', 'capatcher done')
                     next()
                 
         
