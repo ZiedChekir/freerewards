@@ -172,10 +172,13 @@ module.exports = {
                     return res.redirect(`/user/login?username=${username}`)
         
                 }
-                if (body.success) {
+                console.log(body)
+                console.log(body.success)
+              
+                    
                     req.flash('success', 'you are now logged in!')
                     next()
-                }
+                
         
             })
         } else {
