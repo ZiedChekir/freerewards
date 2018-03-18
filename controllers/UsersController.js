@@ -87,6 +87,7 @@ if(password == password2)
                     }
                   if(bodyParsed.success){
                     req.flash('success', 'capatcher done')
+                    next()
                   }
                        
                         
