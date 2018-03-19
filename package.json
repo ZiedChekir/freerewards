@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/wwws",
-    "startd": "set DEBUG=log-info,success & nodemon ./bin/wwws"
+    "dev": "set DEBUG=log-info,success & nodemon ./bin/wwws"
   },
   "dependencies": {
     "auth0": "^2.6.0",

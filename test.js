@@ -265,10 +265,29 @@
 
 
 
-var body = {
-  "success": true,
-   "challenge_ts": "2018-03-18T15:54:01Z",
-   "hostname": "freereward.herokuapp.com"
- }
- console.log(body)
- console.log(body['success'])
+// var body = {
+//   "success": true,
+//    "challenge_ts": "2018-03-18T15:54:01Z",
+//    "hostname": "freereward.herokuapp.com"
+//  }
+//  console.log(body)
+//  console.log(body['success'])
+// var date = new Date()
+// var isodate = new Date().toISOString()
+// console.log(date)
+// console.log(isodate)
+
+
+function SortedBy(sort){
+	var sortBy = ''
+	if(sort =='recent'){
+		return 'desc'
+	}
+	if(sort == 'oldest'){
+		return  'asc'
+	}
+	if(sort == 'popular'){
+		return ''
+	}
+}
+console.log(SortedBy('oldest'))

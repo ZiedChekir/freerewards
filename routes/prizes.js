@@ -17,16 +17,42 @@ router.get('/', function (req, res) {
 
 });
 router.get('/search', async function (req, res) {
+	var sort = req.query.sort
 	var searchquery = req.query.search
-	if(searchquery == '' ||!searchquery|| searchquery == undefined ){
-		var aviableGames = await games.find()
-	}else{
+	
+	console.log(sort)
+	var aviableGames = [];
+
+
+	//if both Sort and search are empty
+	if((searchquery == '' ||!searchquery|| searchquery == undefined) && (sort == '' ||!sort|| sort == undefined) ){
+		 aviableGames = await games.find()
+		
+		
+	}
+	//Search NOT Empty and Sort Is Empty
+	else if( !(searchquery == '' ||!searchquery|| searchquery == undefined) && (sort == '' ||!sort|| sort == undefined) ){
 		var aviableGames = await games.find({"$or":[{"title": { "$regex": searchquery, "$options": "i" }},{"description": { "$regex": searchquery, "$options": "i" }}]})
+
+	}
+	//search empty and Sort IS NOT EMPTY
+	else if((searchquery == '' ||!searchquery|| searchquery == undefined) && !(sort == '' ||!sort|| sort == undefined)){
+
+		aviableGames = await games.find().sort({'created_at':SortedBy(sort)})
+	}
+	//BOTh Sort and search are filled
+	else if( !(searchquery == '' ||!searchquery|| searchquery == undefined) && !(sort == '' ||!sort|| sort == undefined)){
+		var aviableGames = await games.find({"$or":[{"title": { "$regex": searchquery, "$options": "i" }},{"description": { "$regex": searchquery, "$options": "i" }}]}).sort({'created_at':SortedBy(sort)})
+
+	}
+	else{
+		var aviableGames = await games.find()
+		console.log('Shoudl not log')
 	}
 
 
 
-		res.render('prizes/games', { games: aviableGames, prizes: true })
+		res.render('prizes/games', { games: aviableGames, prizes: true,sortBy:sort })
 	
 
 });
@@ -101,3 +127,15 @@ function ableToBuy(usercoins, gameprice) {
 
 module.exports = router;
 
+function SortedBy(sort){
+	var sortBy = ''
+	if(sort =='recent'){
+		return 'desc'
+	}
+	if(sort == 'oldest'){
+		return  'asc'
+	}
+	if(sort == 'popular'){
+		return 'a'
+	}
+}
