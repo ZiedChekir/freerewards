@@ -20,7 +20,7 @@ var MissionsSchema = mongoose.Schema({
 	title:{
 		type:String,
 		required:true
-	}	
+	}
 },{collection:'Missions'})
 
 var Missions = module.exports = mongoose.model('Missions',MissionsSchema)
