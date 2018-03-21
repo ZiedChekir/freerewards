@@ -1,3 +1,4 @@
+{{!--
 <div class="row">
   <div class=" register-box z-depth-3 col s12 m6 offset-m3 ">
 
@@ -5,12 +6,12 @@
     <form class="col s12" method="post" action="/user/register">
 
       <div class="row">
-       
+
         <div class="input-field col s6">
           <input id="name" type="text" name="name" value="{{name}}" class="validate" required>
           <label for="name">name</label>
         </div>
-         <div class="input-field col s6">
+        <div class="input-field col s6">
           <input id="last_name" type="text" name="username" value="{{username}}" class="validate" required>
           <label for="last_name">username</label>
         </div>
@@ -35,7 +36,7 @@
       <label for="indeterminate-checkbox">I HAVE READ AND ACCEPT THE TERMS OF SERVICE</label>
       <br>
       <br>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
       <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
 
       <button type="submit" class="btn">Register</button>
@@ -50,4 +51,76 @@
 
 
 
-  <link rel="stylesheet" type="text/css" href="/stylesheets/register.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/register.css"> --}}
+
+
+
+  <div class="container">
+    <div class="register row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">Register</div>
+
+          <div class="card-body">
+            <form method="POST" action="/user/register">
+              <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+              <div class="form-group row">
+                <label for="name" class="col-md-4 col-form-label text-md-right">Name:</label>
+
+                <div class="col-md-6">
+                  <input id="name" type="text" class="form-control" name="name" value="{{name}}" required autofocus>
+
+                </div>
+              </div>
+
+                <div class="form-group row">
+                <label for="name" class="col-md-4 col-form-label text-md-right">Username:</label>
+
+                <div class="col-md-6">
+                  <input id="username" type="text" class="form-control" name="username" value="{{username}}" required autofocus>
+
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address:</label>
+
+                <div class="col-md-6">
+                  <input id="email" type="email" class="form-control" name="email" value="{{email}}" required>
+
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">Password:</label>
+
+                <div class="col-md-6">
+                  <input id="password" type="password" class="form-control" name="password" required>
+
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password:</label>
+
+                <div class="col-md-6">
+                  <input id="password2" type="password" name="password2"class="form-control" required>
+                </div>
+                
+              </div>
+               <div class="capatcher">
+                <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
+                </div>
+              <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                  <button type="submit" class="btn btn-primary">
+                    Register
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

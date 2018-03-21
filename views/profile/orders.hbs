@@ -1,0 +1,60 @@
+<div class="profile-container">
+
+    <div class="earncoins-title">
+        <h1>
+            <span class="fa fa-anchor"></span> Profile Orders</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div style="text-align: center;" class="col-sm-12 col-md-4">
+                <img src={{user.profileimgurl}} height="140px" width="140px" class="rounded-circle"  alt="profile picture">
+                <h2>Hello {{user.username}}</h2>
+                <div class="profile-userbuttons">
+                    <a class="profile-btn btn btn-primary" href="/profile/overview">Overview</a>
+                    <a class="profile-btn btn btn-primary" href="/profile/settings">Settings</a>
+                    <a class="profile-btn btn btn-primary" href="/profile/orders">Orders</a>
+                    <a class="profile-btn btn btn-primary" href="/profile/addcoin">add coin</a>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Orders</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each orders}}
+                        <tr>
+                            <td>{{this.game}}</td>
+                            <td>{{this.price}}</td>
+                            {{#if this.completed }}
+                            <td class="completed">Approved
+                                <span class="textbubble">Check your emails</span>
+                            </td>
+                            {{else}}
+                            <td>Pending</td>
+                            {{/if}}
+
+                        </tr>
+                        {{else}}
+                        <td>no orders!</td>
+                        {{/each}}
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>

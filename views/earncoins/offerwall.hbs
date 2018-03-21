@@ -1,0 +1,61 @@
+{{> earncoinsheader}}
+
+<div class="container">
+     <div class="earncoins-title">
+             <h3 >Offer wall</h3>
+        </div>
+    <div class="row ">
+        
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+     
+        {{#each missionsToDisplay}}
+          <div class="col-sm-12 col-lg-3 col-md-6 ">
+            <form method="post" action="/earncoins/missions/{{this.id}}">
+                 
+
+                            
+                    <div class="card card-offerwall" style="width: 275px;height:370px;" >
+                        <img class="card-img-top" width="286px" height="180px"  src="/images/missions/{{this.imgname}}" alt="Card image cap">
+                        <div class="card-body">
+                            <p>{{this.title}}</p>
+                            <p class="card-text line-clamp">{{this.description}}</p>
+                        </div>
+                            <button type="submit" onClick="window.open('https://{{this.link}}')" class="btn btn-success">Get {{this.coins}} coins</button>
+
+                    </div>
+                
+                
+
+
+            
+             {{!-- <script>
+                    
+                    var str = '{{this.description}}'
+                    var text1 =  _.truncate(_.capitalize(_.toLower(str)),{'length':80})
+                    
+                   document.getElementsByClassName('card-text')[0].innerHTML = text1;
+                    
+                </script> --}}
+        </div>
+        {{/each}}
+        
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
+
+</form>
+         </div>
+
+
+</div>
+<style>
+    .card-text {
+  width: 200px;
+  overflow: hidden;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+}
+</style>

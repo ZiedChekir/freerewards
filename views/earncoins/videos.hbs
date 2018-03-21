@@ -1,11 +1,14 @@
  {{> earncoinsheader}}
 
 <meta name="_csrf" content="{{csrfToken}}">
-
+<div class="earncoins-title">
+			<h3>Watch videos</h3>
+     
 
 <div id="player"></div>
 <p id="display"></p>
-
+<button class="btn" onclick="location.reload();">Next video</button>
+ </div>
 <script>
 {{!-- var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content') --}}
   var player, timer, timeSpent = [], AbleToPost = true, display = document.getElementById('display');

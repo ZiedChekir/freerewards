@@ -1,4 +1,4 @@
-<div class="navbar-fixed">
+{{!-- <div class="navbar-fixed">
   <nav class="#01579b light-blue darken-3">
     <div class=" nav-wrapper">
       <a href="/" class="brand-logo">FreeReward</a>
@@ -82,4 +82,77 @@
   $(document).ready(function () {
     $(".button-collapse").sideNav();
   })
-</script>
+</script> --}}
+
+
+<nav class="navbar navbar-expand-lg  fixed-top navbar-dark bg-dark">
+  <div class="container">
+  <a class="navbar-brand" href="/">Freereward</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    {{!-- Navbar left --}}
+    <ul class="navbar-nav mr-auto">
+     
+    </ul>
+{{!-- navbar right --}}
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/prizes">Prizes <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/earncoins">Earn coins</a>
+      </li>
+       {{#if logged}}
+       
+        <li class="nav-item active">
+        <a class="nav-link" href="/profile">Profile</a>
+      </li>
+      <li> 
+          <a class="nav-link active" href="#">{{usercoins}}
+            <img style="padding-top:12px;"width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Logged in as {{user.username}}</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/user/logout">Loggout</a>
+        </li>
+
+        {{else}}
+        <li class="nav-item active">
+          <a  class="nav-link" href="/user/login">login</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/user/register">register</a>
+        </li>
+        {{/if}}
+
+    </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+  {{!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      
+      
+       
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> --}}

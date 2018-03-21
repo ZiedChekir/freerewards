@@ -97,7 +97,7 @@ router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 				//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
 				user.coins =  user.coins - game.price;									
 				user.save(function (err) { // user coins saved to database
-					if (err) handleError(err)
+					if (err) console.log(err)
 					return res.redirect('/profile')
 				});
 				var order = new Orders({
@@ -109,7 +109,7 @@ router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 					completed:false
 				})
 				order.save(function(err){
-					if(err) return next(err)
+					if(err) return console.log(err)
 				})
 			}
 		});

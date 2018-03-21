@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
+
 
 
 <h1 style="text-align: center;">
-  <span class="fa fa-anchor"></span> Profile</h1>
+ 
 <div class="container">
 
   <div class="row">
@@ -73,7 +73,8 @@
 
 
           <form method="post"action="/profile/updatepicture" encType="multipart/form-data">
-                
+         
+                <input type="text" name="encod">
 
             <div class="col s8">
             <div class="file-field input-field">
@@ -82,7 +83,7 @@
                 <input type="file" name="image">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+                {{!-- <input class="file-path validate" type="text"> --}}
               </div>
             </div></div>
             <div style="margin-top:20px;"class="col s4">
@@ -92,8 +93,8 @@
 
 
 
-          <form class="col s12" method="post" action="/profile/update" autocomplete="nope">
-      <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+          {{!-- <form class="col s12" method="post" action="/profile/update" autocomplete="nope">
+       <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
             <div class="input-field col s12">
               <input value="" autocomplete="nope" placeholder={{user.username}} id="editusername" name="editusername" type="text" class="validate">
@@ -117,9 +118,9 @@
             </div>
 
 
-      <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
+      {{!-- <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div> --}}
             <button type="submit" class="btn">update</button>
-          </form>
+          </form> --}}
         </div>
       </div>
     </div>
