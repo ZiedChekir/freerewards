@@ -10,9 +10,17 @@ var cloudinary = require('cloudinary');
 var multer = require('multer')
 var Orders = require('../models/orders')
 var request = require('request')
+var maxSize = 1000000;
 var upload = multer({
-	dest: 'uploads/'
-})
+	fileFilter: function (req, file, cb) {
+		if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+			return cb(new Error('Only image files are allowed!'));
+		}
+		cb(null, true);
+	  },
+	dest: 'uploads/',
+	limits: { fileSize: maxSize }
+}).single('image')
 var fs = require('fs')
 
 
@@ -25,48 +33,45 @@ cloudinary.config({
 });
 
 /* GET users listing. */
-router.get('/', ensureLoggedIn, async function (req, res, next) {
+
+
+router.get('/', ensureLoggedIn,  function (req, res, next) {
+	
+	res.redirect('/profile/overview')
+})
+router.get('/overview', ensureLoggedIn, async function (req, res, next) {
 	
 	// let user = await User.findOne({_id: res.locals.user._id})
 	let orders = await Orders.find({email:res.locals.user.email})
 
-	res.render('profile', {
-			profile: true,
-			user: res.locals.user,
-			orders: orders,
-			
-		
-		})
+	res.render('profile/overview')
 });
 
-router.post('/updatepicture', upload.single('image'), function (req, res, next) {
-	if (!req.file) {
-		return res.redirect('/profile#settings')
-	}
-	cloudinary.v2.uploader.upload(req.file.path, async function (err, result) {
-		if (err) {
-			console.log(err)
-			req.flash('errors', 'failed to upload the image')
-			return res.redirect('/profile#settings')
-		}
-		User.getUserById(res.locals.user._id, function (err, user) {
-			user.profileimgurl = result.secure_url
-			user.save(function (err) {
-				if (err) {
-					next(err)
-					req.flash('errors', 'failed to upload the image')
-				}
-			})			
-			res.redirect('/profile#settings')
-			fs.unlink('./uploads/' + result.original_filename)
-		})
-		
-	})
-
-
+router.get('/orders', ensureLoggedIn, async function (req, res, next) {
+		// let user = await User.findOne({_id: res.locals.user._id})
+		let orders = await Orders.find({email:res.locals.user.email})	
+		res.render('profile/orders', {				
+				
+				orders: orders
+			})
+	
+})
+router.get('/settings', ensureLoggedIn, async function (req, res, next) {
+	res.render('profile/settings')
 })
 
-router.post('/update', ensureLoggedIn, async  function (req, res, next) {
+
+
+
+router.post('/update', ensureLoggedIn,function(req,res,next){
+	upload(req,res,function(err){
+		if(err){			
+			console.log(err)
+			req.flash('errors','An error occurred when uploading.The image must be below 1MB and with  .jpg or .jpeg or .png extension ')
+			return res.redirect('/profile/settings')
+		}else{next()}
+	})
+}, async  function (req, res, next) {
 	
 	var errors = []
 
@@ -76,14 +81,44 @@ router.post('/update', ensureLoggedIn, async  function (req, res, next) {
 	var newpassword = req.body.editpassword
 	var passcofirm = req.body.pass
 
+	console.log(req.body)
+	if (req.file) {
+		
 	
-if(!passcofirm || passcofirm == ''){
-	req.flash('errors','Please confirm your current password')
-	return res.redirect('/profile#settings')
+	cloudinary.v2.uploader.upload(req.file.path,  function (err, result) {
+		if (err) {
+			console.log('errors is ' +err)
+			req.flash('errors', 'failed to upload the image')
+			
+		}
+		User.getUserById(res.locals.user._id, async function (err, user) {
+			
+			user.profileimgurl = result.secure_url
+		
+			try{
+				req.flash('success','new picture takes few seconds to load !')
+				await user.save()
+				
+			}catch(err){
+					console.log(err)
+					req.flash('errors', 'failed to upload the image')
+				}
+			
+			fs.unlink('./uploads/' + result.original_filename)
+			
+			
+		})
+		
+	})
+	
 }
 
 
-	if(username ){
+if(username || email || newpassword){
+
+
+
+	if(username){
 		req.checkBody('editusername', 'username length must be between 6 and 20 characters').notEmpty().len({ min: 6 , max:20})
 
 	}
@@ -100,9 +135,11 @@ if(!passcofirm || passcofirm == ''){
 			errors.push(x.msg)
 		})
 		req.flash('errors',errors)	
-		 return res.redirect(`/profile#settings`)
+		 return res.redirect(`/profile/settings`)
 	}
-
+}else{
+	return res.redirect('/profile/settings')
+}
 
 	//if any of the fields was updated
 	if ((username || email || newpassword) && passcofirm) {
@@ -114,7 +151,7 @@ try{
 		if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
 			
 			req.flash('errors', 'Make sure to check recapatcha')
-			return res.redirect(`/profile#settings`)	
+			return res.redirect(`/profile/settings`)	
 		}
 		var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
 		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
@@ -126,7 +163,7 @@ try{
 			if (bodyParsed.success !== undefined && !bodyParsed.success) {
 				console.log('success is false')
 				req.flash('errors', 'something went wrong with recapatcha!')
-				return res.redirect(`/profile#settings`)
+				return res.redirect(`/profile/settings`)
 	
 			}
 		  if(bodyParsed.success){
@@ -135,9 +172,7 @@ try{
 		  }
 		})
 	} 
-	else {
-		next()
-	}
+	
 
 		var user = await userOp.queryById(res.locals.user._id)
 		User.comparePassword(passcofirm, user.password, async function (err, isMatch) {
@@ -163,7 +198,7 @@ try{
 
 			}
 
-			res.redirect('/profile#settings')
+			res.redirect('/profile/settings')
 		})
 	}catch(err){
 		req.flash('errors','something went wrong please retry later')
@@ -171,8 +206,8 @@ try{
 	}
 	
 	} else {
-		console.log('nothing was touched')
-		res.redirect('/profile#settings')
+		
+		res.redirect('/profile/settings')
 	}
 })
 

@@ -92,17 +92,17 @@ if(password == password2)
 
                 })
             } 
-            else {
-                next()
-            }
-        
+          
+           
         try {
+          
             var emailExist = await userOperation.queryByEmail(email)
             var usernameExist = await userOperation.queryByUsername(username)
 
         } catch (err) {
-            next(err)
+            console.log(err)
         }
+        
         if (emailExist) {
             req.flash('errors', "email already in use")
             return res.redirect('/user/register')
@@ -112,6 +112,7 @@ if(password == password2)
             return res.redirect('/user/register')
 
         }
+     
         var newUser = new User({
             name: name,
             email: email,
@@ -122,15 +123,17 @@ if(password == password2)
             lastdailybonus: getPreviousDate(),
             profileimgurl: "http://res.cloudinary.com/dyy9ovwcv/image/upload/v1519766192/sw6calmlh1hjnqfbszch.png"
         });
-
+        
         User.createUser(newUser, function (err, user) {
             if (err) {
                 next(err)
+                
                 req.flash('errors', "a problem has occured. Please register again")
                 return res.redirect('/user/register')
 
             }
         });
+       
         req.flash('success', 'You are registered and can now login');
         res.redirect('/user/login');
 

@@ -1,7 +1,15 @@
 {{> earncoinsheader}}
+<div class="justify-content-center">
+	<div class="container">
+		<div class="earncoins-title">
+			<h3>Daily Bonuses</h3>
+		
+		<form method="post" action="/earncoins/daily">
+			<input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
-<form method="post" action="/earncoins/daily">
-	<input type="hidden" name="_csrf" value="{{csrfToken}}" />
-
-	<button class="btn btn-primary">Get daily Bonus</button>
-</form>
+			<button class="btn btn-primary">Get daily 2 coins </button>
+		</form>
+		<small>More bonuses are coming soon!</small>
+</div>
+	</div>
+</div>

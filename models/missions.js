@@ -20,6 +20,10 @@ var MissionsSchema = mongoose.Schema({
 	title:{
 		type:String,
 		required:true
+	},
+	imgname:{
+		type:String,
+		required:true
 	}
 },{collection:'Missions'})
 

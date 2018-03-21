@@ -16,8 +16,8 @@ const helmet = require('helmet')
 const mongodb = require('mongodb')
 const csrf = require('csurf')
 const loggerr = require('./config/logger').debug
-
-
+var  referrerPolicy = require('referrer-policy')
+var csp = require('helmet-csp')
 
 
 var csrfProtection = csrf({ cookie: true })
@@ -47,6 +47,16 @@ mongoose.connect(mongodburl,options);
 //-----------------BEGIN-----------------
 var app = express();
 app.use(helmet());
+app.use(referrerPolicy({ policy: 'no-referrer' }))
+// app.use(csp({
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com','fonts.googleapis.com','https://fonts.gstatic.com/s/quicksand/v7/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2','https://use.fontawesome.com/c3b6c7d70e.css'],
+//     scriptSrc: ["'self'",'use.fontawesome.com','unpkg.com','google.com','unpkg.com','https://cdn.fontawesome.com/js/stats.js','https://use.fontawesome.com/c3b6c7d70e.css'],
+   
+//     fontSrc:["'self'",'https://fonts.gstatic.com/s/quicksand/v7/6xKtdSZaM9iE8KbpRA_hJFQNcOM.woff2']
+//   }
+// }))
 
 // view engine setup
 app.engine('.hbs', expressHbs({ defaultLayout: 'layout', extname: '.hbs' }));
@@ -160,6 +170,8 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+  if(err.code === 'LIMIT_FILE_SIZE'){res.redirect('/erorooorroro')}
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

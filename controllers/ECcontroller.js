@@ -21,7 +21,7 @@ module.exports = {
             let missions = missionArray
             
             if (user.completedMissions.length == 0) {
-                res.render('earncoins/missions', {
+                res.render('earncoins/offerwall', {
                     missions: true,
                     missionsToDisplay: missions
                 })
@@ -34,7 +34,7 @@ module.exports = {
                     }
                     return mission
                 })
-                res.render('earncoins/missions', {
+                res.render('earncoins/offerwall', {
                     missions: true,
                     missionsToDisplay: missionsToFilter
                 })

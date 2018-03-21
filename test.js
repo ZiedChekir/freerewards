@@ -278,16 +278,16 @@
 // console.log(isodate)
 
 
-function SortedBy(sort){
-	var sortBy = ''
-	if(sort =='recent'){
-		return 'desc'
-	}
-	if(sort == 'oldest'){
-		return  'asc'
-	}
-	if(sort == 'popular'){
-		return ''
-	}
-}
-console.log(SortedBy('oldest'))
+// function SortedBy(sort){
+// 	var sortBy = ''
+// 	if(sort =='recent'){
+// 		return 'desc'
+// 	}
+// 	if(sort == 'oldest'){
+// 		return  'asc'
+// 	}
+// 	if(sort == 'popular'){
+// 		return ''
+// 	}
+// }
+console.log('Join millions of players to build a village, fo...'.length)

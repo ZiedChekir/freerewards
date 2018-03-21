@@ -1,3 +1,54 @@
+<div class="container">
+    <div class="earncoins-title">
+        <h3>Search:</h3>
+        <form method="get" action='/prizes/search'>
+            <div class="form-group">
+
+                <input type="text" class="form-control" name="search" id="search" placeholder="Search">
+            </div>
+                
+                <select  class="custom-select mb-2 mr-sm-2 mb-sm-0" name="sort">
+                <option value=""  selected="selected">Sort By</option>
+                <option value="popular">Popular</option>
+                <option value="recent">Recent</option>
+                <option value="oldest">Oldest</option>
+
+            </select>
+               <button type='submit'class="btn">Search</button>
+    </div>
+    <div class="row">
+
+        {{#if sortBy}}
+
+        <h3>Sorted By {{sortBy}}</h3>
+
+        {{/if}} {{#each games}}
+        <div class="col-sm-12 col-lg-3 col-md-6 ">
+            <div class="card card-prizes" style='width: 275px;height:520px;'>
+                <img class="card-img-top" src="{{this.imgPath}}" alt="Card image cap" width="260px" height="290px">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p class="card-text">{{this.description}}</p>
+                    <p class="right">{{this.price}}
+                        <img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+                    </p>
+                    <a href="/prizes/{{this.title}}" class="btn btn-primary">Redeem</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+{{!--
 <form method="get" action='/prizes/search'>
     <div class="row">
         <div class="search col s10  m8 offset-m2 l6 offset-l3">
@@ -39,63 +90,29 @@
             <button class="btn" type="submit">search</button>
         </div>
     </div>
-</form>
-<link rel="stylesheet" type="text/css" href="/stylesheets/games.css">
-<div class="row">
-
-    {{#if sortBy}}
-    <div class="col s12">
-        <h3>Sorted By {{sortBy}}</h3>
-    </div>
-    {{/if}}
-    <div class="col s12 m10 l8 offset-m1 offset-l2 prizes-container ">
-
-        {{#each games}}
-        <div class="col s12 m4 l3">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="{{this.imgPath}}" width="260px" height="290px">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">
-                        <p class="truncate">{{this.title}}</p>
-                    </span>
-                    <p class="truncate">{{this.description}}</p>
-                </div>
-                <div class="card-action">
-                    <a class="waves-effect waves-light btn left" href="/prizes/{{this.title}}">Redeem</a>
-                    <p class="right">{{this.price}}
-                        <img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
-                    </p>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{this.title}}
-                        <i class="material-icons right">close</i>
-                    </span>
-                    <p>{{this.description}}</p>
-                </div>
-            </div>
+</form> --}} {{!--
+<div class="col s12 m4 l3">
+    <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="{{this.imgPath}}" width="260px" height="290px">
         </div>
-        {{/each}}
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">
+                <p class="truncate">{{this.title}}</p>
+            </span>
+            <p class="truncate">{{this.description}}</p>
+        </div>
+        <div class="card-action">
+            <a class="waves-effect waves-light btn left" href="/prizes/{{this.title}}">Redeem</a>
+            <p class="right">{{this.price}}
+                <img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+            </p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{this.title}}
+                <i class="material-icons right">close</i>
+            </span>
+            <p>{{this.description}}</p>
+        </div>
     </div>
-</div>
-
-<link rel="stylesheet" type="text/css" href="/stylesheets/games.css">
-
-<script>
-    $(document).ready(function () {
-        $('select').material_select();
-    });
-
-</script>
-
-<style>
-    .dropdown-content li>a,
-    .dropdown-content li>span {
-        color: black !important;
-    }
-
-    .select-wrapper ul li>span {
-        color: grey;
-    }
-</style>
+</div> --}}
