@@ -23,7 +23,7 @@
             <div class="col-sm-12 col-md-6">
                 
                     {{!-- form2 --}}
-                    <form method="post" action="/profile/update"  encType="multipart/form-data">
+                    <form method="post" action="/profile/update?_csrf={{csrfToken}}"  encType="multipart/form-data">
                           <div class="custom-file">
                             <input type="file" id='inputGroupFile01' class="custom-file-input" name="image">
                             <label class="custom-file-label" for="inputGroupFile01">Choose picture</label>
@@ -54,7 +54,7 @@
       <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
 
                         </div>
-                        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                        
                         <button type="submit" class="btn btn-primary">Submit</button>
 
                     </form>
