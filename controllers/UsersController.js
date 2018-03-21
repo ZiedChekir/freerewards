@@ -144,8 +144,9 @@ if(password == password2)
 
 
     GET_login: function (req, res) {
-
-        res.render('user/login');
+        console.log(req.query)
+        res.render('user/login',{username:req.query.username});
+        
     },
     POST_login: async function (req, res, next) {
         req.checkBody('username', 'username at least 6 characters').notEmpty().len({min:6})
@@ -206,7 +207,7 @@ if(password == password2)
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     GET_logout: function (req, res) {
         req.logout();
-        req.session.destroy();
+        
         res.redirect('/');
 
     }
