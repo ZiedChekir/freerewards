@@ -1,14 +1,12 @@
 var moment = require('moment')
-
+const request = require('request')
+const {check,validationResult } = require('express-validator/check')
 //models && functions && operatins
 const User = require('../models/users');
-const Coins = require('../Operations/encryptCoins');
-const userOperation = require('../Operations/userOperations')
-
-const request = require('request')
 
 
 
+var forOwn = require('lodash.forown')
 
 
 module.exports = {
@@ -21,54 +19,35 @@ module.exports = {
         });
     },
     POST_register: async function (req, res, next) {
-        var name = req.body.name;
-        var email = req.body.email;
-        var username = req.body.username;
+        var name = req.body.name
+        var username = req.body.username
+        var email = req.body.email
         var password = req.body.password;
         var password2 = req.body.password2;
 
-        // Validation
-        req.checkBody('name', 'invalid name').notEmpty().len({
-            min: 6,
-            max: 20
-        })
-        req.checkBody('email', 'invalid email').notEmpty().isEmail()
-        req.checkBody('username', 'invalid username').notEmpty().len({
-            min: 6,
-            max: 20
-        })
-        req.checkBody('password', 'invalid password').notEmpty().len({
-            min: 8,
-            max: 20
-        })
-        req.checkBody('password2', 'passwords don\'t match').isEqual(password)
-
         //Error handling
-console.log(password)
-console.log(password2)
-if(password == password2)
-{
-    console.log('passwords are the same')
-}
-        var valErrors = req.validationErrors()
-        if (valErrors) {
-            var errors = []
-            valErrors.map(function (x) {
-                errors.push(x.msg)
-            })
-            req.flash('errors', errors)
-
+       var Errors =  validationResult(req)
+       if(!Errors.isEmpty() || password != password2){
+            if(password != password2){
+                req.flash('error','Passwords don\'t match')
+            }
+            if(!Errors.isEmpty()){
+                var errors = []
+                forOwn(Errors.mapped(),function(value,key){
+                    errors.push(value.msg)   
+                })   
+                req.flash('error',errors)
+            }
             return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
-
-        }
+       }
  
-       
+       //capatcher
             if (process.env.NODE_ENV == 'production') {
                 console.log('inside the recp if')
                 var recapatcha = req.body['g-recaptcha-response']
                 if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
                     
-                    req.flash('errors', 'Make sure to check recapatcha')
+                    req.flash('error', 'Make sure to check recapatcha')
                     return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
             
                 }
@@ -81,38 +60,14 @@ if(password == password2)
                     
                     if (bodyParsed.success !== undefined && !bodyParsed.success) {
                         console.log('success is false')
-                        req.flash('errors', 'something went wrong with recapatcha!')
+                        req.flash('error', 'something went wrong with recapatcha!')
                         return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
             
+                    }else{//capatcher is done
                     }
-                  if(bodyParsed.success){
-                    req.flash('success', 'capatcher done')
-                   
-                  }
-
                 })
             } 
           
-           
-        try {
-          
-            var emailExist = await userOperation.queryByEmail(email)
-            var usernameExist = await userOperation.queryByUsername(username)
-
-        } catch (err) {
-            console.log(err)
-        }
-        
-        if (emailExist) {
-            req.flash('errors', "email already in use")
-            return res.redirect('/user/register')
-        }
-        if (usernameExist) {
-            req.flash('errors', "username already in use")
-            return res.redirect('/user/register')
-
-        }
-     
         var newUser = new User({
             name: name,
             email: email,
@@ -122,19 +77,15 @@ if(password == password2)
             joindate: getDate(),
             lastdailybonus: getPreviousDate(),
             profileimgurl: "http://res.cloudinary.com/dyy9ovwcv/image/upload/v1519766192/sw6calmlh1hjnqfbszch.png"
-        });
-        
+        });        
         User.createUser(newUser, function (err, user) {
             if (err) {
-                next(err)
-                
-                req.flash('errors', "a problem has occured. Please register again")
+                next(new Error("a problem has occured. Please register again"))      
+                req.flash('error', "a problem has occured. Please register again")         
                 return res.redirect('/user/register')
-
             }
-        });
-       
-        req.flash('success', 'You are registered and can now login');
+        });    
+        req.flash('success', 'Successfully registred. Please verify your email');
         res.redirect('/user/login');
 
     },
@@ -148,26 +99,13 @@ if(password == password2)
         res.render('user/login',{username:req.query.username});
         
     },
-    POST_login: async function (req, res, next) {
-        req.checkBody('username', 'username at least 6 characters').notEmpty().len({min:6})
-        req.checkBody('password', 'please enter a valid password').notEmpty()
-        var username = req.body.username
-        var valErrors = req.validationErrors()
-        if (valErrors) {
-            var errors = []
-            valErrors.map(function (error) {
-                errors.push(error.msg)
-            })
-            console.log(errors)
-            req.flash('errors', errors)
-            return res.redirect(`/user/login?username=${username}`)
-
-        }
+    capatcherCheck: async function (req, res, next) {
+        //capatcher
         if (process.env.NODE_ENV == 'production') {
             var recapatcha = req.body['g-recaptcha-response']
             if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
                 console.log('recapatcha wasnt checked')
-                req.flash('errors', 'Make sure to check recapatcha')
+                req.flash('error', 'Make sure to check recapatcha')
                 return res.redirect(`/user/login?username=${username}`)
         
             }
@@ -182,7 +120,7 @@ if(password == password2)
                 console.log(bodyParsed.success)
                 if (bodyParsed.success !== undefined && !bodyParsed.success) {
                     console.log('success is false')
-                    req.flash('errors', 'something went wrong with recapatcha!')
+                    req.flash('error', 'something went wrong with recapatcha!')
                     return res.redirect(`/user/login?username=${username}`)
         
                 }
@@ -193,7 +131,7 @@ if(password == password2)
                 }      
             })
         } else {
-            next()
+            next()//login needs a next()
         }
         
     },
@@ -207,7 +145,7 @@ if(password == password2)
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     GET_logout: function (req, res) {
         req.logout();
-        
+        req.session.destroy();    
         res.redirect('/');
 
     }

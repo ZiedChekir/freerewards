@@ -15,10 +15,12 @@ const compression = require('compression')
 const helmet = require('helmet')
 const mongodb = require('mongodb')
 const csrf = require('csurf')
-const loggerr = require('./config/logger').debug
+var redis   = require("ioredis");
+var client  = redis.createClient();
 var  referrerPolicy = require('referrer-policy')
 var csp = require('helmet-csp')
-
+const redisStore = require('connect-redis')(session)
+const Users = require('./models/users')
 
 var csrfProtection = csrf({ cookie: true })
 // --------------ROUTES--------------------
@@ -73,24 +75,32 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression())
 
-
+var Hours = 3600000 * 5
 app.use(
   session({
-    secret: 'shhhhhhhhh',
+    secret: 'notasecret!',
+    store:new redisStore({host:'localhost',port:6379}),
+    //,client: client,ttl :  260
     resave: false,
-    saveUninitialized: false
-    // cookie: {
-    //   httpOnly: true,
-    //   secure: true
-    // }
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      // secure: true,
+      expires : new Date(Date.now() + Hours),
+      maxAge : Hours
+    }
   })
 );
 
 
 app.use(expressValidator({
-  customValidators: {
-    isEqual: (value1, value2) => {
-      return value1 === value2
+  customValidators:{
+    isEqaul:function(value,value2){
+      return value == value2
+    },
+    hasNumAndChar:function(value){
+      var regex =  /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+			return regex.test(value);
     }
   },
   errorFormatter: function (param, msg, value) {
@@ -116,15 +126,13 @@ app.use(flash());
 app.use(csrfProtection)
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
-  
+
    res.locals.success= req.flash('success');
-  res.locals.errors = req.flash('errors');
+  res.locals.errors = req.flash('error');
 
   res.locals.user = req.user || null;
   res.locals.csrfToken = req.csrfToken()
   if (req.user) {
-
-
     res.locals.logged = true;
     res.locals.user =
       {
@@ -162,7 +170,7 @@ app.use('/profile', profile);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('QSDJQSDJQSDJQSJD');
   err.status = 404;
   next(err);
 });

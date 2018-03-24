@@ -6,23 +6,28 @@ var UserSchema = mongoose.Schema({
 	username: {
 		type: String,
 		index:true,
-		required:true
+		required:[true,'username is empty'],
+		maxlength:20,
+		minlength:6,
+		unique:true
 	},
 	password: {
 		type: String,
-		required:true
+		required:[true,'password is empty']
 	},
 	email: {
 		type: String,
-		required:true
+		required:[true,'email is empty'],
+		unique:true
 	},
 	name: {
 		type: String,
-		required:true
+		required:[true,'name is empty']
 	},
 	coins: {
 		type:Number,
-		required:true
+		required:true,
+		default:0
 	},
 	joindate: {
 		type:String,
