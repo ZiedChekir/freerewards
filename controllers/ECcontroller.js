@@ -2,31 +2,28 @@
 var Users = require('../models/users')
 var Videos = require('../models/videos')
 var Missions = require('../models/missions')
-var couponsModel = require('../models/couponsData')
-var Coupons = require('../Operations/couponOperations')
-var CoinOperations = require('../Operations/coinOperations')
-var missionOperations = require('../Operations/missionOperations')
-var userOperations = require('../Operations/userOperations')
-var videoOperations = require('../Operations/videoOperations')
+var Coupons = require('../models/couponsData')
 
+
+var cc = require('coupon-code');
 var Videos = require('../models/videos')
 
+
+const videoCoins = 5;
 
 module.exports = {
     GET_offerwall: async function (req, res, next) {
         try {
-            let missionArray = await missionOperations.queryMissions()
-            let user = await userOperations.queryById(res.locals.user._id)
-            let missionsToFilter
-            let missions = missionArray
-            
+            let missionsArray = await Missions.find()
+            let user = await Users.findOne({
+                _id: res.locals.user._id
+            })
+            var missions = []
+            //no mission is completed yet  for this user
             if (user.completedMissions.length == 0) {
-                res.render('earncoins/offerwall', {
-                    missions: true,
-                    missionsToDisplay: missions
-                })
+                missions = missionsArray
             } else {
-                missionsToFilter = missions.filter(function (mission) {
+                missions = missionsArray.filter(function (mission) {
                     for (let i = 0; i < user.completedMissions.length; i++) {
                         if (mission.title == user.completedMissions[i]) {
                             return false
@@ -34,112 +31,150 @@ module.exports = {
                     }
                     return mission
                 })
-                res.render('earncoins/offerwall', {
-                    missions: true,
-                    missionsToDisplay: missionsToFilter
-                })
             }
+
+            res.render('earncoins/offerwall', {
+                missionsToDisplay: missions
+            })
         } catch (err) {
             next(err)
         }
     },
     POST_offerwall_mission_id: async function (req, res) {
         let id = req.params.id
-        
         let missionToPush
         let missionCoins = 0;
         try {
-            let mission = await  Missions.findOne({id:id})   
-                 
-            let user = await Users.findOne({_id:res.locals.user._id})
-            user.completedMissions.map(function(x){
-                if(x == mission.title){
-                    console.log("mission already done")
+            let mission = await Missions.findOne({
+                id: id
+            })
+
+            let user = await Users.findOne({
+                _id: res.locals.user._id
+            })
+            user.completedMissions.map(function (x) {
+                if (x == mission.title) {
                     return res.redirect('/earncoins/offerwall')
                 }
             })
-          
-            console.log('after for loop')      
-            user.completedMissions.push(mission.title)
-            console.log("before updating user coins")
-             user.coins += mission.coins
+            user.completedMissions.push(mission.title);
+            user.coins += mission.coins;
             await user.save()
-           
             res.redirect('/earncoins/offerwall')
-
         } catch (err) {
             next(err)
-            console.log('Error Catched ')
-            res.redirect('/earncoins/offerwall')
 
         }
     },
 
     /////////////// DAILY BONUS /////////////////////
-    GET_daily: function (req, res,next) {
-        res.render('earncoins/daily', { daily: true })
+    GET_daily: function (req, res, next) {
+        res.render('earncoins/daily')
     },
-    POST_daily: async function (req, res,next) {
-        await CoinOperations.updateDailyCoins(res.locals.user._id)
+    POST_daily: async function (req, res, next) {
+        try {
+            let user = await Users.findOne({
+                _id: res.locals.user._id
+            })
+            let n = moment().format('DD/MM/YYYY hh:mm'); // now 
+            let l = moment(user.lastdailybonus, 'DD/MM/YYYY hh:mm').format('DD/MM/YYYY hh:mm') //last time bonus day
+            let now = moment(n, 'DD/MM/YYYY hh:mm')
+            let last = moment(l, 'DD/MM/YYYY hh:mm')
+            let duration = moment.duration(now.diff(last));
+            let hours = duration.asHours();
+            if (hours >= 24) {
+                user.coins += dailyCoins;
+                user.lastdailybonus = await moment().format('DD/MM/YYYY HH:mm')
+                await user.save()
+            }
+        } catch (err) {
+            next(err)
+        }
         res.redirect('/earncoins/daily')
     },
-    
+
     ////////////// VIDEOS /////////////////////
 
 
 
-    GET_videos:async function (req, res) {
-       var videoArray = await Videos.find()
-       var video = videoArray[RandomVideo(0,videoArray.length )]
-        res.render('earncoins/videos', { videos: true, video: video })
+    GET_videos: async function (req, res) {
+        var videoArray = await Videos.find()
+        var video = videoArray[RandomVideo(0, videoArray.length)]
+        res.render('earncoins/videos', {
+            video: video
+        })
     },
 
 
 
-    POST_videos:async function (req, res,next) {
-        console.log('what s going on ')
-        await videoOperations.updateVideoCoins(res.locals.user._id)
-       
+    POST_videos: async function (req, res, next) {
+        try {
+
+            let user = await Users.findOne({
+                _id: res.locals.user._id
+            })
+            user.coins += videoCoins;
+            await user.save()
+        } catch (err) {
+            next(err)
+        }
         res.send('success')
     },
-
-
-
     ////////////////// INVITE //////////////////////////
-    GET_invite:function (req, res) {
-        res.render('earncoins/invite', { invite: true })
+    GET_invite: function (req, res) {
+        res.render('earncoins/invite')
     },
     ////////////////////// CODE COUPONS ///////////////////////////////
-    GET_code:function (req, res) {
-        res.render('earncoins/code', { code: true })
+    GET_code: function (req, res) {
+        res.render('earncoins/code')
     },
-    POST_code:async function (req, res) {
+    POST_code: async function (req, res, next) {
         let code = req.body.redeemcode
-    
-        if (Coupons.validateCoupons(code)) {
-            try {
-                var coupon = await couponsModel.findOne({ couponCode: code })
-                await Coupons.updateCouponCoins(res.locals.user._id, coupon.couponCoins)
-                await coupon.remove()
-                res.redirect('/earncoins/code')
-            } catch (error) {
-                console.log("Failed!", error);
+
+        if (validateCoupons(code)) {
+            var coupon = await Coupons.findOne({
+                couponCode: code
+            })
+            if (coupon != null) {
+                try {
+                    var user = await Users.findOne({
+                        _id: res.locals.user._id
+                    })
+                    user.coins += coupon.couponCoins;
+                    await user.save()
+                    await coupon.remove()
+                    res.redirect('/earncoins/code')
+                } catch (error) {
+                    next(error)
+
+                }
+            } else {
+                req.flash('error', 'invalid coupon')
                 res.redirect('/earncoins/code')
             }
-    
         } else {
+            req.flash('error', 'invalid coupon')
             res.redirect('/earncoins/code')
         }
-    
+
     },
-/////////////////////// BUY ///////////////////////::
-    GET_buy:function (req, res) {
-        res.render('earncoins/buy', { buy: true })
+    /////////////////////// BUY ///////////////////////::
+    GET_buy: function (req, res) {
+        res.render('earncoins/buy')
     }
 
 }
 
 
-function RandomVideo(min, max) {
-	return Math.floor(Math.random() * (max - min) + min)
+var RandomVideo = function RandomVideo(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+
+var validateCoupons = function (coupon) {
+    if (cc.validate(coupon, {
+            parts: 4
+        }).length > 0) {
+        return true
+    }
+    return false
 }

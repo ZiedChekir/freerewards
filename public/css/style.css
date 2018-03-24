@@ -6036,6 +6036,12 @@ body {
   font-family: 'Quicksand', sans-serif;
   display: flex;
   flex-direction: column; }
+  body .alertRelative {
+    margin-top: 10px;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%; }
   body main {
     min-height: 80vh; }
   body .login {

@@ -1,16 +1,71 @@
- {{#if errors}}
+<div class="container">
 
-<div class="alert alert-danger">
+  {{#if errors}} 
+
   {{#each errors}}
-  <p>{{this}}</p>
-  {{/each}}
-</div>
+ 
+  <script>
+    $(document).ready(function () {
+      $.notify({
+        // options
+        //icon: 'glyphicon glyphicon-warning-sign',
+        //title: 'Bootstrap notify',
+        message:'{{this}}',
+      //	url: 'https://github.com/mouse0270/bootstrap-notify',
+      //	target: '_blank'
+    }, {
+        // settings
+        type: "danger",
+        allow_dismiss: true,
+        newest_on_top: false,
+        placement: {
+          from: "top",
+          align: "right"
+        },
+        offset: 70,
+        spacing: 10,
+        z_index: 1031,
+        delay: 4000,
+        timer: 2000,
+        mouse_over: ' pause'
+      });
+      
+  })
+
+  </script> {{/each}}
+
+{{/if}} {{#if success}} {{#each success}}
+<script>
+    $(document).ready(function () {
+      $.notify({
+        // options
+        //icon: 'glyphicon glyphicon-warning-sign',
+        //title: 'Bootstrap notify',
+        message:'{{this}}',
+      //	url: 'https://github.com/mouse0270/bootstrap-notify',
+      //	target: '_blank'
+    }, {
+        // settings
+        type: "success",
+        allow_dismiss: true,
+        newest_on_top: false,
+        placement: {
+          from: "top",
+          align: "right"
+        },
+        offset: 70,
+        spacing: 20,
+        z_index: 1031,
+        delay: 4000,
+        timer: 2000,
+        mouse_over: ' pause'
+      });
+      
+  })
+
+  </script>
+{{/each}}
+
 {{/if}}
 
- {{#if success}}
-<div class="alert alert-success">
-  {{#each success}}
-  <p>{{this}}</p>
-  {{/each}}
 </div>
-{{/if}}
