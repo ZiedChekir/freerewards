@@ -10,7 +10,7 @@
      
         {{#each missionsToDisplay}}
           <div class="col-sm-12 col-lg-3 col-md-6 ">
-            <form method="post" action="/earncoins/missions/{{this.id}}">
+            <form method="post" action="/earncoins/missions/{{this.id}}" onsubmit="return submitionOnce()">
                  
 
                             
@@ -59,3 +59,13 @@
   -webkit-box-orient: vertical;  
 }
 </style>
+
+<script>
+    var allowSubmit = true;
+    function submitionOnce() {
+        if (allowSubmit == true) 
+            allowSubmit = false;
+        else 
+            return false   
+    }
+</script>

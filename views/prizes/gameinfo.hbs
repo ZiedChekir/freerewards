@@ -2,23 +2,31 @@
 
 
 <section>
-	<div class="container">
+	<div class="gameinfo container">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-sm-12 col-md-4">
 				<img src="{{game.imgPath}}" alt="{{game.title}}" height="386px" width="320px">
 			</div>
-			<div class="col-8">
-				<h3 style="color:black;" class="title">{{game.title}}</h3>
-				<p  style="color:black;" class="description">{{game.description}}</p>
-				<p 	style="color:black;">category:{{game.category}}</p>
-				<p 	style="color:black;">{{game.price}}coins</p>
-				{{#if ableToBuy}}
-				<a 	style="color:black;" class="btn btn-success" href="/prizes/{{game.title}}/redeem">Redeem</a>
-					
-					{{else}}
-					<a 	style="color:black;" class="btn btn-danger disabled" href="#">Redeem</a>
-				{{/if}}
-				
+			<div class="col-sm-12 col-md-8">
+
+
+
+				<div class="card">
+					<div class="card-header">
+						Game Overview
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">{{game.title}}</h5>
+						<p class="card-text">{{game.description}}</p>
+						<p>{{game.price}} coins</p>
+						{{#if ableToBuy}}
+						<button class="btn " onclick='beforeSubmit()'> Redeeem</button>
+							
+								{{else}}
+								<a class="btn btn-danger disabled" href="#">Redeem</a>
+								{{/if}}
+					</div>
+				</div>
 			</div>
 
 		</div>
@@ -26,4 +34,56 @@
 	</div>
 </section>
 
+<script>
+	function beforeSubmit() {
+		swal({
+			title: "Are you Sure ?",
+			text: 'Are you sure you want to get this game ? this action cannot be canceled',
+			icon: "warning",
+			buttons: {
+				next: {
+					text: 'cancel',
+					value: 'cancel'
+				},
+				continue: {
+					text: 'Yes,I\'m sure!',
+					value: 'yes'
+				}
 
+			},
+
+		})
+			.then(name => {
+				if (name == 'yes') {
+					var f = document.createElement("form");
+					var action = '/prizes/' + '{{game.title}}' + '/redeem/confirm';
+					
+					f.setAttribute('method', 'post')
+					f.setAttribute('action', action)
+					f.setAttribute('onsubmit','return submitionOnce()')
+					var input = document.createElement('input')
+					input.setAttribute('type', 'hidden');
+					input.setAttribute('name','_csrf')
+					input.setAttribute('value', '{{csrfToken}}')
+
+					var s = document.createElement("input"); //input element, Submit button
+					s.setAttribute('type', "submit");
+					s.setAttribute('value', "Submit");
+					f.appendChild(input)
+					f.appendChild(s)
+					document.body.appendChild(f)
+					f.submit()
+				}
+			})
+	}
+
+</script>
+<script>
+    var allowSubmit = true;
+    function submitionOnce() {
+        if (allowSubmit == true) 
+            allowSubmit = false;
+        else 
+            return false   
+    }
+</script>

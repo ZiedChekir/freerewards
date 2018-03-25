@@ -3,14 +3,14 @@ var Users = require('../models/users')
 var Videos = require('../models/videos')
 var Missions = require('../models/missions')
 var Coupons = require('../models/couponsData')
-
+const moment = require('moment')
 
 var cc = require('coupon-code');
 var Videos = require('../models/videos')
 
 
 const videoCoins = 5;
-
+const dailyCoins = 2;
 module.exports = {
     GET_offerwall: async function (req, res, next) {
         try {
@@ -82,7 +82,9 @@ module.exports = {
             let last = moment(l, 'DD/MM/YYYY hh:mm')
             let duration = moment.duration(now.diff(last));
             let hours = duration.asHours();
+            console.log('before if sqdqs')
             if (hours >= 24) {
+                console.log('inside if sdq')
                 user.coins += dailyCoins;
                 user.lastdailybonus = await moment().format('DD/MM/YYYY HH:mm')
                 await user.save()

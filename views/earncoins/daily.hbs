@@ -4,12 +4,23 @@
 		<div class="earncoins-title">
 			<h3>Daily Bonuses</h3>
 		
-		<form method="post" action="/earncoins/daily">
+		<form method="post" action="/earncoins/daily" onsubmit="return submitionOnce()">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
-			<button class="btn btn-primary">Get daily 2 coins </button>
+			<button type="submit" onclick="this.disable = true"  class="btn btn-primary">Get daily 2 coins </button>
 		</form>
 		<small>More bonuses are coming soon!</small>
 </div>
 	</div>
 </div>
+
+
+<script>
+    var allowSubmit = true;
+    function submitionOnce() {
+        if (allowSubmit == true) 
+            allowSubmit = false;
+        else 
+            return false   
+    }
+</script>
