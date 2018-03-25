@@ -47,9 +47,9 @@ router.get('/:game', function (req, res) {
 
 // })
 router.post('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
-	var game = req.params.game;
+	var gameParam = req.params.game;
 
-	games.findOne({ title: game }, function (err, game) {
+	games.findOne({ title: gameParam }, function (err, game) {
 		if(err){
 			next(err)
 			req.flash('error','game not found')
@@ -68,6 +68,7 @@ router.post('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 					}
 					return res.redirect('/profile/orders')
 				});
+				
 				var order = new Orders({
 					username:user.username,
 					email:user.email,
@@ -78,6 +79,10 @@ router.post('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 				})
 				order.save(function(err){
 					if(err) return next(err)
+				})
+				game.popularity += 1;
+				game.save(function(err){
+					if(err)next(err)
 				})
 			}
 		});
@@ -96,7 +101,7 @@ function ableToBuy(usercoins, gameprice) {
 module.exports = router;
 
 function SortedBy(sort){
-	var sortBy = ''
+	
 	if(sort =='recent'){
 		return 'desc'
 	}

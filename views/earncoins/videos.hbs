@@ -10,7 +10,7 @@
 <button class="btn" onclick="location.reload();">Next video</button>
  </div>
 <script>
-{{!-- var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content') --}}
+//var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
   var player, timer, timeSpent = [], AbleToPost = true, display = document.getElementById('display');
   // 2. This code loads the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
@@ -69,7 +69,7 @@
     }
     percent = Math.round(percent / timeSpent.length * 100);
     display.innerHTML = percent + "%";
-    if (percent >=30 && AbleToPost) {
+    if (percent >=20 && AbleToPost) {
       AbleToPost = false
 
 
@@ -80,11 +80,12 @@
     });
         $.post(
             "/earncoins/videos",
-            {
+            {   
+              videoId:'{{video._id}}',                
                 _csrf : $('meta[name="_csrf"]').attr('content')
             }, function (response) {
         
-          console.log(response); // ex.: { user: 'Your User'}
+           
           
           swal({
             title: "Good job!",
