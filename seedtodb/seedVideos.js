@@ -11,7 +11,8 @@ new Videos(
 	owner:'Beme news',
 	videoId:'scc6_qcMKJI',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:10000
 }),
 new Videos(
 {
@@ -19,7 +20,8 @@ new Videos(
 	owner:'Peter McKinnon',
 	videoId:'scc6_qcMKJI',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:10000
 }),
 new Videos(
 {
@@ -27,7 +29,8 @@ new Videos(
 	owner:'INSIDER',
 	videoId:'h-9wEMa1a2E',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:10000
 }),
 new Videos(
 {
@@ -35,7 +38,8 @@ new Videos(
 	owner:'BuzzFeedBlue',
 	videoId:'c8Q8AyFjWZM',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:10000
 }),
 new Videos(
 {
@@ -43,7 +47,8 @@ new Videos(
 	owner:'Melted Fusion',
 	videoId:'0rsjxzPbTGc',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:10000
 }),
 new Videos(
 {
@@ -51,7 +56,8 @@ new Videos(
 	owner:'Melted Fusion',
 	videoId:'Zv4NnN2g7tk',
 	viewsCount:0,
-	maxViews:1000
+	canBeviewed:true,
+	maxViews:100000
 })
 ]
 

@@ -100,8 +100,8 @@ module.exports = {
 
 
     GET_videos: async function (req, res) {
-        var videoArray = await Videos.find()
-        var video = videoArray[RandomVideo(0, videoArray.length)]
+        let videoArray = await Videos.find({$where:'this.viewsCount < this.maxViews'}).sort({'viewsCount':'asc'})    
+        var video = videoArray[0]
         res.render('earncoins/videos', {
             video: video
         })
@@ -111,16 +111,22 @@ module.exports = {
 
     POST_videos: async function (req, res, next) {
         try {
+            // if(!(req.body.percent >= 2)){
+            //     req.flash('error','you need to watch the video')
+            //     return res.redirect('/earncoins/videos')
+            // }
+            let video = await Videos.findOne({_id:req.body.videoId})
+            let user = await Users.findOne({_id: res.locals.user._id })
 
-            let user = await Users.findOne({
-                _id: res.locals.user._id
-            })
+            video.viewsCount += 1;
             user.coins += videoCoins;
+            await video.save()
             await user.save()
+            res.send('success')
         } catch (err) {
             next(err)
         }
-        res.send('success')
+        
     },
     ////////////////// INVITE //////////////////////////
     GET_invite: function (req, res) {

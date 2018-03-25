@@ -18,6 +18,11 @@ var VideosSchema = mongoose.Schema({
 		required:true,
 		type:Number
 	},
+	canBeviewed:{
+		required:true,
+		type:Boolean
+		
+	},
 	maxViews:{
 		required:true,
 		type:Number
