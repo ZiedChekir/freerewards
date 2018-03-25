@@ -6077,6 +6077,8 @@ body {
   body .profile-container {
     margin-top: 5px;
     margin-bottom: 30px; }
+  body .gameinfo {
+    margin-top: 40px; }
 
 footer {
   background-color: #1C212D; }

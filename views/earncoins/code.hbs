@@ -4,11 +4,21 @@
 <div class="earncoins-title">
 			<h3>Redeem code</h3>
      
-<form method="post" action="/earncoins/code">
+<form method="post" action="/earncoins/code" onsubmit="return submitionOnce()">
 <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
 <input type="text" class="form-control" name="redeemcode">
-<button type='submit' class="btn btn-primary">Submit</button>
+<button type='submit' onclick="this.disable = true" class="btn btn-primary">Submit</button>
 </form>
 
 </div>
+
+<script>
+    var allowSubmit = true;
+    function submitionOnce() {
+        if (allowSubmit == true) 
+            allowSubmit = false;
+        else 
+            return false   
+    }
+</script>

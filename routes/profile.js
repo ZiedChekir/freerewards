@@ -4,7 +4,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
 const ProfileController = require('../controllers/ProfileController')
 
-
+const User = require('../models/users')
 
 
 /* GET users listing. */

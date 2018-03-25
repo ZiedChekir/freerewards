@@ -21,6 +21,7 @@ var  referrerPolicy = require('referrer-policy')
 var csp = require('helmet-csp')
 const redisStore = require('connect-redis')(session)
 const Users = require('./models/users')
+const moment = require('moment')
 
 var csrfProtection = csrf({ cookie: true })
 // --------------ROUTES--------------------
@@ -134,6 +135,15 @@ app.use(function (req, res, next) {
   res.locals.csrfToken = req.csrfToken()
   if (req.user) {
     res.locals.logged = true;
+
+    res.locals.getDaily = false
+    
+    let now = moment(moment().format('DD/MM/YYYY hh:mm'), 'DD/MM/YYYY hh:mm')
+    let last = moment(moment(req.user.lastdailybonus, 'DD/MM/YYYY hh:mm').format('DD/MM/YYYY hh:mm'), 'DD/MM/YYYY hh:mm')
+    if (moment.duration(now.diff(last)).asHours() >= 24) {
+      res.locals.getDaily =true
+    }
+
     res.locals.user =
       {
         _id: req.user._id,
@@ -149,6 +159,7 @@ app.use(function (req, res, next) {
         profileimgurl:req.user.profileimgurl
       }
     res.locals.usercoins = req.user.coins;
+
   } else {
     res.locals.logged = false;
   }

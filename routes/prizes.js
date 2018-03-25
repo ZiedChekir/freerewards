@@ -11,7 +11,7 @@ var Orders = require('../models/orders')
 
 router.get('/', function (req, res) {
 	games.find(function (err, aviableGames) {
-		res.render('prizes/games', { games: aviableGames, prizes: true });
+		res.render('prizes/games', { games: aviableGames});
 	})
 
 });
@@ -26,26 +26,27 @@ router.get('/search', async function (req, res) {
 router.get('/:game', function (req, res) {
 	var game = req.params.game;
 	games.findOne({ title: game }, function (err, game) {	
+		if(err) return next(err)
 		res.render('prizes/gameinfo', { game: game, ableToBuy: ableToBuy(res.locals.usercoins, game.price) });
 	})
 });
 
-router.get('/:game/redeem', ensureLoggedIn, function (req, res) {
-	var game = req.params.game;
-	games.findOne({ title: game }, function (err, game) {
-		if (err) return next(err)
+// router.get('/:game/redeem', ensureLoggedIn, function (req, res) {
+// 	var game = req.params.game;
+// 	games.findOne({ title: game }, function (err, game) {
+// 		if (err) return next(err)
 
-		if (game && ableToBuy(res.locals.usercoins, game.price)) {
-			res.render('prizes/redeem', { game: game })
-		} else {
-			res.redirect('/prizes')
-		}
+// 		if (game && ableToBuy(res.locals.usercoins, game.price)) {
+// 			res.render('prizes/redeem', { game: game })
+// 		} else {
+// 			res.redirect('/prizes')
+// 		}
 
 
-	})
+// 	})
 
-})
-router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
+// })
+router.post('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 	var game = req.params.game;
 
 	games.findOne({ title: game }, function (err, game) {
@@ -61,8 +62,11 @@ router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 				//under this line the encrypted value of coins gets decrypted ,  added some number, encrypted it again and stored it in a variable
 				user.coins =  user.coins - game.price;									
 				user.save(function (err) { // user coins saved to database
-					if (err) console.log(err)
-					return res.redirect('/profile')
+					if (err){
+						req.flash('error','an error occured while purchasing the game. please contact us')
+						next(err)
+					}
+					return res.redirect('/profile/orders')
 				});
 				var order = new Orders({
 					username:user.username,
@@ -73,7 +77,7 @@ router.get('/:game/redeem/confirm', ensureLoggedIn, function (req, res,next) {
 					completed:false
 				})
 				order.save(function(err){
-					if(err) return console.log(err)
+					if(err) return next(err)
 				})
 			}
 		});

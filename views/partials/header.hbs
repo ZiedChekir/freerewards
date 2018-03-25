@@ -22,7 +22,11 @@
         <a class="nav-link" href="/earncoins">Earn coins</a>
       </li>
        {{#if logged}}
-       
+            {{#if getDaily}}
+                <li class="nav-item active">
+                  <a class="nav-link" href="/earncoins/daily">Get my daily Bonus</a>
+                </li>
+            {{/if}}
         <li class="nav-item active">
         <a class="nav-link" href="/profile">Profile</a>
       </li>

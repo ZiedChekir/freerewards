@@ -25,7 +25,8 @@
             <div class="col-sm-12 col-md-6">
                 
                     {{!-- form2 --}}
-                    <form method="post" action="/profile/update?_csrf={{csrfToken}}"  encType="multipart/form-data">
+                    <form method="post" action="/profile/update?_csrf={{csrfToken}}"  encType="multipart/form-data" 
+onsubmit="return submitionOnce()">
                           <div class="custom-file">
                             <input type="file" id='inputGroupFile01' class="custom-file-input" name="image">
                             <label class="custom-file-label" for="inputGroupFile01">Choose picture</label>
@@ -57,7 +58,7 @@
 
                         </div>
                         
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" onclick="this.disable = true"  class="btn btn-primary">Submit</button>
 
                     </form>
 
@@ -83,6 +84,16 @@
     })
 
 </script> 
+
+<script>
+    var allowSubmit = true;
+    function submitionOnce() {
+        if (allowSubmit == true) 
+            allowSubmit = false;
+        else 
+            return false   
+    }
+</script>
 {{!-- <form method="post" action="/profile/update"encType="multipart/form-data" >
 
     <div class="input-group mb-3">

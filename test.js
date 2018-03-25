@@ -291,3 +291,6 @@
 // 	}
 // }
 console.log('Join millions of players to build a village, fo...'.length)
+
+
+a = ['asdq',]

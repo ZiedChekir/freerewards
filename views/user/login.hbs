@@ -1,7 +1,3 @@
-
-
-
-
 <div class="login container">
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -9,13 +5,13 @@
         <div class="card-header">Login</div>
 
         <div class="card-body">
-          <form method="POST" action="/user/login">
+          <form method="POST" action="/user/login" onsubmit="return submitionOnce()">
             <input type="hidden" name="_csrf" value="{{csrfToken}}" />
             <div class="form-group row">
               <label for="username" class="col-sm-4 col-form-label text-md-right">Username:</label>
 
               <div class="col-md-6">
-                <input id="username" type="text" name="username" class="form-control" value="{{username}}"  required autofocus>
+                <input id="username" type="text" name="username" class="form-control" value="{{username}}" required autofocus>
 
               </div>
             </div>
@@ -29,21 +25,13 @@
               </div>
             </div>
 
-            <div class="form-group row">
-              <div class="col-md-6 offset-md-4">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="remember"> Remember Me
-                  </label>
-                </div>
-              </div>
+
+            <div class="capatcher">
+              <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
             </div>
-                <div class="capatcher">
-                  <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div>
-                </div>
             <div class="form-group row mb-0">
               <div class="col-md-8 offset-md-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" onclick="this.disable = true" class="btn btn-primary">
                   Login
                 </button>
 
@@ -58,3 +46,15 @@
     </div>
   </div>
 </div>
+
+
+
+<script>
+  var allowSubmit = true;
+  function submitionOnce() {
+    if (allowSubmit == true)
+      allowSubmit = false;
+    else
+      return false
+  }
+</script>
