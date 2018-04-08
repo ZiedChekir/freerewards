@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
-const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
+const ensureLoggedIn = require('../config/connect-ensure-login.1/lib/ensureLoggedIn')()
+const ensureLoggedOut = require('../config/connect-ensure-login.1/lib/ensureLoggedOut')()
 var moment = require('moment')
 const {check,validationResult } = require('express-validator/check')
 

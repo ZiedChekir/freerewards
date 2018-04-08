@@ -25,40 +25,41 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-if (cluster.isMaster) {
+// if (cluster.isMaster) {
 
   // Count the machine's CPUs
-  var cpuCount = os.cpus().length;
+  // var cpuCount = os.cpus().length;
 
   // Create a worker for each CPU
-  if(process.env.NODE_ENV == 'production'){
-    for (var i = 0; i < cpuCount; i += 1) {
-      cluster.fork();
-  }
-  }else{
-    for (var i = 0; i < 1; i += 1) {
-      cluster.fork();
-  }
-  }
+  // if (process.env.NODE_ENV == 'production') {
+  //   for (var i = 0; i < cpuCount; i += 1) {
+  //     cluster.fork();
+  //   }
+  // } 
+  // else {
+  //   for (var i = 0; i < 1; i += 1) {
+  //     cluster.fork();
+  //   }
+  //}
 
 
 
-  cluster.on('exit', function (worker) {
+  // cluster.on('exit', function (worker) {
 
-    // Replace the dead worker,
-    // we're not sentimental
-    console.log('Worker %d died :(', worker.id);
-    cluster.fork();
+  //   // Replace the dead worker,
+  //   // we're not sentimental
+  //   console.log('Worker %d died :(', worker.id);
+  //   cluster.fork();
 
-});
-// Code to run if we're in a worker process
-}else{
+  // });
+  // Code to run if we're in a worker process
+// } else {
 
-  console.log('Worker %d running!', cluster.worker.id);
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-}
+  // console.log('Worker %d running!', cluster.worker.id);
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+//}
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -88,9 +89,9 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ?
+    'Pipe ' + port :
+    'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -113,9 +114,9 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = typeof addr === 'string' ?
+    'pipe ' + addr :
+    'port ' + addr.port;
   debug('Listening on ' + bind);
 }
 
@@ -134,14 +135,14 @@ function onListening() {
 
 /*
 ° Create HTTPS server.
-*/ 
+*/
 // server = https.createServer(options, app).listen(https_port, function () {
 //  console.log('Magic happens on port ' + https_port); 
 // });
 
 /**
-* Listen on provided port, on all network interfaces.
-*/
+ * Listen on provided port, on all network interfaces.
+ */
 
 // server.listen(https_port);
 // server.on('error', onError);

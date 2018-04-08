@@ -40,7 +40,7 @@ module.exports = {
             next(err)
         }
     },
-    POST_offerwall_mission_id: async function (req, res) {
+    POST_offerwall_mission_id: async function (req, res, next) {
         let id = req.params.id
         let missionToPush
         let missionCoins = 0;
@@ -52,13 +52,16 @@ module.exports = {
             let user = await Users.findOne({
                 _id: res.locals.user._id
             })
+            updateCoinsInTheParentUser(user.refferedBy, user._id, mission.coins)
             user.completedMissions.map(function (x) {
                 if (x == mission.title) {
                     return res.redirect('/earncoins/offerwall')
                 }
             })
             user.completedMissions.push(mission.title);
-            user.coins += mission.coins;
+            // user.coins += mission.coins;
+            updateCurrentUserCoins (user,mission.coins)
+            console.log(user)
             await user.save()
             res.redirect('/earncoins/offerwall')
         } catch (err) {
@@ -82,11 +85,12 @@ module.exports = {
             let last = moment(l, 'DD/MM/YYYY hh:mm')
             let duration = moment.duration(now.diff(last));
             let hours = duration.asHours();
-            console.log('before if sqdqs')
+            
             if (hours >= 24) {
-                console.log('inside if sdq')
+                
                 user.coins += dailyCoins;
                 user.lastdailybonus = await moment().format('DD/MM/YYYY HH:mm')
+                updateCoinsInTheParentUser(user.refferedBy, user._id, dailyCoins)
                 await user.save()
             }
         } catch (err) {
@@ -100,7 +104,11 @@ module.exports = {
 
 
     GET_videos: async function (req, res) {
-        let videoArray = await Videos.find({$where:'this.viewsCount < this.maxViews'}).sort({'viewsCount':'asc'})    
+        let videoArray = await Videos.find({
+            $where: 'this.viewsCount < this.maxViews'
+        }).sort({
+            'viewsCount': 'asc'
+        })
         var video = videoArray[0]
         res.render('earncoins/videos', {
             video: video
@@ -115,22 +123,28 @@ module.exports = {
             //     req.flash('error','you need to watch the video')
             //     return res.redirect('/earncoins/videos')
             // }
-            let video = await Videos.findOne({_id:req.body.videoId})
-            let user = await Users.findOne({_id: res.locals.user._id })
+            let video = await Videos.findOne({
+                _id: req.body.videoId
+            })
+            let user = await Users.findOne({
+                _id: res.locals.user._id
+            })
 
             video.viewsCount += 1;
             user.coins += videoCoins;
+            updateCoinsInTheParentUser(user.refferedBy, user._id, videoCoins)
             await video.save()
             await user.save()
             res.send('success')
         } catch (err) {
             next(err)
         }
-        
+
     },
     ////////////////// INVITE //////////////////////////
-    GET_invite: function (req, res) {
-        res.render('earncoins/invite')
+    GET_invite:async function (req, res) {
+        let user = await Users.findOne({_id:req.user._id})
+        res.render('earncoins/invite',{refUrl:user.refferalUrl})
     },
     ////////////////////// CODE COUPONS ///////////////////////////////
     GET_code: function (req, res) {
@@ -149,6 +163,7 @@ module.exports = {
                         _id: res.locals.user._id
                     })
                     user.coins += coupon.couponCoins;
+                    updateCoinsInTheParentUser(user.refferedBy, user._id, couponCoins)
                     await user.save()
                     await coupon.remove()
                     res.redirect('/earncoins/code')
@@ -185,4 +200,31 @@ var validateCoupons = function (coupon) {
         return true
     }
     return false
+}
+
+function updateCoinsInTheParentUser(refferedBy, thisUserId, coinsToAdd) {
+    if(refferedBy){
+        let percentage = 3
+        let coinsAfterPercentage = (coinsToAdd /100 *percentage)
+        Users.findOne({_id: refferedBy}, function (err, refUser) {
+            refUser.totalCoins += coinsAfterPercentage
+            refUser.childCoins += coinsAfterPercentage
+            for (let i = 0; i < refUser.refferedUsers.length; i++) {
+                
+                if (refUser.refferedUsers[i].id.toString() == thisUserId.toString()) {
+                    
+                    refUser.refferedUsers[i].coins += coinsAfterPercentage
+                    
+                    refUser.save(function (err) {
+                        if (err) return console.log(err)
+                    })                
+                    break;
+                }    
+            }
+        })
+    }
+}
+function updateCurrentUserCoins (user,coins){
+    user.Earnedcoins += coins
+    user.totalCoins += coins
 }

@@ -1,5 +1,3 @@
-
-
 <div class="profile-container">
     <div class="earncoins-title">
         <h1>
@@ -9,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div style="text-align: center;" class="col-sm-12 col-md-4">
-                <img src={{user.profileimgurl}} height="140px" width="140px" class="rounded-circle"  alt="profile picture">
+                <img src={{user.profileimgurl}} height="140px" width="140px" class="rounded-circle" alt="profile picture">
                 <h2>Hello {{user.username}}</h2>
                 <div class="profile-userbuttons">
                     <a class="profile-btn btn btn-primary" href="/profile/overview">Overview</a>
@@ -20,11 +18,26 @@
             </div>
             <div class="col-sm-12 col-md-6">
                 <p>overview</p>
-
+                {{#if refferedUsers}}
+                <table class="table table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Coins</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each refferedUsers}}
+                        <tr>
+                            <td>{{this.username}}</td>
+                            <td>{{ floorCoins this.coins}}</td>
+                          
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
             </div>
-
         </div>
-
-
     </div>
 </div>
