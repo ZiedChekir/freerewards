@@ -30,9 +30,9 @@ const index = require('./routes/index');
 const user = require('./routes/user');
 const prizes = require('./routes/prizes');
 const earncoins = require('./routes/earncoins');
-const invite = require('./routes/invite');
-const profile = require('./routes/profile');
 
+const profile = require('./routes/profile');
+var MongoClient = require('mongodb').MongoClient;
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
 var mongodburl = "mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards"
 
@@ -46,6 +46,7 @@ const options = {
   bufferMaxEntries: 0
 };
 mongoose.connect(mongodburl,options);
+
 
 //-----------------BEGIN-----------------
 var app = express();
@@ -158,11 +159,19 @@ app.use(function (req, res, next) {
         orders: req.user.orders,
         profileimgurl:req.user.profileimgurl
       }
-    res.locals.usercoins = req.user.coins;
-
+    
+      // let refUserCoins = 0; 
+      // for(let i = 0; i < req.user.refferedUsers.length;i ++){
+      //   refUserCoins += req.user.refferedUsers[i].coins        
+      // }
+      res.locals.usercoins = Math.floor(req.user.totalCoins)
   } else {
     res.locals.logged = false;
   }
+
+ 
+
+
   next();
 
 });
@@ -173,7 +182,7 @@ app.use('/', index);
 app.use('/user', user);
 app.use('/prizes', prizes);
 app.use('/earncoins', earncoins);
-app.use('/invite', invite);
+
 app.use('/profile', profile);
 
 

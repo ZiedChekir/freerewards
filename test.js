@@ -290,7 +290,68 @@
 // 		return ''
 // 	}
 // }
-console.log('Join millions of players to build a village, fo...'.length)
+// console.log('Join millions of players to build a village, fo...'.length)
 
 
-a = ['asdq',]
+// a = ['asdq',]
+
+
+// var a  = {
+//     z:100,
+//     c:50,
+//     d:21
+// }
+
+
+// var string = 'hello, from the others side'
+
+// string = string.replace(',','')
+
+
+
+// var a = string.split(' ')
+// var z = ''
+// var b = []
+// var num = 0
+// a.forEach((x)=>{
+//     if(x.length >= num){
+//         if(x.length > num){
+//             b = []
+//         }
+//         b.push(x)
+//         num = x.length   
+//     }
+// })
+// if(b.length == 1){
+//     console.log(b[0])
+// }else{
+//     console.log(b)
+// }
+
+// console.log(string)
+
+
+
+// module.exports = {
+//     id: '1-step',
+
+//     up : function(db, cb){
+//         db.collection('testcollection').insert({ name: 'initial-setup' }, cb);
+//     },
+
+//     down : function(db, cb){
+//         db.collection('testcollection').remove({ name: 'initial-setup' }, cb);
+//     }
+// }
+var a = [1,2,3,4,5,6]
+
+for (let i = 0; i < a.length; i++) {
+    console.log(a[i])
+    if(a[i] == 4){
+        console.log(i)
+        console.log(a[i])
+        break
+    }
+    
+}
+console.log('fin du loop')

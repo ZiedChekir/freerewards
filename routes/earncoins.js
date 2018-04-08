@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
-const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
+const ensureLoggedIn = require('../config/connect-ensure-login.1/lib/ensureLoggedIn')()
+const ensureLoggedOut = require('../config/connect-ensure-login.1/lib/ensureLoggedOut')()
 const earncoinsHandler = require('../controllers/ECcontroller')
 
 

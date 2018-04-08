@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
-const ensureLoggedOut = require('connect-ensure-login').ensureLoggedOut();
+const ensureLoggedIn = require('../config/connect-ensure-login.1/lib/ensureLoggedIn')()
+const ensureLoggedOut = require('../config/connect-ensure-login.1/lib/ensureLoggedOut')()
 const ProfileController = require('../controllers/ProfileController')
 
 const User = require('../models/users')
@@ -32,7 +32,7 @@ router.get('/addcoin', ensureLoggedIn, async function (req, res, next) {
 	//access Database anc check for this user's coin
 	try {
 		var user = await User.findOne(res.locals.user._id);
-		user.coins += 10000;
+		user.totalCoins += 10000;
 		await user.save();
 		res.redirect('/profile')
 	} catch (err) {
