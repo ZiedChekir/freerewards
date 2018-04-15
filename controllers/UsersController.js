@@ -6,10 +6,14 @@ const {
 } = require('express-validator/check')
 //models && functions && operatins
 const User = require('../models/users');
-
+const ConfirmationToken = require('../models/confirmationToken')
 var shortid = require('shortid');
 
 var forOwn = require('lodash.forown')
+const crypto = require('crypto')
+const sgMail = require('@sendgrid/mail');
+var zeroBounce = require('../config/zerobounce')
+
 
 
 module.exports = {
@@ -25,37 +29,22 @@ module.exports = {
         });
     },
     POST_register: async function (req, res, next) {
-        // if (req.session.refferal) {
-        //     //query for the user that reffered this new user           
-        //     var refUser = await User.findOne({
-        //         refferalUrl: req.session.refferal
-        //     })         
-            
-        //     var obj =  {}
-        //     obj.createdUserId = 0
-        //     console.log(obj)
-        //     refUser.refferedUsers = obj
-            //add a reffrence in the refUser and assign 0 coins   
-            // let obj = {}
-            // obj[createdUserId] = 0 
-            // console.log(obj) 
-            // Object.assign(refUser.refferedUsers,obj)
+        sgMail.setApiKey('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');
 
-            // refUser.refferedUsers = {...refUser.refferedUsers,`${a}`:0}
-        //     refUser.save()          
-        // }
-        // return res.redirect('/user/register')
 
-      
         var name = req.body.name
         var username = req.body.username
         var email = req.body.email
         var password = req.body.password;
         var password2 = req.body.password2;
-       
+        
+        var validate = await zeroBounce.validate(email)
+
+        
+        
         //Error handling
         var Errors = validationResult(req)
-        if (!Errors.isEmpty() || password != password2) {
+        if (!Errors.isEmpty() || password != password2 || validate.status != 'Valid') {
             if (password != password2) {
                 req.flash('error', 'Passwords don\'t match')
             }
@@ -66,12 +55,15 @@ module.exports = {
                 })
                 req.flash('error', errors)
             }
+            if(validate.status != 'Valid'){
+                req.flash('error','Enter a Valid Email please')
+            }
             return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
         }
 
         //capatcher
         if (process.env.NODE_ENV == 'production') {
-            console.log('inside the recp if')
+
             var recapatcha = req.body['g-recaptcha-response']
             if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
 
@@ -82,7 +74,7 @@ module.exports = {
             var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
             var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 
-            console.log('before request')
+
             request(verificationUrl, function (error, res, body) {
                 var bodyParsed = JSON.parse(body)
 
@@ -96,58 +88,74 @@ module.exports = {
             })
         }
         var refBy = null
+        var initizialCoins = 0
         if (req.session.refferal) {
-           let refUser= await User.findOne({refferalUrl:req.session.refferal})
-           refBy = refUser._id
-           
+            let refUser = await User.findOne({
+                refferalUrl: req.session.refferal
+            })
+            refBy = refUser._id
+            initizialCoins = 200
         }
         var newUser = new User({
             name: name,
             email: email,
             username: username,
             password: password,
-            coins: 0,
+            coins: initizialCoins,
             joindate: getDate(),
             lastdailybonus: getPreviousDate(),
             profileimgurl: "http://res.cloudinary.com/dyy9ovwcv/image/upload/v1519766192/sw6calmlh1hjnqfbszch.png",
-            refferedBy:refBy,
-            refferalUrl:shortid.generate().toLowerCase()
+            refferedBy: refBy,
+            refferalUrl: shortid.generate().toLowerCase(),
+            emailVerified: false
         });
 
         //if Refferal exists in session
         var createdUserId
-         User.createUser(newUser, async function (err, user) {
+        var token
+        User.createUser(newUser, async function (err, user) {
             if (err) {
-                next(new Error("a problem has occured. Please register again"))
+                next(new Error(err))
                 req.flash('error', "a problem has occured. Please register again")
                 return res.redirect('/user/register')
             }
+            req.session.userId = user._id
+            req.session.userEmail = user.email
+            req.flash('info','Please confirm you Email:'+user.email+'before logging in')
+             token = new ConfirmationToken({
+                _userId: user._id,
+                token: crypto.randomBytes(16).toString('hex')
+            })
+            token.save();
             if (req.session.refferal) {
                 //query for the user that reffered this new user           
                 var refUser = await User.findOne({
                     refferalUrl: req.session.refferal
-                })         
-                //add a reffrence in the refUser and assign 0 coins   
-                
-                refUser.refferedUsers.push({id:user._id,username:user.username,coins:0})
-                console.log(refUser.refferedUsers)
-                refUser.save() 
-                
-                delete req.session.refferal             
+                })
+                //add a reffrence in the refUser and assign 0 coins             
+                refUser.refferedUsers.push({
+                    id: user._id,
+                    username: user.username,
+                    coins: 0
+                })
+                refUser.save()
+                delete req.session.refferal
             }
+            
+       
+            const msg = {
+                to: email,
+                from: 'noreply@freerewards.com',
+                subject: 'Freerewards Email Confirmation 1',
+                text: 'hello '+name+', please confirm your email by clicking this url1: www.localhost:3111/confirm/'+token.token,
+                html: '<strong>hello '+name+'</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/'+token.token+'</a></p>',
+            };
+            sgMail.send(msg);
             req.flash('success', 'Successfully registred. Please verify your email');
             res.redirect('/user/login');
         })
-           
-            
-
-      
         
         
-        
-
-
-
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////    LOGIN       ////////////////////////////////////////////////////////
@@ -155,9 +163,10 @@ module.exports = {
 
 
     GET_login: function (req, res) {
-console.log('login' + req.session.refferal)
+        var info = req.flash('info')
         res.render('user/login', {
-            username: req.query.username
+            username: req.query.username,
+            infoFlash:info
         });
 
     },

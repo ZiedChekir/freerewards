@@ -6,7 +6,8 @@ var coinsEncryption = require('../Operations/encryptCoins')
 var coinsToAdd = 1000
 var CouponsToGenerate = 100
 
-mongoose.connect('mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards');
+// mongoose.connect('mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards');
+mongoose.connect('mongodb://localhost:27017/freereward');
 const options = {
   useMongoClient: true,
   autoIndex: false, // Don't build indexes

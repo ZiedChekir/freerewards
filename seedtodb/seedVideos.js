@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards');
+mongoose.connect('mongodb://localhost:27017/freereward');
 
 var Videos = require('../models/videos')
 

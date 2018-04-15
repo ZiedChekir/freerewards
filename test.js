@@ -1,10 +1,10 @@
 // // // var Cryptr = require('cryptr'),
 // // //     cryptr = new Cryptr('dsqdqsdsqdqsdv51616513134132dqs31bc31v');
- 
- 
+
+
 // // // var encryptedString = cryptr.encrypt('bacon'),
 // // //     decryptedString = cryptr.decrypt(encryptedString);
- 
+
 // // // console.log(encryptedString);  // d7233809c0 
 // // // console.log(decryptedString);  // bacon 
 
@@ -13,8 +13,8 @@
 // //8335728bcaf48908975f99e44b4d2840
 
 // // function encryptcoins(data){
-		
-	
+
+
 // // 		var cipher = crypto.createCipher('aes-256-cbc', key);
 // //         var crypted = cipher.update(data, 'utf-8', 'hex');
 // //        	crypted += cipher.final('hex');
@@ -42,7 +42,7 @@
 
 
 // var shortid = require('shortid');
- 
+
 // console.log(shortid.generate);
 
 
@@ -91,7 +91,7 @@
 // // var now = moment(moment().format('DD/MM/YYYY hh:mm'),'DD/MM/YYYY hh:mm')
 // // var lastdaily = moment(p,'DD/MM/YYYY hh:mm')
 
- 
+
 // // var duration = moment.duration(now.diff(lastdaily));
 // // var hours = duration.asHours();
 // // console.log(typeof(hours))
@@ -109,7 +109,7 @@
 
 
 // //  module.exports = function coins(){
-		
+
 // // 	this.encryptcoins = function(data){
 // // 		var cipher = crypto.createCipher('aes-256-cbc', key);
 // //         var crypted = cipher.update(data, 'utf-8', 'hex');
@@ -183,7 +183,7 @@
 // // var count = 0
 // // while(true){
 // // 	console.log(RandomVideo(0,7))
-	
+
 // // }
 // var cc = require('coupon-code');
 // // var coupon =  '9GkG-J99U-N6FD-MWW9'
@@ -203,24 +203,24 @@
 
 // function truncateString(str, num) {
 //     // Clear out that junk in your trunk
-    
+
 //     if(str.length < num){
 //       console.log(str)
 //     } 
-   
-    
+
+
 //     if(num <= 3){
 //        str +='...';
 //        console.log(str)
 //     }
-    
+
 //     if(num >3){
 //       var b = str.substring(0,(num-3));
 //       b += '...';
 //       console.log(b)
 //     }
 //   }
-  
+
 //   truncateString("A-tisket a-tasket A green and yellow basket", 11);
 
 
@@ -231,27 +231,27 @@
 //     var a = arr[0].toLowerCase();
 //     var b = arr[1].toLowerCase();
 //     for(var i = 0; i < a.length; i ++){
-        
+
 //         if(b.indexOf(a.charAt(i)) == -1){
-            
+
 //             return console.log('no')
 
 //         }
-    
+
 //   }
 //   return console.log('yes')
 // }
 
-  
+
 // mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])
-  
+
 
 // function bouncer(arr) {
 //     // Don't show a false ID to this bouncer.
 //    var a =  arr.filter(Boolean)
 //    console.log(a)
 //   }
-  
+
 //   bouncer([false, null, 0, NaN, undefined, "","sd"])
 //   function person(bool,t){
 //     this.bool= bool
@@ -343,15 +343,101 @@
 //         db.collection('testcollection').remove({ name: 'initial-setup' }, cb);
 //     }
 // }
-var a = [1,2,3,4,5,6]
+// var a = [1,2,3,4,5,6]
 
-for (let i = 0; i < a.length; i++) {
-    console.log(a[i])
-    if(a[i] == 4){
-        console.log(i)
-        console.log(a[i])
-        break
-    }
+// for (let i = 0; i < a.length; i++) {
+//     console.log(a[i])
+//     if(a[i] == 4){
+//         console.log(i)
+//         console.log(a[i])
+//         break
+//     }
+
+// }
+// console.log('fin du loop')
+// using SendGrid's v3 Node.js Library
+// https://github.com/sendgrid/sendgrid-nodejs
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey('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');
+// const msg = {
+//   to: 'ziedchekir1@gmail.com',
+//   from: 'noreply@freereward.com',
+//   subject: 'sqddsqdqsd',
+//   text: 'sqdsqdqssqddqsdqdsdq',
+//   html: '<strong>sqddqssq1dqsdsqdqsdqsdqdsdq</strong>',
+// };
+// sgMail.send(msg);
+// var siege = require('siege')
+// siege()
+//   .on(3111)
+//   .for(10000).times
+//   .get('/prizes')
+//   .attack()
+
+
+// Reqvalidate('ziedchekir1@gmail.com')
+// function timeCounter() {
+//   var before = new Date().getSeconds()
+
+//   setTimeout(function () {
+//     var after = new Date().getSeconds()
+//     console.log(after - before)
     
+//   },3000)
+
+// }
+
+// timeCounter()
+
+
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var apiKey = "6d1f984420ca4b25bb062e21e34d93ca"
+var baseUrl = "https://api.zerobounce.net/v1";
+var get = new XMLHttpRequest();
+
+function getCredits() {
+
+
+  var uri = baseUrl + "/getcredits" + "?apikey=" + apiKey;
+  request(uri,function(error, response, body){
+    console.log(error)
+    console.log(response)
+    console.log(body)
+  })
 }
-console.log('fin du loop')
+
+function validate(email) {
+  var before = new Date().getSeconds()
+  var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
+
+  request(uri,function(error, response, body){
+    console.log(error)
+    console.log(response)
+    console.log(body)
+  })
+  }
+
+var request = require('request-promise')
+
+function Reqvalidate(email) {
+  var before = new Date().getSeconds()
+  var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
+  request(uri, function (error, response, body) {
+    if (error) console.log('error')
+    console.log(body)
+    var after = new Date().getSeconds()
+    console.log('with request it took ' + after - before)
+  })
+}
+
+var zeroB = require('./config/zerobounce')
+ async function c(){
+   
+  var a = await zeroB.validate('ziedchekir1@gmail.com')
+
+  console.log(a)
+  console.log('async ?')
+}
+
+c()

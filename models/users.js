@@ -76,6 +76,11 @@ var UserSchema = mongoose.Schema({
 		type: Number,
 		required: true,
 		default:0
+	},
+	emailVerified:{
+		type:Boolean,
+		default:false,
+		required:true
 	}
 
 }, {
