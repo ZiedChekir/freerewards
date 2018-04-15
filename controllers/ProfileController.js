@@ -202,7 +202,7 @@ module.exports = {
                         }
                         if (newpassword) {
                             User.hashandsave(user, newpassword, function (err) {
-                                if (err) next(new Error(err));
+                                if (err) next(err);
                             })
                         }
                         req.flash('success', "account successfully updated")

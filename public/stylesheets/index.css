@@ -93,7 +93,7 @@ nav ul li a:focus{
   
   width: 100%;
   height: 100vh;
-   background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('../images/gaming.jpg');
+
   background-size:cover;
   background-position: center;
   background-attachment: fixed;
@@ -105,20 +105,20 @@ nav ul li a:focus{
 /*.push{
   background-color:#065A82 ;
 }*/
-
+/* 
 #heading-content{
   padding-top: 170px;
 }
 #heading-content h1 {
-  color: white;
+
   font-size: 60px;
   letter-spacing: 3px;
 }
 #heading-content h3 {
-  color:white;
+
   font-size: 30px;
   letter-spacing: 1px;
-}
+} */
 
 
 #about{

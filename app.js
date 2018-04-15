@@ -34,7 +34,8 @@ const earncoins = require('./routes/earncoins');
 const profile = require('./routes/profile');
 var MongoClient = require('mongodb').MongoClient;
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
-var mongodburl = "mongodb://zied:zied1478963!@ds151024.mlab.com:51024/freerewards"
+var mongodburl = "mongodb://localhost:27017/freereward"
+
 
 const options = {
   useMongoClient: true,
@@ -189,8 +190,9 @@ app.use('/profile', profile);
 
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('QSDJQSDJQSDJQSJD');
+app.use(function (error,req, res, next) {
+  var err = new Error(error);
+  console.log(err.stack)
   err.status = 404;
   next(err);
 });

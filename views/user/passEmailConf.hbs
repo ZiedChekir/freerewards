@@ -1,0 +1,50 @@
+<div class="login container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Pasword Reset</div>
+
+        <div class="card-body">
+          <form method="POST" action="/password/reset" onsubmit="return submitionOnce()">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            <div class="form-group row">
+
+              <label for="email" class="col-sm-4 col-form-label text-md-right">Enter your Email to recieve a password Reset:</label>
+
+              <div class="col-md-6">
+                <input id="email" type="email" name="email" class="form-control"  required autofocus>
+
+              </div>
+            </div>
+
+
+            {{!-- <div class="capatcher">
+              {{!-- <div class="g-recaptcha" data-sitekey="6LfGQ00UAAAAAN5PJ9zK7-lM60HByjKHpgfxNEq_"></div> --}}
+            </div> --}}
+            <div class="form-group row mb-0">
+              <div class="col-md-8 offset-md-4">
+                <button type="submit" onclick="this.disable = true" class="btn btn-primary">
+                  submit
+                </button>
+
+            
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  var allowSubmit = true;
+  function submitionOnce() {
+    if (allowSubmit == true)
+      allowSubmit = false;
+    else
+      return false
+  }
+</script>

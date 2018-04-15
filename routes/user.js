@@ -56,7 +56,7 @@ router.route('/login')
 		
 		successReturnToOrRedirect: '/',
 		failureRedirect: '/user/login',
-		failureFlash: 'invalid password or Username',
+		failureFlash: true,
 	}))
 
 
@@ -75,10 +75,14 @@ passport.use(new LocalStrategy(
 					message: 'Invalid User or password'
 				});
 			}
+			
 
 			User.comparePassword(password, user.password, function (err, isMatch) {
 				if (err) throw err;
 				if (isMatch) {
+					if(!user.emailVerified){
+						return done(null,false,{message:'Please verify you Email'})
+					}
 					return done(null, user);
 
 				} else {

@@ -11,6 +11,7 @@
     "test": "snyk test"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.2.1",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.1",
@@ -56,6 +57,7 @@
     "redis": "^2.8.0",
     "referrer-policy": "^1.1.0",
     "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "serve-favicon": "^2.4.5",
     "sha1": "^1.1.1",
     "shortid": "^2.2.8",
@@ -63,12 +65,15 @@
     "sweetalert": "^2.1.0",
     "tether": "^1.4.3",
     "voucher-code-generator": "^1.1.1",
-    "winston": "^3.0.0-rc3"
+    "winston": "^3.0.0-rc3",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
+    "node-siege": "0.0.4",
+    "siege": "^0.2.0",
     "snyk": "^1.70.2"
   }
 }
