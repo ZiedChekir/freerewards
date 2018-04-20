@@ -15,11 +15,11 @@ const compression = require('compression')
 const helmet = require('helmet')
 const mongodb = require('mongodb')
 const csrf = require('csurf')
-var redis   = require("ioredis");
-var client  = redis.createClient();
+// var redis   = require("ioredis");
+// var client  = redis.createClient();
 var  referrerPolicy = require('referrer-policy')
 var csp = require('helmet-csp')
-const redisStore = require('connect-redis')(session)
+// const redisStore = require('connect-redis')(session)
 const Users = require('./models/users')
 const moment = require('moment')
 const cors = require('cors')
@@ -79,21 +79,22 @@ app.use(cookieParser());
 app.use(compression())
 
 var Hours = 3600000 * 5
-// app.use(
-//   session({
-//     secret: 'notasecret!',
-//     // store:new redisStore({host:'localhost',port:6379}),
-//     //,client: client,ttl :  260
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       httpOnly: true,
-//       // secure: true,
-//       expires : new Date(Date.now() + Hours),
-//       maxAge : Hours
-//     }
-//   })
-// );
+app.use(
+  session({
+    secret: 'notasecret!',
+    // store:new redisStore({host:'localhost',port:6379}),
+    //,client: client,ttl :  260
+    resave: false,
+    saveUninitialized: false,
+    
+    // cookie: {
+    //   httpOnly: true,
+    //   // secure: true,
+    //   expires : new Date(Date.now() + Hours),
+    //   maxAge : Hours
+    // }
+  })
+);
 
 
 app.use(expressValidator({
