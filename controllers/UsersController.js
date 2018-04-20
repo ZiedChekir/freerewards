@@ -13,8 +13,8 @@ var forOwn = require('lodash.forown')
 const crypto = require('crypto')
 const sgMail = require('@sendgrid/mail');
 var zeroBounce = require('../config/zerobounce')
-var secret = require('../config/secrets')
-sgMail.setApiKey(secret.sendgrid);
+// var secret = require('../config/secrets')
+// sgMail.setApiKey(secret.sendgrid);
 
 module.exports = {
     GET_register: function (req, res) {

@@ -13,8 +13,8 @@ const EmailToken = require('../models/confirmationToken')
 const PassToken = require('../models/passwordResetToken')
 const request = require('request')
 const sgMail = require('@sendgrid/mail');
-var secret = require('../config/secrets')
-sgMail.setApiKey(secret.sendgrid);
+// var secret = require('../config/secrets')
+// sgMail.setApiKey(secret.sendgrid);
 //DAta base connection
 
 // mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
