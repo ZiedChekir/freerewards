@@ -79,21 +79,21 @@ app.use(cookieParser());
 app.use(compression())
 
 var Hours = 3600000 * 5
-app.use(
-  session({
-    secret: 'notasecret!',
-    // store:new redisStore({host:'localhost',port:6379}),
-    //,client: client,ttl :  260
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      // secure: true,
-      expires : new Date(Date.now() + Hours),
-      maxAge : Hours
-    }
-  })
-);
+// app.use(
+//   session({
+//     secret: 'notasecret!',
+//     // store:new redisStore({host:'localhost',port:6379}),
+//     //,client: client,ttl :  260
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       httpOnly: true,
+//       // secure: true,
+//       expires : new Date(Date.now() + Hours),
+//       maxAge : Hours
+//     }
+//   })
+// );
 
 
 app.use(expressValidator({
