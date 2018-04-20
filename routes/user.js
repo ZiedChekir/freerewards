@@ -53,7 +53,7 @@ router.route('/register')
 router.route('/login')
 	.get(ensureLoggedOut, UsersController.GET_login)
 	.post(ensureLoggedOut, UsersController.capatcherCheck, passport.authenticate('local', {
-		
+		// passReqToCallback: true,
 		successReturnToOrRedirect: '/',
 		failureRedirect: '/user/login',
 		failureFlash: true,
@@ -66,8 +66,9 @@ module.exports = router;
 
 
 
-passport.use(new LocalStrategy(
-	function (username, password, done) {
+passport.use(new LocalStrategy({passReqToCallback: true},
+	function (req,username, password, done) {
+		
 		User.getUserByUsername(username, function (err, user) {
 			if (err) throw err;
 			if (!user) {
@@ -81,10 +82,10 @@ passport.use(new LocalStrategy(
 				if (err) throw err;
 				if (isMatch) {
 					if(!user.emailVerified){
-						return done(null,false,{message:'Please verify you Email'})
+						req.flash('info','Please confirm you Email: '+user.email+ ' before logging in')
+						return done(null,false,{message:"Please Verify your email"})
 					}
 					return done(null, user);
-
 				} else {
 					return done(null, false, {
 						message: 'Invalid User or password'

@@ -44,9 +44,15 @@ module.exports = function ensureLoggedIn(options) {
     if (!req.isAuthenticated || !req.isAuthenticated()) {
       if (setReturnTo && req.session) {
         req.session.returnTo = req.originalUrl || req.url;
+        
       }
-      return res.redirect(url);
+      return res.redirect(url);          
     }
+    // if(req.url == "/logout" || req.url == '/user/logout')
+    // {console.log('it is right')}
+    // if(!req.user.emailVerified && !(req.url == '/user/logout' || req.url == "/logout")  ){  
+    //     return res.redirect('/verify')
+    // }
     next();
   }
 }

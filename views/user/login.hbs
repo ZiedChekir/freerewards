@@ -1,6 +1,10 @@
 <div class="login container">
   <div class="row justify-content-center">
     <div class="col-md-8">
+        {{#if infoFlash}}
+                  <p>{{infoFlash}}.</p>
+                  <p>didnt recieve email ? <a href="/resendToken"> Resend</a> confirmation</p> 
+        {{/if}}
       <div class="card">
         <div class="card-header">Login</div>
 
@@ -8,10 +12,7 @@
           <form method="POST" action="/user/login" onsubmit="return submitionOnce()">
             <input type="hidden" name="_csrf" value="{{csrfToken}}" />
             <div class="form-group row">
-               {{#if infoFlash}}
-                  <p>{{infoFlash}}.</p>
-                  <p>didnt recieve email ? <a href="/resendToken"> Resend</a> confirmation</p> 
-               {{/if}}
+             
               <label for="username" class="col-sm-4 col-form-label text-md-right">Username:</label>
 
               <div class="col-md-6">

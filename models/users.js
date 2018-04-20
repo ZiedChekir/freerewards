@@ -83,7 +83,9 @@ var UserSchema = mongoose.Schema({
 		required:true
 	}
 
-}, {
+}, { 
+	usePushEach: true,
+  
 	collection: 'users'
 });
 

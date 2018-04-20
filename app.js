@@ -22,7 +22,7 @@ var csp = require('helmet-csp')
 const redisStore = require('connect-redis')(session)
 const Users = require('./models/users')
 const moment = require('moment')
-
+const cors = require('cors')
 var csrfProtection = csrf({ cookie: true })
 // --------------ROUTES--------------------
 
@@ -70,7 +70,7 @@ app.set('view engine', '.hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-
+app.use(cors())
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -129,13 +129,15 @@ app.use(flash());
 app.use(csrfProtection)
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
+ 
 
-   res.locals.success= req.flash('success');
+  res.locals.success= req.flash('success');
   res.locals.errors = req.flash('error');
 
   res.locals.user = req.user || null;
   res.locals.csrfToken = req.csrfToken()
   if (req.user) {
+    
     res.locals.logged = true;
 
     res.locals.getDaily = false
@@ -165,7 +167,9 @@ app.use(function (req, res, next) {
       // for(let i = 0; i < req.user.refferedUsers.length;i ++){
       //   refUserCoins += req.user.refferedUsers[i].coins        
       // }
+      
       res.locals.usercoins = Math.floor(req.user.totalCoins)
+     
   } else {
     res.locals.logged = false;
   }
@@ -177,8 +181,10 @@ app.use(function (req, res, next) {
 
 });
 
+const ensureLoggedIn = require('./config/connect-ensure-login.1/lib/ensureLoggedIn')()
 
 //----------------SET ROUTES----------------
+
 app.use('/', index);
 app.use('/user', user);
 app.use('/prizes', prizes);

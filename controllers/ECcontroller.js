@@ -8,7 +8,6 @@ const moment = require('moment')
 var cc = require('coupon-code');
 var Videos = require('../models/videos')
 
-
 const videoCoins = 5;
 const dailyCoins = 2;
 module.exports = {
@@ -32,7 +31,6 @@ module.exports = {
                     return mission
                 })
             }
-
             res.render('earncoins/offerwall', {
                 missionsToDisplay: missions
             })
@@ -53,17 +51,20 @@ module.exports = {
                 _id: res.locals.user._id
             })
             updateCoinsInTheParentUser(user.refferedBy, user._id, mission.coins)
+            updateCurrentUserCoins (user,mission.coins)
             user.completedMissions.map(function (x) {
+                
                 if (x == mission.title) {
+                    
                     return res.redirect('/earncoins/offerwall')
                 }
             })
+            
             user.completedMissions.push(mission.title);
-            // user.coins += mission.coins;
-            updateCurrentUserCoins (user,mission.coins)
-            console.log(user)
-            await user.save()
-            res.redirect('/earncoins/offerwall')
+            user.save(function(err,result){
+                if(err) return next(err)
+                res.redirect('/earncoins/offerwall')
+            })     
         } catch (err) {
             next(err)
 
@@ -84,13 +85,12 @@ module.exports = {
             let now = moment(n, 'DD/MM/YYYY hh:mm')
             let last = moment(l, 'DD/MM/YYYY hh:mm')
             let duration = moment.duration(now.diff(last));
-            let hours = duration.asHours();
-            
-            if (hours >= 24) {
-                
-                user.coins += dailyCoins;
+            let hours = duration.asHours();            
+            if (hours >= 24) {       
+                user.totalCoins += dailyCoins;
                 user.lastdailybonus = await moment().format('DD/MM/YYYY HH:mm')
                 updateCoinsInTheParentUser(user.refferedBy, user._id, dailyCoins)
+                updateCurrentUserCoins(user,dailyCoins) 
                 await user.save()
             }
         } catch (err) {
@@ -133,6 +133,8 @@ module.exports = {
             video.viewsCount += 1;
             user.coins += videoCoins;
             updateCoinsInTheParentUser(user.refferedBy, user._id, videoCoins)
+            updateCurrentUserCoins(user,videoCoins) 
+
             await video.save()
             await user.save()
             res.send('success')
@@ -162,7 +164,7 @@ module.exports = {
                     var user = await Users.findOne({
                         _id: res.locals.user._id
                     })
-                    user.coins += coupon.couponCoins;
+                    updateCurrentUserCoins(user,coupon.couponCoins) 
                     updateCoinsInTheParentUser(user.refferedBy, user._id, couponCoins)
                     await user.save()
                     await coupon.remove()
@@ -227,4 +229,5 @@ function updateCoinsInTheParentUser(refferedBy, thisUserId, coinsToAdd) {
 function updateCurrentUserCoins (user,coins){
     user.Earnedcoins += coins
     user.totalCoins += coins
+
 }
