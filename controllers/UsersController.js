@@ -13,14 +13,11 @@ var forOwn = require('lodash.forown')
 const crypto = require('crypto')
 const sgMail = require('@sendgrid/mail');
 var zeroBounce = require('../config/zerobounce')
-
-
+var secret = require('../config/secrets')
+sgMail.setApiKey(secret.sendgrid);
 
 module.exports = {
     GET_register: function (req, res) {
-        if (req.session.refferal) {
-            console.log('refferal exists')
-        }
         var url = req.query
         res.render('user/register', {
             username: url.username,
@@ -29,7 +26,7 @@ module.exports = {
         });
     },
     POST_register: async function (req, res, next) {
-        sgMail.setApiKey('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');
+    
 
 
         var name = req.body.name
@@ -38,13 +35,13 @@ module.exports = {
         var password = req.body.password;
         var password2 = req.body.password2;
         
-        var validate = await zeroBounce.validate(email)
+        
 
         
         
         //Error handling
         var Errors = validationResult(req)
-        if (!Errors.isEmpty() || password != password2 || validate.status != 'Valid') {
+    if (!Errors.isEmpty() || password != password2) {
             if (password != password2) {
                 req.flash('error', 'Passwords don\'t match')
             }
@@ -55,9 +52,7 @@ module.exports = {
                 })
                 req.flash('error', errors)
             }
-            if(validate.status != 'Valid'){
-                req.flash('error','Enter a Valid Email please')
-            }
+           
             return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
         }
 
@@ -73,11 +68,8 @@ module.exports = {
             }
             var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
             var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-
-
             request(verificationUrl, function (error, res, body) {
                 var bodyParsed = JSON.parse(body)
-
                 if (bodyParsed.success !== undefined && !bodyParsed.success) {
                     console.log('success is false')
                     req.flash('error', 'something went wrong with recapatcha!')
@@ -121,10 +113,11 @@ module.exports = {
             }
             req.session.userId = user._id
             req.session.userEmail = user.email
-            req.flash('info','Please confirm you Email:'+user.email+'before logging in')
+            req.flash('info','Please confirm you Email: '+user.email+' before logging in')
              token = new ConfirmationToken({
                 _userId: user._id,
-                token: crypto.randomBytes(16).toString('hex')
+                token: crypto.randomBytes(16).toString('hex'),
+                createdAt:Date.now()
             })
             token.save();
             if (req.session.refferal) {
@@ -147,15 +140,13 @@ module.exports = {
                 to: email,
                 from: 'noreply@freerewards.com',
                 subject: 'Freerewards Email Confirmation 1',
-                text: 'hello '+name+', please confirm your email by clicking this url1: www.localhost:3111/confirm/'+token.token,
+                text: 'hello '+name+', please confirm your email by clicking this url1: '+req.host+'/confirm/'+token.token,
                 html: '<strong>hello '+name+'</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/'+token.token+'</a></p>',
             };
             sgMail.send(msg);
             req.flash('success', 'Successfully registred. Please verify your email');
-            res.redirect('/user/login');
-        })
-        
-        
+            res.redirect('/verify');
+        })       
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////    LOGIN       ////////////////////////////////////////////////////////

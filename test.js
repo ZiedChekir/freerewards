@@ -390,54 +390,83 @@
 // timeCounter()
 
 
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+// var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-var apiKey = "6d1f984420ca4b25bb062e21e34d93ca"
-var baseUrl = "https://api.zerobounce.net/v1";
-var get = new XMLHttpRequest();
+// var apiKey = "6d1f984420ca4b25bb062e21e34d93ca"
+// var baseUrl = "https://api.zerobounce.net/v1";
+// var get = new XMLHttpRequest();
 
-function getCredits() {
+// function getCredits() {
 
 
-  var uri = baseUrl + "/getcredits" + "?apikey=" + apiKey;
-  request(uri,function(error, response, body){
-    console.log(error)
-    console.log(response)
-    console.log(body)
-  })
-}
+//   var uri = baseUrl + "/getcredits" + "?apikey=" + apiKey;
+//   request(uri,function(error, response, body){
+//     console.log(error)
+//     console.log(response)
+//     console.log(body)
+//   })
+// }
 
-function validate(email) {
-  var before = new Date().getSeconds()
-  var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
+// function validate(email) {
+//   var before = new Date().getSeconds()
+//   var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
 
-  request(uri,function(error, response, body){
-    console.log(error)
-    console.log(response)
-    console.log(body)
-  })
-  }
+//   request(uri,function(error, response, body){
+//     console.log(error)
+//     console.log(response)
+//     console.log(body)
+//   })
+//   }
 
-var request = require('request-promise')
+// var request = require('request-promise')
 
-function Reqvalidate(email) {
-  var before = new Date().getSeconds()
-  var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
-  request(uri, function (error, response, body) {
-    if (error) console.log('error')
-    console.log(body)
-    var after = new Date().getSeconds()
-    console.log('with request it took ' + after - before)
-  })
-}
+// function Reqvalidate(email) {
+//   var before = new Date().getSeconds()
+//   var uri = baseUrl + "/validate" + "?apikey=" + apiKey + "&email=" + email;
+//   request(uri, function (error, response, body) {
+//     if (error) console.log('error')
+//     console.log(body)
+//     var after = new Date().getSeconds()
+//     console.log('with request it took ' + after - before)
+//   })
+// }
 
-var zeroB = require('./config/zerobounce')
- async function c(){
+// var zeroB = require('./config/zerobounce')
+//  async function c(){
    
-  var a = await zeroB.validate('ziedchekir1@gmail.com')
+//   var a = await zeroB.validate('ziedchekir1@gmail.com')
 
-  console.log(a)
-  console.log('async ?')
+//   console.log(a)
+//   console.log('async ?')
+// }
+
+// c()
+
+
+var request = require('request')
+var uri = 'e24eaee6f1d89cc561153412d73edd10'
+
+// request('https://api.everifier.org/v1/e24eaee6f1d89cc561153412d73edd10/verify/cokac@cars2.club',function(err,res,body){
+//   console.log(body)
+// })
+// var valid = require('./config/zerobounce')
+// valid.validate('chikenwings555@gmail.com').then(function(err,resp,body){
+//   console.log(err)
+
+// })
+// console.log(a)
+function testAtack(){
+var siege = require('siege');
+siege()
+  .on(3111)
+  .for(5000).times
+  .get('/').for(2).seconds
+  .get('/user/login').for(3000).times
+  .get('/prizes').for(3000).times
+  .attack()
 }
-
-c()
+var req = require('request')
+req('https://freereward.herokuapp.com/checkcoins',function(err,res,body){
+  if(err) console.log(err)
+  console.log(body)
+})
