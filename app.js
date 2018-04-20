@@ -46,7 +46,7 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
 };
-mongoose.connect(mongodburl,options);
+// mongoose.connect(mongodburl,options);
 
 
 //-----------------BEGIN-----------------
@@ -82,7 +82,7 @@ var Hours = 3600000 * 5
 app.use(
   session({
     secret: 'notasecret!',
-    store:new redisStore({host:'localhost',port:6379}),
+    // store:new redisStore({host:'localhost',port:6379}),
     //,client: client,ttl :  260
     resave: false,
     saveUninitialized: false,
@@ -181,7 +181,6 @@ app.use(function (req, res, next) {
 
 });
 
-const ensureLoggedIn = require('./config/connect-ensure-login.1/lib/ensureLoggedIn')()
 
 //----------------SET ROUTES----------------
 
