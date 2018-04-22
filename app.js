@@ -1,41 +1,44 @@
 //Dependencies
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const expressHbs = require('express-handlebars');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const session = require('express-session');
-const flash = require('connect-flash');
+const express          = require('express');
+const path             = require('path');
+const favicon          = require('serve-favicon');
+const morgan           = require('morgan');
+const cookieParser     = require('cookie-parser');
+const bodyParser       = require('body-parser');
+const expressHbs       = require('express-handlebars');
+const mongoose         = require('mongoose');
+const passport         = require('passport');
+const session          = require('express-session');
+const flash            = require('connect-flash');
 const expressValidator = require('express-validator')
-const compression = require('compression')
-const helmet = require('helmet')
-const mongodb = require('mongodb')
-const csrf = require('csurf')
-// var redis   = require("ioredis");
-// var client  = redis.createClient();
-var  referrerPolicy = require('referrer-policy')
-var csp = require('helmet-csp')
-// const redisStore = require('connect-redis')(session)
-const Users = require('./models/users')
-const moment = require('moment')
-const cors = require('cors')
-var csrfProtection = csrf({ cookie: true })
+const compression      = require('compression')
+const helmet           = require('helmet')
+const mongodb          = require('mongodb')
+const csrf             = require('csurf')
+const redis            = require("redis");
+const referrerPolicy   = require('referrer-policy')
+const csp              = require('helmet-csp')
+const redisStore       = require('connect-redis')(session)
+const moment           = require('moment')
+
+// --------------Models ------------------
+const Users            = require('./models/users')
 // --------------ROUTES--------------------
+const index            = require('./routes/index');
+const user             = require('./routes/user');
+const prizes           = require('./routes/prizes');
+const earncoins        = require('./routes/earncoins');
+const profile          = require('./routes/profile');
 
-const index = require('./routes/index');
-const user = require('./routes/user');
-const prizes = require('./routes/prizes');
-const earncoins = require('./routes/earncoins');
 
-const profile = require('./routes/profile');
-var MongoClient = require('mongodb').MongoClient;
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
-var mongodburl = "mongodb://localhost:27017/freereward"
 
+
+//initialization
+var mongodburl = "mongodb://localhost:27017/freereward"
+var MongoClient        = require('mongodb').MongoClient;
+var client  = redis.createClient();
+var csrfProtection = csrf({ cookie: true })
 
 const options = {
   useMongoClient: true,
@@ -46,7 +49,7 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
 };
-// mongoose.connect(mongodburl,options);
+mongoose.connect(mongodburl,options);
 
 
 //-----------------BEGIN-----------------
@@ -70,7 +73,7 @@ app.set('view engine', '.hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-app.use(cors())
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,17 +85,16 @@ var Hours = 3600000 * 5
 app.use(
   session({
     secret: 'notasecret!',
-    // store:new redisStore({host:'localhost',port:6379}),
+    store:new redisStore({host:'localhost',port:6379,client: client}),
     //,client: client,ttl :  260
     resave: false,
     saveUninitialized: false,
-    
-    // cookie: {
-    //   httpOnly: true,
-    //   // secure: true,
-    //   expires : new Date(Date.now() + Hours),
-    //   maxAge : Hours
-    // }
+    cookie: {
+      httpOnly: true,
+      // secure: true,
+      expires : new Date(Date.now() + Hours),
+      maxAge : Hours
+    }
   })
 );
 
@@ -181,8 +183,6 @@ app.use(function (req, res, next) {
   next();
 
 });
-
-
 //----------------SET ROUTES----------------
 
 app.use('/', index);
