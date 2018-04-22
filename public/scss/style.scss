@@ -56,6 +56,35 @@ body {
             font-family: Montserrat;
             color: white;
         }
+        .registerbtn{
+            border-radius: 20px;
+            background-color: #F71F3F;
+            border-color: #F71F3F;
+            transition :.5s;
+            border-width: 2px;
+            &:hover{
+                
+                background-color:rgba(0, 0,0, 0);
+                border-color: #F71F3F;
+                transition: .5s;
+            }
+
+        }
+        
+        .loginbtn{
+            border-radius: 20px;    
+            border-radius: 20px;
+            border-width: 2px;
+            transition :.5s;
+            &:hover{
+                
+                background-color:rgba(0, 0,0, 0);
+                
+                transition: .5s;
+            }
+ 
+        }
+       
     }
     #about{
         margin-top: 4%;
