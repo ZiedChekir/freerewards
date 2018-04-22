@@ -6054,6 +6054,24 @@ body {
       padding-top: 10%;
       font-family: Montserrat;
       color: white; }
+    body .heading .registerbtn {
+      border-radius: 20px;
+      background-color: #F71F3F;
+      border-color: #F71F3F;
+      transition: .5s;
+      border-width: 2px; }
+      body .heading .registerbtn:hover {
+        background-color: transparent;
+        border-color: #F71F3F;
+        transition: .5s; }
+    body .heading .loginbtn {
+      border-radius: 20px;
+      border-radius: 20px;
+      border-width: 2px;
+      transition: .5s; }
+      body .heading .loginbtn:hover {
+        background-color: transparent;
+        transition: .5s; }
   body #about {
     margin-top: 4%;
     margin-bottom: 4%; }
