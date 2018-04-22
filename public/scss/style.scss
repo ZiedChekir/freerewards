@@ -1,137 +1,168 @@
-
-$white:    #fff ;
-$gray-100: #f8f9fa ;
-$gray-200: #e9ecef ;
-$gray-300: #dee2e6 ;
-$gray-400: #ced4da ;
-$gray-500: #adb5bd ;
-$gray-600: #6c757d ;
-$gray-700: #495057 ;
-$gray-800: #0277BD ; //navbar color
-$gray-900: #212529 ;
-$black:    #000 ;
-
-$grays: () ;
-$grays: map-merge((
-  "100": $gray-100,
-  "200": $gray-200,
-  "300": $gray-300,
-  "400": $gray-400,
-  "500": $gray-500,
-  "600": $gray-600,
-  "700": $gray-700,
-  "800": $gray-800,
-  "900": $gray-900
-), $grays);
-
-$blue:    #007bff ;
-$indigo:  #6610f2 ;
-$purple:  #6f42c1 ;
-$pink:    #e83e8c ;
-$red:     #dc3545 ;
-$orange:  #fd7e14 ;
-$yellow:  #ffc107 ;
-$green:   #28a745 ;
-$teal:    #20c997 ;
-$cyan:    #17a2b8 ;
-
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #0277BD; //navbar color
+$gray-900: #212529;
+$black: #000;
+$grays: ();
+$grays: map-merge(( "100": $gray-100, "200": $gray-200, "300": $gray-300, "400": $gray-400, "500": $gray-500, "600": $gray-600, "700": $gray-700, "800": $gray-800, "900": $gray-900), $grays);
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
 @import "node_modules/bootstrap/scss/bootstrap";
-
-
 $bg-color:#F5F8FA;
 $nav-color:#343A40;
-
-
+$footer-color:#161921;
 // //header
-header{
-    nav{
-        .navbar-brand{
-            font-size:25px;          
+header {
+    nav {
+        .navbar-brand {
+            font-size: 25px;
         }
     }
     margin-bottom: 60px;
 }
+
 body {
-    .heading{
-        height: 450px;
-        background:white;
-        #heading-content{
-           padding-top: 18%;      
-            color:black;
+    .heading {
+        height: 70vh;
+        background: linear-gradient( rgba(28, 33, 45, .5), rgba(28, 33, 45, .6)), url('../images/morg.jpg');
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%); 
+        background-image: no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-attachment: fixed; // background-image: rgba(0,0,0,0.8);
+        #heading-content {
+            text-align: center;
+            margin-left:auto;
+            margin-right:auto;
+            width:50%;
+            padding-top: 10%;
+            font-family: Montserrat;
+            color: white;
         }
     }
-    .alertRelative{
-    margin-top:10px;
-    z-index: 2; 
-    margin-left: auto; 
-    margin-right: auto; 
-    width: 50%;   
+    #about{
+        margin-top: 4%;
+        margin-bottom: 4%;
+        h1{
+            width: 25%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4%;
+        }
     }
-    #email-container{
+    #hr{
+        width:80%;
+        border-radius: 5px;
+        border-width: 5px;
+    }
+    #win-coins{
+        height: 60vh;
+        color:black;
+        margin-top: 4%;
+        margin-bottom: 7%;
+        // background-color: #F9F9F9;
+        h1{
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 4%;
+            padding-top: 4%;
+        }
+        .row{
+            text-align: center;
+        }
+        h4{
+            color:#333333;
+        }
+        p{
+            color:#747474;
+        }
+
+    }
+    .alertRelative {
+        margin-top: 10px;
+        z-index: 2;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+    #email-container {
         position: absolute;
         top: 35%;
-        left:50%;
-        transform: translate(-50%,-50%);
-      
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
-    background-color:$bg-color;
-    main{
-        min-height:80vh;
-    } 
-    .login{
-        margin-top:10vh;
+    
+    main {
+        min-height: 80vh;
+    }
+    .login {
+        margin-top: 10vh;
         margin-bottom: 10vh;
-        .capatcher{
-            width:50%;
-            margin-left:auto;
+        .capatcher {
+            width: 50%;
+            margin-left: auto;
             margin-right: auto;
         }
     }
-    .register{
-        margin-top:10vh;
+    .register {
+        margin-top: 10vh;
         margin-bottom: 10vh;
-        .capatcher{
-            width:50%;
-            margin-left:auto;
+        .capatcher {
+            width: 50%;
+            margin-left: auto;
             margin-right: auto;
         }
     }
-    .ecnavbar{
-        color:white;
-        background-color:#0097A7;
-      
+    .ecnavbar {
+        color: white;
+        background-color: #0097A7;
     }
-    .earncoins-title{
-        
-        width:50%;
+    .earncoins-title {
+        width: 50%;
         text-align: center;
-        
-        margin-top:5vh;
-        margin-bottom:5vh;
-        margin-left:auto;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        margin-left: auto;
         margin-right: auto;
     }
-    .card-offerwall{
-        margin:20px 20px;
+    .card-offerwall {
+        margin: 20px 20px;
     }
-    .card-prizes{
-        margin:30px 20px ;
+    .card-prizes {
+        margin: 30px 20px;
     }
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand',
+    sans-serif;
     display: flex;
-    .profile-btn{
-        margin-top:5px;
+    .profile-btn {
+        margin-top: 5px;
     }
-    .profile-container{
-        margin-top:5px;
+    .profile-container {
+        margin-top: 5px;
         margin-bottom: 30px;
     }
-    .gameinfo{
-        margin-top:40px;
+    .gameinfo {
+        margin-top: 40px;
     }
-    flex-direction: column;
-    // background-color: $bg-color;
-
+    flex-direction: column; // background-color: $bg-color;
     // .card-text{
     //          max-height: 1000px;
     //         span {
@@ -141,46 +172,28 @@ body {
     //             display: inline-block;
     //             max-width: 100%;
     //         }
-        
     // }
-  }
- 
-
-
-
-
-
-
+}
 
 //footer
-  footer{
-    background-color:#1C212D;
- 
-    .ft{
-        margin-top:40px; 
-        color:white;
-        a{
+footer {
+    background-color: #1C212D;
+    .ft {
+        margin-top: 40px;
+        color: white;
+        a {
             text-decoration: none;
-            color:white;
-        }    
-        .redirect a{
-            color:$gray-500;
+            color: white;
+        }
+        .redirect a {
+            color: $gray-500;
             text-decoration: underline;
         }
-       
     }
-    .footer-text{
-        padding-top:17px;
-        background-color: #161921;
-        color:white;
+    .footer-text {
+        padding-top: 17px;
+        background-color: $footer-color;
+        color: white;
         height: 59px;
-     
-     }
-      
-     
     }
-  
-
-
-
-
+}

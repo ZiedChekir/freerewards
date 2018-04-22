@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.23.6",
+    "eslint": "^4.19.1",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "node-siege": "0.0.4",
