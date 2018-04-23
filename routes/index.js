@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -222,12 +224,9 @@ router.post('/password/reset/:token', function (req, res, next) {
   })
 })
 router.get('/gene', function (req, res, next) {
-  var newToken = new EmailToken({
-    _userId: "5ac916b3fb365142b82db8da",
-    token: "hezheqsd",
-    createdAt: Date.now()
+  Users.findOne({id:_id},function(reqq,rs){
+    console.log(reqq)
   })
-  newToken.save()
   res.redirect('/')
 })
 router.get('/genera', function (req, res, next) {
