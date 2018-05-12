@@ -3,9 +3,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-
-					<h1> <strong>Freerewards</strong> </h1>
-					<h4>Get the hottest games for free! Steam keys, Riot Points, Gift Cards and Much More.!</h4>
+					
+					<h1 class="animated fadeIn"> <strong>Freerewards</strong> </h1>
+					<h4 class="animated fadeIn">Get the hottest games for free! Steam keys, Riot Points, Gift Cards and Much More.!</h4>
 					
 					{{#if logged}}
 					<h4>Earn Coins Now</h4>
@@ -23,13 +23,13 @@
 <section id="about">
 	<div class="container">
 		<h1> <strong>Freerewards</strong> </h1>
-		<div class="row">
+		<div class=" hideme row">
 			<div class="col col-5">
 				
 				<br>
 
-				<h3>What is FreeRewards ?</h3>
-				<p>FreeRewards is a plateform where you can get the latests steam games, origin games, Riot Points and gift cards for FREE
+				<h3 > <i class="fas fa-star"></i> What is FreeRewards ?</h3>
+				<p  >FreeRewards is a plateform where you can get the latests steam games, origin games, Riot Points and gift cards for FREE
 					!
 					<br> All you have to do is earn coins by completing daily missions,surveys, watching vidoes check
 					<a href="/earncoins">Earncoins</a> for more information.
@@ -41,7 +41,7 @@
 			</div>
 
 			<div class="col col-5">
-				<h3>Why You Should Trust us ?</h3>
+				<h3 > <i class="fas fa-bullhorn"></i> Why You Should Trust us ?</h3>
 				<p>FreeRewards is a Trusted plateform. We deliver the best missions and daily quizes to provide our users with the best
 					experience and to catch up with the latest Game !
 					<br> We have 24/7 support to help you if you have any problem or contact us at
@@ -57,9 +57,9 @@
 	
 	<div class="container">
 
-		<h1>Win Coins With Easy Methods</h1>
+		<h1  class="hideme">Win Coins With Easy Methods</h1>
 		<div class="row">
-			<div class="col col-4">
+			<div class="hideme col col-4">
 				<div class="circle">
 					<img width="90px" height="90px" src="/images/youtube (1).svg" alt=" coins">
 				</div>
@@ -67,7 +67,7 @@
 				<h4>Watch Videos</h4>
 				<p>Enjoy Watching gaming videos while you're earning coins.</p>
 			</div>
-			<div class="col col-4">
+			<div class="hideme col col-4">
 				<div class="circle">
 					<img class="rounded-circle" width="90px" height="90px" src="/images/survey.jpg" alt=" coins">
 				</div>
@@ -84,7 +84,7 @@
 
 				<h3>Complete missions</h3>
 			</div> --}}
-			<div class="col col-4">
+			<div class="hideme col col-4">
 				<div class="circle">
 					<img class="rounded-circle" width="90px" height="90px" src="/images/coupon.svg" alt=" coins">
 				</div>
@@ -96,7 +96,11 @@
 	</div>
 
 </section>
-
+<style>
+	.hideme{
+		opacity: 0;
+	}
+</style>
 
 {{!--
 <script type="text/javascript">
@@ -112,3 +116,39 @@
 	})
 </script> --}} {{!--
 <link rel="stylesheet" href="/stylesheets/index.css"> --}}
+
+
+
+<script>
+
+	$(document).ready(function() {
+	setInterval(function(){
+
+			$('.hideme').each( function(i){
+			var bottom_of_object = $(this).offset().top ;
+			var bottom_of_window = $(window).scrollTop() + $(window).height();	
+				if( bottom_of_window > ( bottom_of_object +5 )  ){
+					$(this).removeClass('hideme').addClass('animated fadeIn');		
+				}	
+		}); 
+	},200)
+	
+		
+
+		
+	//});
+	
+});
+</script>
+	{{!-- $('body *').each( function(){
+	   
+		var top_of_object = $(this).position().top;
+		var bottom_of_window = $(window).scrollTop() + $(window).height();
+	   
+		if( bottom_of_window < top_of_object  ){
+		
+			$(this).addClass('hideme').css({'opacity':'0'});
+			
+		}
+		
+	}); --}}

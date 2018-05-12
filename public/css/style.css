@@ -6072,6 +6072,8 @@ body {
       body .heading .loginbtn:hover {
         background-color: transparent;
         transition: .5s; }
+  body .external-offers {
+    background-color: #f1f2e1; }
   body #about {
     margin-top: 4%;
     margin-bottom: 4%; }
@@ -6084,6 +6086,8 @@ body {
     width: 80%;
     border-radius: 5px;
     border-width: 5px; }
+  body .fas {
+    color: #F71F3F; }
   body #win-coins {
     height: 60vh;
     color: black;

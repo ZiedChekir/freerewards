@@ -3,12 +3,13 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 var schema = new Schema({
-    _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+  createdAt:{type:Date,required:true},
+    _userId: { type: String, required: true, ref: 'User' },
     token: { type: String, required: true },
    
 }, {
-  timestamps: true,
-  collection: 'passwordResetToken'
+  
+  collection: 'passwordresettokens'
 });
 
-module.exports = mongoose.model('passwordResetToken', schema);
+module.exports = mongoose.model('passwordresettokens', schema);

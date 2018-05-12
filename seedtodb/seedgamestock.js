@@ -16,8 +16,8 @@ var gamestock = new mongoose.Schema({
         playsotre:{type:Array}
 
     }
-},{collection:'gamestock'})
-var gameStock = mongoose.model('gamestock',gamestock)
+},{collection:'gamestocks'})
+var gameStock = mongoose.model('gamestocks',gamestock)
 
 var gameStock= new gameStock({
 	games:{

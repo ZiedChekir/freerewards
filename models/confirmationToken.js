@@ -4,12 +4,12 @@ mongoose.Promise = global.Promise;
 
 var schema = new Schema({ 
      createdAt:{type:Date,required:true},
-    _userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    _userId: { type: String, required: true, ref: 'User' },
     token: { type: String, required: true },
 }, {
  
-  collection: 'confirmationToken'
+  collection: 'emailconftokens'
 })
 
 
-module.exports = mongoose.model('confirmationToken', schema);
+module.exports = mongoose.model('emailconftokens', schema);

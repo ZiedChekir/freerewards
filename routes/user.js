@@ -82,6 +82,8 @@ passport.use(new LocalStrategy({passReqToCallback: true},
 				if (err) throw err;
 				if (isMatch) {
 					if(!user.emailVerified){
+						req.session.userId = user._id
+						req.session.userEmail = user.email
 						req.flash('info','Please confirm you Email: '+user.email+ ' before logging in')
 						return done(null,false,{message:"Please Verify your email"})
 					}

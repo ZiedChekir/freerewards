@@ -63,7 +63,7 @@ module.exports = {
     GET_orders: async function (req, res, next) {
         // let user = await User.findOne({_id: res.locals.user._id})
         let orders = await Orders.find({
-            email: res.locals.user.email
+            userId: res.locals.user._id
         })
         res.render('profile/orders', {
             orders: orders

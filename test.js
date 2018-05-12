@@ -382,7 +382,7 @@
 //   setTimeout(function () {
 //     var after = new Date().getSeconds()
 //     console.log(after - before)
-    
+
 //   },3000)
 
 // }
@@ -433,7 +433,7 @@
 
 // var zeroB = require('./config/zerobounce')
 //  async function c(){
-   
+
 //   var a = await zeroB.validate('ziedchekir1@gmail.com')
 
 //   console.log(a)
@@ -443,8 +443,8 @@
 // c()
 
 
-var request = require('request')
-var uri = 'e24eaee6f1d89cc561153412d73edd10'
+// var request = require('request')
+// var uri = 'e24eaee6f1d89cc561153412d73edd10'
 
 // request('https://api.everifier.org/v1/e24eaee6f1d89cc561153412d73edd10/verify/cokac@cars2.club',function(err,res,body){
 //   console.log(body)
@@ -455,18 +455,247 @@ var uri = 'e24eaee6f1d89cc561153412d73edd10'
 
 // })
 // console.log(a)
-function testAtack(){
-var siege = require('siege');
-siege()
-  .on(3111)
-  .for(5000).times
-  .get('/').for(2).seconds
-  .get('/user/login').for(3000).times
-  .get('/prizes').for(3000).times
-  .attack()
+// function testAtack(){
+// var siege = require('siege');
+// siege()
+//   .on(3111)
+//   .for(5000).times
+//   .get('/').for(2).seconds
+//   .get('/user/login').for(3000).times
+//   .get('/prizes').for(3000).times
+//   .attack()
+// }
+// var req = require('request')
+// req('https://freereward.herokuapp.com/checkcoins',function(err,res,body){
+//   if(err) console.log(err)
+//   console.log(body)
+// })
+// var a = "rocket_league"
+
+// a.replace('_',' ')
+// console.log(a)
+// var a = 1940
+// if(a% 100 == 0)
+// console.log(a % 100)
+// var a = [6, 2, 3, 8]
+
+// function makeArrayConsecutive2(statues) {
+//     var SmallestNum = Math.min(...statues)
+//     var maxNum = Math.max(...statues)
+  
+//     var statuesMissing = 0
+//     for (var i = SmallestNum; i < maxNum; i++) {
+//         // console.log(SmallestNum+i)
+//         console.log(i)
+//         if (statues.indexOf( i) == -1) {
+//             // console.log(i)
+//             statuesMissing += 1
+//         }
+
+//     }
+//     console.log(statuesMissing)
+// }
+// makeArrayConsecutive2(a)
+// var a = [1, 3, 2, 1]
+// function almostIncreasingSequence(sequence) { 
+//     var originalLength = sequence.length   
+//     var i = 0
+//     var b = sequence.length  -1
+//     while(i < b){
+//         console.log('I is '+ i + '   and seq is   '+ sequence[i])
+//         // if(sequence[i] >= sequence[i+1]){ 
+//         //     if((sequence[i+1] > sequence[i-1]) || i == 0){
+//         //                 console.log(i+' in bigger')
+//         //                 sequence.splice(i, 1);
+//         //             }else{
+//         //                 console.log(i+' in smaller')
+//         //                 sequence.splice(i+1, 1);  
+//         //             }
+//         //             i -=1
+//         // }
+        
+//         if(sequence[i] >= sequence[i+1]){       
+//             if((sequence[i+1] > sequence[i-1]) || i == 0){
+                
+//                 console.log(i+' in bigger')
+//                 sequence.splice(i, 1);
+//             }else{
+//                 console.log(i+' in smaller')
+//                 sequence.splice(i+1, 1);
+//             }
+//             i -=1
+//             // b = sequence.length -2
+            
+//             if(originalLength - sequence.length >= 2 )
+//               return   console.log(false)
+//         }
+//         i++
+//     }
+//     console.log('end test')
+// console.log(true)
+// console.log(sequence)
+
+// }
+
+// function almostIncreasingSequence(sequence) { 
+//     var originalLength = sequence.length   
+   
+//     var err = 0
+//     var i = 0
+//     var b = sequence.length -1 
+//     while(i < b){
+//         if(sequence[i] >= sequence[i+1]){
+         
+//             if((sequence[i+1] > sequence[i-1]) || i == 0){
+                
+               
+//                 sequence.splice(i, 1);
+//             }else{
+//                 sequence.splice(i+1, 1);
+//             }
+//             i=0
+//             b = sequence.length -2
+            
+//             if(originalLength - sequence.length >= 2 )
+//               return   console.log(false)
+// //         }
+// //         i++
+// //     }
+
+// // console.log(true)
+// // console.log(sequence)
+
+ 
+// //  }
+
+// // almostIncreasingSequence(a)
+
+
+// // function matrixElementsSum(matrix) {
+// //     var sum = 0
+// //     var MatrixLength = matrix[0].length
+// //     for(var i = 0;i <MatrixLength ; i++ ){
+// //         for(var k = 0; k < matrix.length;k++){
+            
+// //            if( matrix[k][i] == 0 ){
+// //             break
+// //            }else{
+// //             sum +=  matrix[k][i]
+// //            }
+           
+// //         }
+// //     }
+// //     return sum
+// //     }
+// // var mat =[[1,1,1,0], 
+// // [0,5,0,1], 
+// // [2,1,3,10]]
+// //     matrixElementsSum(mat)
+// // var i 
+// // var b = 2 
+// // console.log(i> b)
+
+// // function allLongestStrings(inputArray) {
+// //     var longLength = 0
+// //     var array = []
+// // for(var i = 0; i < inputArray.length;i++){
+   
+// //     if(inputArray[i].length >longLength){
+// //         longLength = inputArray[i].length 
+// //         array = []
+// //         array.push(inputArray[i])
+// //     }
+// //      if(inputArray[i].length ==longLength){
+// //         array.push(inputArray[i])
+// //     }
+    
+// // }
+// // }
+// // var s = 'abcd'
+// // // allLongestStrings(arr)
+// // console.log(s[1])
+// function commonCharacterCount(s1, s2) {  
+//     s2 = s2.split('')
+//     s1 = s1.split('')
+//     var count = 0
+//     var arr= {}
+//     var b =0
+    
+//     for(var i = 0; i < s1.length ;i++){
+//         console.log()
+//         console.log(s2.indexOf(s1[0]))
+//         // console.log(i)
+//         // console.log(arr)
+  
+//     //   console.log(s2)
+    
+//         // console.log('b is '+b)
+//         if(s2.indexOf(s1[i]) != -1 ){
+//             // console.log(s1[i])
+//             // console.log(s1[i])
+            
+//             count++
+//             s2[s2.indexOf(s1[i])] = null
+//             // s1.splice(i,1)
+//             // console.log(s2[s2.indexOf(s1[i])])
+//             // s2.splice(s2.indexOf(s1[i]),1)
+//             // i -=1
+//             // console.log(s1)
+//             // console.log(s2)
+//             // console.log('this is s1 after '+s1)
+//             // console.log('thisis s2 after '+s2)
+//             // console.log(s1[i])
+//             // arr[s1[i]] = s2.indexOf(s1[i])   
+//         }
+     
+//     }
+   
+//     console.log('count is ' +count)
+// }
+// var s1 =  "abca"
+// var s2 =  "xyzbac"
+// commonCharacterCount(s1,s2)
+// function isLucky(n) {
+//     n = n.toString().split('')
+//     var a = n.length /2
+//     var sum1 = 0
+//     var sum2= 0
+// for(var i =0; i < n.length;i++){
+//     if(i< a)
+//         sum1 += Number(n[i])
+//     else
+//         sum2 += Number(n[i])
+// }
+// console.log(sum1)
+// console.log(sum2)
+//     console.log( sum1 == sum2)
+// }
+// var n1 = 1230
+// isLucky(n1)
+var a = [-1, 150, 190, 170, -1, -1, 160, 180]
+var previous = 0
+var actualSmall= Math.max(...a)
+var treeIndex = []
+var newArr = []
+for (let i = 0; i < a.length; i++) {  
+
+    for (let k = 0; k < a.length; k++) {       
+        if(a[i] === -1){
+            if(treeIndex.indexOf(i) == -1){
+                treeIndex.push(i)
+                newArr.push(a[i])
+            }
+            break
+        }
+        if(previous < a[i] &&actualSmall > a[i] && a[i] != -1 ){
+            actualSmall = a[i]
+        }
+        if(i === a.length -1){
+            previous = actualSmall
+            newArr.push(previous)
+        }
+    
+    }      
 }
-var req = require('request')
-req('https://freereward.herokuapp.com/checkcoins',function(err,res,body){
-  if(err) console.log(err)
-  console.log(body)
-})
+console.log(treeIndex)
+console.log(newArr)

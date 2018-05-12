@@ -15,8 +15,8 @@ const EmailToken = require('../models/confirmationToken')
 const PassToken = require('../models/passwordResetToken')
 const request = require('request')
 const sgMail = require('@sendgrid/mail');
-// var secret = require('../config/secrets')
-// sgMail.setApiKey(secret.sendgrid);
+var secret = require('../config/secrets')
+sgMail.setApiKey(secret.sendgrid);
 //DAta base connection
 
 // mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
@@ -24,6 +24,7 @@ const sgMail = require('@sendgrid/mail');
 
 
 router.get('/', function (req, res, next) {
+  console.log(req.rateLimit)
   res.render('index');
 })
 router.get('/verify', function (req, res, next) {
@@ -53,8 +54,9 @@ router.get('/confirm/:token', function (req, res, next) {
             delete req.session.userId
             delete req.session.userEmail
             req.flash('success', 'email verified')
+            res.redirect('/')
           })
-          res.redirect('/')
+          
         }
       })
     }
@@ -69,9 +71,7 @@ router.get('/ref/:refferal', ensureLoggedOut, function (req, res, next) {
 router.get('/resendToken', ensureLoggedOut, function (req, res, next) {
   var userid = req.session.userId
   var email = req.session.userEmail
-  User.findOne({
-    _id: userid
-  }, function (err, user) {
+  User.findOne({_id: userid}, function (err, user) {
     if (err) return next(err)
     if (!user) {
       req.flash('error', 'user with the specified email is not found. Please Register!')
@@ -93,15 +93,17 @@ router.get('/resendToken', ensureLoggedOut, function (req, res, next) {
       } else {
         tokenToSendInstance = token
       }
-
+      console.log(tokenToSendInstance)
       const msg = {
         to: email,
         from: 'noreply@freerewards.com',
         subject: 'Freerewards Email Reconfirmation',
-        text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.host+'/confirm/' + tokenToSendInstance.token,
+        text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + tokenToSendInstance.token,
         html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/' + tokenToSendInstance.token + '</a> ' + new Date() + '</p>',
       };
+      
       sgMail.send(msg);
+      req.flash('success','Email verification was sent!')
       res.redirect('/user/login')
     })
   })

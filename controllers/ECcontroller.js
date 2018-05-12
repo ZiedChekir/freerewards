@@ -7,9 +7,16 @@ const moment = require('moment')
 
 var cc = require('coupon-code');
 var Videos = require('../models/videos')
+const md5 = require('md5')
+var client = require('redis').createClient();
+var RateLimit = require('express-rate-limit');
+var RedisStore = require('rate-limit-redis');
 
 const videoCoins = 5;
 const dailyCoins = 2;
+const maxVideoRequest = 501
+
+
 module.exports = {
     GET_offerwall: async function (req, res, next) {
         try {
@@ -51,20 +58,20 @@ module.exports = {
                 _id: res.locals.user._id
             })
             updateCoinsInTheParentUser(user.refferedBy, user._id, mission.coins)
-            updateCurrentUserCoins (user,mission.coins)
+            updateCurrentUserCoins(user, mission.coins)
             user.completedMissions.map(function (x) {
-                
+
                 if (x == mission.title) {
-                    
+
                     return res.redirect('/earncoins/offerwall')
                 }
             })
-            
+
             user.completedMissions.push(mission.title);
-            user.save(function(err,result){
-                if(err) return next(err)
+            user.save(function (err, result) {
+                if (err) return next(err)
                 res.redirect('/earncoins/offerwall')
-            })     
+            })
         } catch (err) {
             next(err)
 
@@ -85,12 +92,12 @@ module.exports = {
             let now = moment(n, 'DD/MM/YYYY hh:mm')
             let last = moment(l, 'DD/MM/YYYY hh:mm')
             let duration = moment.duration(now.diff(last));
-            let hours = duration.asHours();            
-            if (hours >= 24) {       
+            let hours = duration.asHours();
+            if (hours >= 24) {
                 user.totalCoins += dailyCoins;
                 user.lastdailybonus = await moment().format('DD/MM/YYYY HH:mm')
                 updateCoinsInTheParentUser(user.refferedBy, user._id, dailyCoins)
-                updateCurrentUserCoins(user,dailyCoins) 
+                updateCurrentUserCoins(user, dailyCoins)
                 await user.save()
             }
         } catch (err) {
@@ -103,50 +110,78 @@ module.exports = {
 
 
 
-    GET_videos: async function (req, res) {
-        let videoArray = await Videos.find({
-            $where: 'this.viewsCount < this.maxViews'
-        }).sort({
-            'viewsCount': 'asc'
-        })
-        var video = videoArray[0]
-        res.render('earncoins/videos', {
-            video: video
+    GET_videos: async function (req, res, next) {
+        var rateLimitNumber = 0
+        client.get('rl:' + req.ip, async function (err, reply) {
+            rateLimitNumber = reply
+
+            console.log(rateLimitNumber)
+            if (rateLimitNumber >= (maxVideoRequest - 1)) {
+                return res.render('earncoins/videos')
+            }
+            let videoArray = await Videos.find({
+                $where: 'this.viewsCount < this.maxViews'
+            }).sort({
+                'viewsCount': 'asc'
+            })
+            var video = videoArray[0]
+
+
+            res.render('earncoins/videos', {
+                video: video
+            })
         })
     },
 
 
 
     POST_videos: async function (req, res, next) {
+        console.log(req.body)
         try {
+
+            if (req.rateLimit.remaining <= 0) {
+                return res.status(500).send('limit exceeded  ' + req.rateLimit.remaining)
+            }
+
+
             // if(!(req.body.percent >= 2)){
             //     req.flash('error','you need to watch the video')
             //     return res.redirect('/earncoins/videos')
             // }
-            let video = await Videos.findOne({
-                _id: req.body.videoId
-            })
-            let user = await Users.findOne({
-                _id: res.locals.user._id
-            })
+            if (Number(req.body.time) >= 30) {
 
-            video.viewsCount += 1;
-            user.coins += videoCoins;
-            updateCoinsInTheParentUser(user.refferedBy, user._id, videoCoins)
-            updateCurrentUserCoins(user,videoCoins) 
 
-            await video.save()
-            await user.save()
-            res.send('success')
+                let video = await Videos.findOne({
+                    _id: req.body.videoId
+                })
+                let user = await Users.findOne({
+                    _id: res.locals.user._id
+                })
+
+                video.viewsCount += 1;
+                user.coins += videoCoins;
+                updateCoinsInTheParentUser(user.refferedBy, user._id, videoCoins)
+                updateCurrentUserCoins(user, videoCoins)
+
+                await video.save()
+                await user.save()
+                res.send('success')
+            } else {
+                return res.status(500).send('Problem with time')
+            }
         } catch (err) {
             next(err)
-        }
 
+        }
     },
     ////////////////// INVITE //////////////////////////
-    GET_invite:async function (req, res) {
-        let user = await Users.findOne({_id:req.user._id})
-        res.render('earncoins/invite',{refUrl:user.refferalUrl})
+    GET_invite: async function (req, res) {
+        let user = await Users.findOne({
+            _id: req.user._id
+        })
+        res.render('earncoins/invite', {
+            refUrl: user.refferalUrl
+        })
     },
     ////////////////////// CODE COUPONS ///////////////////////////////
     GET_code: function (req, res) {
@@ -164,7 +199,7 @@ module.exports = {
                     var user = await Users.findOne({
                         _id: res.locals.user._id
                     })
-                    updateCurrentUserCoins(user,coupon.couponCoins) 
+                    updateCurrentUserCoins(user, coupon.couponCoins)
                     updateCoinsInTheParentUser(user.refferedBy, user._id, couponCoins)
                     await user.save()
                     await coupon.remove()
@@ -186,7 +221,168 @@ module.exports = {
     /////////////////////// BUY ///////////////////////::
     GET_buy: function (req, res) {
         res.render('earncoins/buy')
-    }
+    },
+    ////////////////////POSTBACKS///////////////////////////////////////
+    GET_kiwi: function (req, res, next) {
+        var secret_key = "2cw0280swIKLgrfCYG2Vl0cR4SvnCuqW"
+        const {
+            status,
+            trans_id,
+            app_id,
+            sub_id,
+            sub_id_2,
+            gross,
+            amount,
+            offer_id,
+            offer_name,
+            category,
+            os,
+            ip_address,
+            signature
+        } = req.query
+        console.log(req.query)
+        var validation = md5(sub_id + ':' + amount + ':' + secret_key)
+        if (signature == validation) {
+            // res.sendStatus(200)
+            console.log('matches')
+            Users.findOne({
+                _id: sub_id
+            }, async function (err, user) {
+                if (err) {
+                    console.log('error finding')
+                    return res.status(200).send('0');
+                }
+                if (!user) {
+                    console.log('user not found')
+                    return res.status(200).send('0');
+                }
+                user.totalCoins += amount
+                user.offerWallCoins += amout
+                await user.save() //error handling
+                res.status(200).send('1');
+            })
+        } else {
+            console.log('deosnt matches')
+            res.status(500).send('0');
+        }
+    },
+    GET_superrewards: async function (req, res, next) {
+        var secret_key = '5aee4deb34ecf481cd81c9162df82d1a'
+        const {
+            id,
+            total,
+            oid,
+            sig,
+            uid
+        } = req.query
+        var new_currency = req.query['new']
+        var validation = md5(id + ':' + new_currency + ':' + uid + ':' + secret_key)
+        if (sig == validation) {
+
+            console.log('matches')
+            Users.findOne({
+                _id: id
+            }, async function (err, user) {
+                if (err) {
+                    console.log('error finding')
+                    return res.status(200).send('0');
+                }
+                if (!user) {
+                    console.log('user not found')
+                    return res.status(200).send('0');
+                }
+                user.totalCoins += new_currency
+                user.offerWallCoins += new_currency
+                await user.save() //error handling
+                res.status(200).send('1');
+            })
+
+
+        } else {
+            console.log('deosnt matches')
+            res.status(500).send('3')
+        }
+    },
+    GET_personaly: function (req, res, next) {
+        const publisher_secret_key = "e19b248b-3f5f-4801-a4a7-9eff3a99ef3a"
+        const publisher_hash = '5ae06af33e9cbf00112d53bc'
+        const {
+            user_id,
+            amount,
+            placement_id,
+            signature
+        } = req.query
+        var validation = md5(user_id + ':' + publisher_hash + ':' + publisher_secret_key)
+        if (signature == validation) {
+
+            console.log('matches')
+            Users.findOne({
+                _id: user_id
+            }, async function (err, user) {
+                if (err) {
+                    console.log('error finding')
+                    return res.status(200).send('0');
+                }
+                if (!user) {
+                    console.log('user not found')
+                    return res.status(200).send('0');
+                }
+                user.totalCoins += amount
+                user.offerWallCoins += amount
+                await user.save() //error handling
+                res.status(200).send('1');
+            })
+
+
+        } else {
+            console.log('deosnt matches')
+            res.status(500).send('3')
+        }
+    },
+    GET_offerToro: function (req, res, next) {
+        const secret = "916c12b24dd2453982d15d14152d1572"
+        const {
+            user_id,
+            oid,
+            amount
+        } = req.query
+        var validation = md5(user_id + ':' + oid + ':' + secret)
+        if (signature == validation) {
+
+            console.log('matches')
+            Users.findOne({
+                _id: user_id
+            }, async function (err, user) {
+                if (err) {
+                    console.log('error finding')
+                    return res.status(200).send('0');
+                }
+                if (!user) {
+                    console.log('user not found')
+                    return res.status(200).send('0');
+                }
+                user.totalCoins += amount
+                user.offerWallCoins += amount
+                await user.save() //error handling
+                res.status(200).send('1');
+            })
+
+        } else {
+            console.log('deosnt matches')
+            res.status(500).send('3')
+        }
+    },
+    videoRateLimiter: new RateLimit({
+        store: new RedisStore({
+            expiry: 12 * 60 * 60 * 1000, // 12 hour window
+            // see Configuration
+        }),
+
+        // delayAfter: 20, // begin slowing down responses after the first request
+        // delayMs: 1000, // slow down subsequent responses by 3 seconds per request
+        max: maxVideoRequest, // start blocking after 5 requests
+        message: "You have reached the maximum number of coins earned this day, please try again after few hours"
+    })
 
 }
 
@@ -205,29 +401,35 @@ var validateCoupons = function (coupon) {
 }
 
 function updateCoinsInTheParentUser(refferedBy, thisUserId, coinsToAdd) {
-    if(refferedBy){
+    if (refferedBy) {
         let percentage = 3
-        let coinsAfterPercentage = (coinsToAdd /100 *percentage)
-        Users.findOne({_id: refferedBy}, function (err, refUser) {
+        let coinsAfterPercentage = (coinsToAdd / 100 * percentage)
+        Users.findOne({
+            _id: refferedBy
+        }, function (err, refUser) {
             refUser.totalCoins += coinsAfterPercentage
             refUser.childCoins += coinsAfterPercentage
             for (let i = 0; i < refUser.refferedUsers.length; i++) {
-                
+
                 if (refUser.refferedUsers[i].id.toString() == thisUserId.toString()) {
-                    
+
                     refUser.refferedUsers[i].coins += coinsAfterPercentage
-                    
+
                     refUser.save(function (err) {
                         if (err) return console.log(err)
-                    })                
+                    })
                     break;
-                }    
+                }
             }
         })
     }
 }
-function updateCurrentUserCoins (user,coins){
+
+function updateCurrentUserCoins(user, coins) {
     user.Earnedcoins += coins
     user.totalCoins += coins
+
+}
+async function addOfferWallCoins(id, amount) {
 
 }
