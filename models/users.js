@@ -72,6 +72,10 @@ var UserSchema = mongoose.Schema({
 		required: true,
 		default: 0
 	},
+	offerWallCoins:{
+		type: Number,
+		default: 0
+	},
 	totalCoins: {
 		type: Number,
 		required: true,

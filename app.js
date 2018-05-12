@@ -30,6 +30,13 @@ const prizes           = require('./routes/prizes');
 const earncoins        = require('./routes/earncoins');
 const profile          = require('./routes/profile');
 
+var RateLimit = require('express-rate-limit');
+ 
+// app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+ 
+
+ 
+//  apply to all requests
 
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
 
@@ -49,6 +56,13 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
 };
+
+var limiter = new RateLimit({
+  windowMs:5*60*1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  delayMs: 0 ,// disable delaying - full speed until the max limit is reached
+  message: "Too many requests"
+});
 mongoose.connect(mongodburl,options);
 
 
@@ -183,10 +197,13 @@ app.use(function (req, res, next) {
   next();
 
 });
+app.use(limiter);
+
+
 //----------------SET ROUTES----------------
 
 app.use('/', index);
-app.use('/user', user);
+app.use('/user' ,user);
 app.use('/prizes', prizes);
 app.use('/earncoins', earncoins);
 

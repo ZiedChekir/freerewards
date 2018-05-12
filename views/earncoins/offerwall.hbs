@@ -6,9 +6,9 @@
     </div>
     {{#if missionsToDisplay}}
     <div class="row ">
-        <h4 class="col-sm-12">Avialable Missions:</h4>  
-        
-         {{#each missionsToDisplay}}
+        <h4 class="col-sm-12">Avialable Missions:</h4>
+
+        {{#each missionsToDisplay}}
         <div class="col-sm-12 col-lg-3 col-md-6 ">
             <form method="post" action="/earncoins/missions/{{this.id}}" onsubmit="return submitionOnce()">
                 <div class="card card-offerwall" style="width: 275px;height:370px;">
@@ -26,16 +26,152 @@
         <input type="hidden" name="_csrf" value="{{csrfToken}}" />
         </form>
     </div>
-{{else}}
-<h4>No Avialable Missions:</h4>
-{{/if}}
+    {{else}}
+    <h4>No Avialable Missions:</h4>
+    {{/if}}
     <h4>Avialable Surveys:</h4>
-    <iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/AU3g9ykaUTPcmR7qi4HReJ2ZxtndRyoF/aa5YXWjWAeipd56KGAowcSgkmZxlrNMC"
-        frameborder="0" allowfullscreen></iframe>
-            <iframe width="750" height="1400" src="https://persona.ly/widget/?appid=d745c591bf48ef16967e7776da857687&userid=aa5YXWjWAeipd56KGAowcSgkmZxlrNMC"></iframe>
-"
 
+    <div class="row">
+        <div class="col-sm-12 col-lg-3 col-md-6">
+            <div id="personaly"class="card ">
+                <img class="card-img-top" width="320px" height="140px" src="/images/personaly.png" alt="Card image cap">
+                <div class="card-body external-offers">
+                    <p>Personaly</p>
+                    <p class="card-text line-clamp">Earn up to 900 coins </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 col-md-6">
+            <div id="superrewards"class="card ">
+                <img class="card-img-top" width="320px" height="140px" src="/images/superrewards.png" alt="Card image cap">
+                <div class="card-body external-offers">
+                    <p>Superrewards</p>
+                    <p class="card-text line-clamp">Earn up to 900 coins </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-lg-3 col-md-6">
+            <div id="kiwiwall" class="card  ">
+                <img class="card-img-top" width="320px" height="140px" src="/images/resized/kiwiwall.jpg" alt="Card image cap">
+                <div class="card-body external-offers">
+                    <p>Kiwiwall</p>
+                    <p class="card-text line-clamp">Earn up to 400 coins </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 col-md-6">
+            <div class="card " id="offertoro">
+                <img class="card-img-top" width="320px" height="140px" src="/images/resized/offertoro.jpg" alt="Card image cap">
+                <div class="card-body external-offers">
+                    <p>Offertoro</p>
+                    <p class="card-text line-clamp">Earn up to 900 coins </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The Modal -->
+    <div id="offerbox" class="offerbox">
+        <!-- Modal content -->
+        <div class="offerbox-content">
+            <span class="close">&times;</span>
+            <div id="frame" class="frame">
+                <h1>boxy</h1>
+            </div>
+        </div>
+    </div>
+    {{!-- <div id=" personalyBos" class="offerbox">
+        <!-- Modal content -->
+        <div class="offerbox-content">
+            <span class="close">&times;</span>
+            <iframe src="https://persona.ly/widget/?appid=71be87f1c5a691dc0b21d4e1212361d9&userid={{user.id}}" frameborder="0" width="728"
+                height="2400" scrolling="no"></iframe>
+        </div>
+    </div>
+    <div id=" kiwiwallBox" class="offerbox">
+        <!-- Modal content -->
+        <div class="offerbox-content">
+            <span class="close">&times;</span>
+            <iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/C7VBqqSt5qny2nUuEqInQeNd2HMaBLgT/{{user.id}}" frameborder="0"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+    <div id=" offertoroBox" class="offerbox">
+        <!-- Modal content -->
+        <div class="offerbox-content">
+            <span class="close">&times;</span>
+         <iframe src="https://www.offertoro.com/ifr/show/15722/{{user.id}}/5538" frameborder="0" width="860" height="2400"></iframe>
+        </div>
+    </div> --}}
 </div>
+
+
+
+
+
+
+{{!--
+<iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/C7VBqqSt5qny2nUuEqInQeNd2HMaBLgT/{{user.id}}" frameborder="0"
+    allowfullscreen></iframe>
+<iframe src="https://wall.superrewards.com/super/offers?h=knslnxkiinl.242866040097&uid={{user.id}}" frameborder="0" width="728"
+    height="2400" scrolling="no"></iframe>
+<iframe src="https://persona.ly/widget/?appid=71be87f1c5a691dc0b21d4e1212361d9&userid={{user.id}}" frameborder="0" width="728"
+    height="2400" scrolling="no"></iframe>
+<iframe src="https://www.offertoro.com/ifr/show/15722/{{user.id}}/5538" frameborder="0" width="860" height="2400"></iframe> --}}
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('offerbox');
+  /*  var superrewardBox = document.getElementById('superrewardsBox');
+    var kiwiwallBox = document.getElementById('kiwiwallBox');
+    var personalyBox = document.getElementById('personalyBox');
+    var offertoroBox = document.getElementById('offertoroBox');*/
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+ 
+
+    //get the offer container
+   var kiwiwallCard = document.querySelector('#kiwiwall');
+    var personalyCard = document.querySelector('#personaly')
+    var offertoroCard = document.querySelector('#offertoro');
+    var superrewardsCard = document.querySelector('#superrewards');
+
+console.log('{{user._id}}')
+    superrewardsCard.addEventListener("click", function (e) {
+        $('#frame').html('<iframe src="https://wall.superrewards.com/super/offers?h=knslnxkiinl.242866040097&uid={{user._id}}" frameborder="0" width="728"height="2400" scrolling="no"></iframe>');
+        modal.style.display = "block"
+    });
+   kiwiwallCard.addEventListener("click", function (e) {
+               $('#frame').html('<iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/C7VBqqSt5qny2nUuEqInQeNd2HMaBLgT/{{user._id}}" frameborder="0" allowfullscreen></iframe>')
+
+        modal.style.display = "block"
+    });
+   offertoroCard.addEventListener("click", function (e) {
+       $('#frame').html('<iframe src="https://www.offertoro.com/ifr/show/15722/{{user._id}}/5538" frameborder="0" width="860" height="2400"></iframe> ');
+        modal.style.display = "block"
+    });
+   personalyCard.addEventListener("click", function (e) {
+       $('#frame').html('<iframe src="https://persona.ly/widget/?appid=71be87f1c5a691dc0b21d4e1212361d9&userid={{user._id}}" frameborder="0" width="728" height="2400" scrolling="no"></iframe>');
+        modal.style.display = "block"
+    });
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+</script>
+
+
 <style>
     .card-text {
         width: 200px;
@@ -58,3 +194,59 @@
             return false
     }
 </script>
+<style>
+    .card:hover {
+        cursor: pointer;
+    }
+
+    /* The Modal (background) */
+
+    .offerbox {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+
+    .offerbox-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>

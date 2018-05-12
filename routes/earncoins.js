@@ -23,10 +23,11 @@ router.route('/daily')
 
 
 
+	
 
 router.route('/videos')
 	.get( ensureLoggedIn,earncoinsHandler.GET_videos)
-	.post( ensureLoggedIn,earncoinsHandler.POST_videos)
+	.post( ensureLoggedIn,earncoinsHandler.videoRateLimiter,earncoinsHandler.POST_videos)
 
 
 

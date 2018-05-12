@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
 var MissionsSchema = mongoose.Schema({
-	id:{
+	missionId:{
 		type:String,
 		required:true
 	},
@@ -25,9 +25,9 @@ var MissionsSchema = mongoose.Schema({
 		type:String,
 		required:true
 	}
-},{collection:'Missions'})
+},{collection:'missions'})
 
-var Missions = module.exports = mongoose.model('Missions',MissionsSchema)
+var Missions = module.exports = mongoose.model('missions',MissionsSchema)
 
 module.exports.getMissions = function(id,callback){
 	Missions.find(id,callback)

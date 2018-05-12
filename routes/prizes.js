@@ -112,8 +112,7 @@ router.post('/:game/redeem/confirm', ensureLoggedIn, function (req, res, next) {
 					});
 
 					var order = new Orders({
-						username: user.username,
-						email: user.email,
+						userId:user._id,
 						game: game.title,
 						gameId: game._id,
 						price: game.price,

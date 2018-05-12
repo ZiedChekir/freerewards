@@ -21,10 +21,11 @@ $yellow: #ffc107;
 $green: #28a745;
 $teal: #20c997;
 $cyan: #17a2b8;
-@import "node_modules/bootstrap/scss/_variables";
+@import "node_modules/bootstrap/scss/bootstrap";
 $bg-color:#F5F8FA;
 $nav-color:#343A40;
 $footer-color:#161921;
+$coolred:#F71F3F;
 // //header
 header {
     nav {
@@ -58,14 +59,14 @@ body {
         }
         .registerbtn{
             border-radius: 20px;
-            background-color: #F71F3F;
-            border-color: #F71F3F;
+            background-color: $coolred;
+            border-color: $coolred;
             transition :.5s;
             border-width: 2px;
             &:hover{
                 
                 background-color:rgba(0, 0,0, 0);
-                border-color: #F71F3F;
+                border-color: $coolred;
                 transition: .5s;
             }
 
@@ -86,6 +87,9 @@ body {
         }
        
     }
+    .external-offers{
+        background-color:#f1f2e1;
+    }
     #about{
         margin-top: 4%;
         margin-bottom: 4%;
@@ -100,6 +104,9 @@ body {
         width:80%;
         border-radius: 5px;
         border-width: 5px;
+    }
+    .fas{
+        color:$coolred;
     }
     #win-coins{
         height: 60vh;

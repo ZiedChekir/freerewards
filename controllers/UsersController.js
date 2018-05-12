@@ -11,10 +11,10 @@ var shortid = require('shortid');
 
 var forOwn = require('lodash.forown')
 const crypto = require('crypto')
-const sgMail = require('@sendgrid/mail');
 var zeroBounce = require('../config/zerobounce')
-// var secret = require('../config/secrets')
-// sgMail.setApiKey(secret.sendgrid);
+const sgMail = require('@sendgrid/mail');
+var secret = require('../config/secrets')
+sgMail.setApiKey(secret['sendgrid']);
 
 module.exports = {
     GET_register: function (req, res) {
@@ -155,6 +155,7 @@ module.exports = {
 
     GET_login: function (req, res) {
         var info = req.flash('info')
+        
         res.render('user/login', {
             username: req.query.username,
             infoFlash:info

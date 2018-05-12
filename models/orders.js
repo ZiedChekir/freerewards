@@ -2,8 +2,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var Orders = new Schema({
-    username:{type:String , required:true},
-    email:{type:String , required:true},
+    userId:{type:String,required:true},
     game:{type:String , required:true},
     gameId:{type:String,required:true},
     price :{type:Number, required:true},
@@ -13,3 +12,5 @@ var Orders = new Schema({
 },{collection:'orders'})
 
 module.exports = mongoose.model('orders',Orders)
+
+
