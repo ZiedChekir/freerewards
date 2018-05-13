@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "node ./bin/wwws",
+    "start": "NODE_ENV=production node ./bin/wwws",
     "dev": "set DEBUG=log-info,success & nodemon ./bin/wwws",
     "test": "snyk test"
   },
@@ -32,6 +32,7 @@
     "cryptr": "^2.0.0",
     "csurf": "^1.9.0",
     "debug": "^2.6.9",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-rate-limit": "^2.11.0",

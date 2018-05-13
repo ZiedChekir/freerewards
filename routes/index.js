@@ -15,8 +15,8 @@ const EmailToken = require('../models/confirmationToken')
 const PassToken = require('../models/passwordResetToken')
 const request = require('request')
 const sgMail = require('@sendgrid/mail');
-var secret = require('../config/secrets')
-sgMail.setApiKey(secret.sendgrid);
+
+sgMail.setApiKey(process.env.sendgridKey);
 //DAta base connection
 
 // mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
@@ -99,7 +99,7 @@ router.get('/resendToken', ensureLoggedOut, function (req, res, next) {
         from: 'noreply@freerewards.com',
         subject: 'Freerewards Email Reconfirmation',
         text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + tokenToSendInstance.token,
-        html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/' + tokenToSendInstance.token + '</a> ' + new Date() + '</p>',
+        html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/confirm/' + tokenToSendInstance.token + '</a> ' + new Date() + '</p>',
       };
       
       sgMail.send(msg);
@@ -165,8 +165,8 @@ router.post('/password/reset', function (req, res, next) {
           to: email,
           from: 'noreply@freerewards.com',
           subject: 'Freerewards Email Reconfirmation',
-          text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.host+'/confirm/' + token,
-          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/' + token + '</a> ' + new Date() + '</p>',
+          text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + token,
+          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/confirm/' + token + '</a> ' + new Date() + '</p>',
         };
         sgMail.send(msg);
         req.flash('success', 'check you email to Reset your password')
