@@ -42,7 +42,8 @@ var RateLimit = require('express-rate-limit');
 
 
 //initialization
-var mongodburl = "mongodb://localhost:27017/freereward"
+require('dotenv').config()
+var mongodburl = process.env.mongodb
 var MongoClient        = require('mongodb').MongoClient;
 var client  = redis.createClient();
 var csrfProtection = csrf({ cookie: true })
@@ -98,7 +99,7 @@ app.use(compression())
 var Hours = 3600000 * 5
 app.use(
   session({
-    secret: 'notasecret!',
+    secret: process.env.sessionSecret,
     store:new redisStore({host:'localhost',port:6379,client: client}),
     //,client: client,ttl :  260
     resave: false,
@@ -143,12 +144,13 @@ app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
+app.enable('trust proxy')
 app.use(csrfProtection)
 //------------Global VARIABLES-------------------------
 app.use(function (req, res, next) {
- 
-
-  res.locals.success= req.flash('success');
+//console.log(req.headers['x-forwarded-for'])
+//console.log(req.ip)  
+res.locals.success= req.flash('success');
   res.locals.errors = req.flash('error');
 
   res.locals.user = req.user || null;
@@ -197,7 +199,7 @@ app.use(function (req, res, next) {
   next();
 
 });
-app.use(limiter);
+//app.use(limiter);
 
 
 //----------------SET ROUTES----------------

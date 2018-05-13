@@ -13,8 +13,8 @@ var forOwn = require('lodash.forown')
 const crypto = require('crypto')
 var zeroBounce = require('../config/zerobounce')
 const sgMail = require('@sendgrid/mail');
-var secret = require('../config/secrets')
-sgMail.setApiKey(secret['sendgrid']);
+
+sgMail.setApiKey(process.env.sendgridKey);
 
 module.exports = {
     GET_register: function (req, res) {
@@ -66,7 +66,7 @@ module.exports = {
                 return res.redirect(`/user/register?name=${name}&username=${username}&email=${email}`)
 
             }
-            var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
+            var secretKey = process.env.recapatcha
             var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
             request(verificationUrl, function (error, res, body) {
                 var bodyParsed = JSON.parse(body)
@@ -140,8 +140,8 @@ module.exports = {
                 to: email,
                 from: 'noreply@freerewards.com',
                 subject: 'Freerewards Email Confirmation 1',
-                text: 'hello '+name+', please confirm your email by clicking this url1: '+req.host+'/confirm/'+token.token,
-                html: '<strong>hello '+name+'</strong>, <p>please confirm your email by clicking this url: <a>www.localhost:3111/confirm/'+token.token+'</a></p>',
+                text: 'hello '+name+', please confirm your email by clicking this url1: '+req.hostname+'/confirm/'+token.token,
+                html: '<strong>hello '+name+'</strong>, <p>please confirm your email by clicking this url: '+req.hostname+'/confirm/'+token.token+'</p>',
             };
             sgMail.send(msg);
             req.flash('success', 'Successfully registred. Please verify your email');
@@ -165,14 +165,21 @@ module.exports = {
     capatcherCheck: async function (req, res, next) {
         //capatcher
         if (process.env.NODE_ENV == 'production') {
+            
+            
             var recapatcha = req.body['g-recaptcha-response']
+            console.log(req.body)
+            
+            
+            var secretKey = process.env.recapatcha
+
             if (recapatcha == '' || recapatcha == null || recapatcha == undefined) {
+                var username = req.body.username
                 console.log('recapatcha wasnt checked')
                 req.flash('error', 'Make sure to check recapatcha')
                 return res.redirect(`/user/login?username=${username}`)
 
             }
-            var secretKey = "6LfGQ00UAAAAAAtDN5vTsav_EiQ6Kj8Xsb8vcgV-"
             var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 
 
@@ -182,14 +189,14 @@ module.exports = {
 
 
                 if (bodyParsed.success !== undefined && !bodyParsed.success) {
-
+                    var username = req.body.username
                     req.flash('error', 'something went wrong with recapatcha!')
                     return res.redirect(`/user/login?username=${username}`)
 
                 }
 
                 if (bodyParsed.success) {
-                    req.flash('success', 'capatcher done')
+                    
                     next()
                 }
             })
