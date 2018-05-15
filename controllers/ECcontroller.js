@@ -180,7 +180,7 @@ module.exports = {
             _id: req.user._id
         })
         res.render('earncoins/invite', {
-            refUrl: user.refferalUrl
+            refUrl: req.hostname +'/ref/'+ user.refferalUrl
         })
     },
     ////////////////////// CODE COUPONS ///////////////////////////////

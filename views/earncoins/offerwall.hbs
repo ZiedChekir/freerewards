@@ -6,12 +6,12 @@
     </div>
     {{#if missionsToDisplay}}
     <div class="row ">
-        <h4 class="col-sm-12">Avialable Missions:</h4>
+        <h4 class="col-sm-12 missionText" >Avialable Missions:</h4>
 
         {{#each missionsToDisplay}}
-        <div class="col-sm-12 col-lg-3 col-md-6 ">
+        <div class="card-offerwall-container col-sm-6 col-lg-3 col-md-4 ">
             <form method="post" action="/earncoins/missions/{{this.id}}" onsubmit="return submitionOnce()">
-                <div class="card card-offerwall" style="width: 275px;height:370px;">
+                <div class="card card-offerwall" >
                     <img class="card-img-top" width="286px" height="180px" src="/images/missions/{{this.imgname}}" alt="Card image cap">
                     <div class="card-body">
                         <p>{{this.title}}</p>
@@ -27,12 +27,12 @@
         </form>
     </div>
     {{else}}
-    <h4>No Avialable Missions:</h4>
+    <h4  class="missionText">No Avialable Missions:</h4>
     {{/if}}
-    <h4>Avialable Surveys:</h4>
+    <h4 class="missionText">Avialable Surveys:</h4>
 
     <div class="row">
-        <div class="col-sm-12 col-lg-3 col-md-6">
+        <div class="card-offerwall-container col-sm-12 col-lg-3 col-md-6">
             <div id="personaly"class="card ">
                 <img class="card-img-top" width="320px" height="140px" src="/images/personaly.png" alt="Card image cap">
                 <div class="card-body external-offers">
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-3 col-md-6">
+        <div class=" card-offerwall-container col-sm-12 col-lg-3 col-md-6">
             <div id="superrewards"class="card ">
                 <img class="card-img-top" width="320px" height="140px" src="/images/superrewards.png" alt="Card image cap">
                 <div class="card-body external-offers">
@@ -51,7 +51,7 @@
             </div>
 
         </div>
-        <div class="col-sm-12 col-lg-3 col-md-6">
+        <div class=" card-offerwall-container col-sm-12 col-lg-3 col-md-6">
             <div id="kiwiwall" class="card  ">
                 <img class="card-img-top" width="320px" height="140px" src="/images/resized/kiwiwall.jpg" alt="Card image cap">
                 <div class="card-body external-offers">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-3 col-md-6">
+        <div class=" card-offerwall-container col-sm-12 col-lg-3 col-md-6">
             <div class="card " id="offertoro">
                 <img class="card-img-top" width="320px" height="140px" src="/images/resized/offertoro.jpg" alt="Card image cap">
                 <div class="card-body external-offers">
@@ -137,7 +137,7 @@
     var offertoroCard = document.querySelector('#offertoro');
     var superrewardsCard = document.querySelector('#superrewards');
 
-console.log('{{user._id}}')
+
     superrewardsCard.addEventListener("click", function (e) {
         $('#frame').html('<iframe src="https://wall.superrewards.com/super/offers?h=knslnxkiinl.242866040097&uid={{user._id}}" frameborder="0" width="728"height="2400" scrolling="no"></iframe>');
         modal.style.display = "block"

@@ -19,7 +19,6 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.sendgridKey);
 //DAta base connection
 
-// mongoose.connect('mongodb://ziedchekir:ziedmessi!@ds151024.mlab.com:51024/freerewards');
 //routing
 
 
