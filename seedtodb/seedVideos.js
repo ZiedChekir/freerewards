@@ -1,64 +1,176 @@
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/freereward');
-
+var shortid = require('shortid');
 var Videos = require('../models/videos')
 
 var videos = [
 new Videos(
 {
-	title:'The Phone Is Changed Forever',
-	owner:'Beme news',
-	videoId:'scc6_qcMKJI',
+	
+	owner:'kaypea',
+	videoId:'0ud3Q2APQ34',
 	viewsCount:0,
 	canBeviewed:true,
 	maxViews:10000
 }),
 new Videos(
-{
-	title:"WHAT'S INSIDE A $6,000.00 CAMERA?!",
-	owner:'Peter McKinnon',
-	videoId:'scc6_qcMKJI',
+	{
+		
+		owner:'kaypea',
+		videoId:'2nvE8ja9K5w',
+		viewsCount:0,
+		canBeviewed:true,
+		maxViews:10000
+	}),
+new Videos({
+		
+		owner:'kaypea',
+		videoId:'3MtrtkAluzg',
+		viewsCount:0,
+		canBeviewed:true,
+		maxViews:10000
+}),
+new Videos({
+		
+		owner:'kaypea',
+		videoId:'IbmaNrSqBsI',
+		viewsCount:0,
+		canBeviewed:true,
+		maxViews:10000
+}),
+new Videos({
+		
+		owner:'kaypea',
+		videoId:'9raM6Hh6D7s',
+		viewsCount:0,
+		canBeviewed:true,
+		maxViews:10000
+}),
+new Videos({
+		
+		owner:'kaypea',
+		videoId:'nhjS2mo48tw',
+		viewsCount:0,
+		canBeviewed:true,
+		maxViews:10000
+}),
+					new Videos(
+						{
+							
+							owner:'kaypea',
+							videoId:'B2KKTss4zQo',
+							viewsCount:0,
+							canBeviewed:true,
+							maxViews:10000
+						}),
+						new Videos(
+							{
+								
+								owner:'kaypea',
+								videoId:'YZTSGXIQ9VM',
+								viewsCount:0,
+								canBeviewed:true,
+								maxViews:10000
+							}),
+							new Videos(
+								{
+									
+									owner:'kaypea',
+									videoId:'QznUNHk_4bE',
+									viewsCount:0,
+									canBeviewed:true,
+									maxViews:10000
+								}),
+								new Videos(
+									{
+										
+										owner:'kaypea',
+										videoId:'IjNfj-iw-14',
+										viewsCount:0,
+										canBeviewed:true,
+										maxViews:10000
+									}),
+									new Videos(
+										{
+											
+											owner:'kaypea',
+											videoId:'bgCic46pYtw',
+											viewsCount:0,
+											canBeviewed:true,
+											maxViews:10000
+										}),
+										new Videos(
+											{
+												
+												owner:'kaypea',
+												videoId:'f3K48c6Tpmk',
+												viewsCount:0,
+												canBeviewed:true,
+												maxViews:10000
+											}),
+											new Videos(
+												{
+													
+													owner:'kaypea',
+													videoId:'zg4NSPVNdvk',
+													viewsCount:0,
+													canBeviewed:true,
+													maxViews:10000
+												}),
+												new Videos(
+													{
+														
+														owner:'kaypea',
+														videoId:'zg4NSPVNdvk',
+														viewsCount:0,
+														canBeviewed:true,
+														maxViews:10000
+													}),
+new Videos({
+	owner:'siv HD',
+	videoId:'1t0LFKzlOV4',
 	viewsCount:0,
 	canBeviewed:true,
 	maxViews:10000
 }),
-new Videos(
-{
-	title:'This table basically floats',
-	owner:'INSIDER',
-	videoId:'h-9wEMa1a2E',
+new Videos({
+	owner:'siv HD',
+	videoId:'mvs-cbAriU0',
 	viewsCount:0,
 	canBeviewed:true,
 	maxViews:10000
 }),
-new Videos(
-{
-	title:'We Did 100 Squats Every Day For 30 Days',
-	owner:'BuzzFeedBlue',
-	videoId:'c8Q8AyFjWZM',
+new Videos({
+	owner:'siv HD',
+	videoId:'qIZNrpKk1UE',
 	viewsCount:0,
 	canBeviewed:true,
 	maxViews:10000
 }),
-new Videos(
-{
-	title:'The Most Satisfying Video in the World 2',
-	owner:'Melted Fusion',
-	videoId:'0rsjxzPbTGc',
+new Videos({
+	owner:'siv HD',
+	videoId:'H-GpZJNwKz4',
 	viewsCount:0,
 	canBeviewed:true,
 	maxViews:10000
 }),
-new Videos(
-{
-	title:'The Most Satisfying Video in the World',
-	owner:'Melted Fusion',
-	videoId:'Zv4NnN2g7tk',
+new Videos({
+	owner:'siv HD',
+	videoId:'e6ftEpYBdqg',
 	viewsCount:0,
 	canBeviewed:true,
-	maxViews:100000
-})
+	maxViews:10000
+}),
+new Videos({
+	owner:'siv HD',
+	videoId:'fgzI7YrrgP8',
+	viewsCount:0,
+	canBeviewed:true,
+	maxViews:10000
+}),
+
+
 ]
 
 
