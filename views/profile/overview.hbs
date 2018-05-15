@@ -18,7 +18,7 @@
             </div>
             <div class="col-sm-12 col-md-6">
                 <p>overview</p>
-                {{#if refferedUsers}}
+                
                 <table class="table table-dark">
                     <thead class="thead-dark">
                         <tr>
@@ -27,6 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#if refferedUsers}}
                         {{#each refferedUsers}}
                         <tr>
                             <td>{{this.username}}</td>
@@ -34,9 +35,17 @@
                           
                         </tr>
                         {{/each}}
+                        {{else}}
+                        <tr>
+                            <td>no users reffered !</td>
+                            
+                          
+                        </tr>
+                            
+                        {{/if}}
                     </tbody>
                 </table>
-                {{/if}}
+                
             </div>
         </div>
     </div>
