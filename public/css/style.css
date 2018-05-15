@@ -6051,12 +6051,9 @@ body {
       text-align: center;
       margin-left: auto;
       margin-right: auto;
-      width: 50%;
-      padding-top: 10%;
+      padding-top: 18vh;
       font-family: Montserrat;
       color: white; }
-      body .heading #heading-content .siteTitle {
-        letter-spacing: 6px; }
       body .heading #heading-content .registerbtn {
         border-radius: 20px;
         background-color: #F71F3F;
