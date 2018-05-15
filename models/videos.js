@@ -2,10 +2,6 @@ var mongoose = require('mongoose')
 
 var VideosSchema = mongoose.Schema({
 
-	title:{
-		required:true,
-		type:String
-	},
 	owner:{
 		required:true,
 		type:String

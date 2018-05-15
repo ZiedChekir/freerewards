@@ -79,10 +79,6 @@
     display.innerHTML = timeWatched + "%";
     if (timeWatched >= 30 && AbleToPost) {
       AbleToPost = false
-
-
-
-
       $.ajaxSetup({
         headers: { 'X-CSRF-Token': $('meta[name="_csrf"]').attr('content') }
       });

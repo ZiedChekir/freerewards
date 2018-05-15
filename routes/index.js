@@ -140,7 +140,7 @@ router.post('/password/reset', function (req, res, next) {
       var token = ""
       PassToken.findOne({
         _userId: user._id
-      }, function (err, tokenExists) {
+      }, async function (err, tokenExists) {
         if (err) return next(err)
 
         if (tokenExists) {
@@ -153,20 +153,20 @@ router.post('/password/reset', function (req, res, next) {
             _userId: user._id,
             token: crypto.randomBytes(16).toString('hex')
           })
-          newToken.save(function (err, result) {
-            if (err) console.log(err)
-            console.log(result + "  token registred")
-            token = newToken.token
-          })
-        }
 
+         var t = await newToken.save().catch(function(err){
+            next(err)
+          })
+          token = t.token
+        }
+        
 
         const msg = {
           to: email,
           from: 'noreply@freerewards.com',
           subject: 'Freerewards Email Reconfirmation',
           text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + token,
-          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/confirm/' + token + '</a> ' + new Date() + '</p>',
+          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/password/reset/' + token + '</a> ' + new Date() + '</p>',
         };
         sgMail.send(msg);
         req.flash('success', 'check you email to Reset your password')
