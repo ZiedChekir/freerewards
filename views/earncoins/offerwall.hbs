@@ -2,20 +2,19 @@
 
 <div class="container">
     <div class="earncoins-title">
-        <h3>Offer wall</h3>
     </div>
     {{#if missionsToDisplay}}
     <div class="row ">
         <h4 class="col-sm-12 missionText" >Avialable Missions:</h4>
 
         {{#each missionsToDisplay}}
-        <div class="card-offerwall-container col-sm-6 col-lg-3 col-md-4 ">
+        <div class="card-mission col-sm-6 col-lg-3 col-md-4 ">
             <form method="post" action="/earncoins/missions/{{this.id}}" onsubmit="return submitionOnce()">
                 <div class="card card-offerwall" >
                     <img class="card-img-top" width="286px" height="180px" src="/images/missions/{{this.imgname}}" alt="Card image cap">
                     <div class="card-body">
                         <p>{{this.title}}</p>
-                        <p class="card-text line-clamp">{{this.description}}</p>
+                        <p class="card-text line-clamp">{{truncate this.description 1900 }}</p>
                     </div>
                     <button type="submit" onClick="window.open('{{this.link}}')" class="btn btn-success">Get {{this.coins}} coins</button>
 
@@ -173,15 +172,13 @@
 
 
 <style>
-    .card-text {
-        width: 200px;
-        overflow: hidden;
-    }
+
 
     .line-clamp {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+         overflow: hidden;
     }
 </style>
 

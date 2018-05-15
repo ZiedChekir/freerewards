@@ -39,6 +39,29 @@ module.exports = {
                 })
             }
             res.render('earncoins/offerwall', {
+                helpers: {
+                    truncate: function (str, len) {
+                        if (str.length > len) {
+                            var new_str = str.substr(0, len + 1);
+
+                            while (new_str.length) {
+                                var ch = new_str.substr(-1);
+                                new_str = new_str.substr(0, -1);
+
+                                if (ch == ' ') {
+                                    break;
+                                }
+                            }
+
+                            if (new_str == '') {
+                                new_str = str.substr(0, len);
+                            }
+
+                            return new_str.toLowerCase() + '...';
+                        }
+                        return str;
+                    }
+                },
                 missionsToDisplay: missions
             })
         } catch (err) {
@@ -180,7 +203,7 @@ module.exports = {
             _id: req.user._id
         })
         res.render('earncoins/invite', {
-            refUrl: req.hostname +'/ref/'+ user.refferalUrl
+            refUrl: req.hostname + '/ref/' + user.refferalUrl
         })
     },
     ////////////////////// CODE COUPONS ///////////////////////////////

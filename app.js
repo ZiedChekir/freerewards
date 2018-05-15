@@ -40,10 +40,17 @@ var RateLimit = require('express-rate-limit');
 
 // var mongodburl = process.env.MONGODB_URI ||"mongodb://{$process.env.DB_USER}:{$process.env.DB_PASS}@ds151024.mlab.com:51024/freerewards"
 
+// var hbs = expressHbs.create({
+//   // Specify helpers which are only registered on this instance.
+//   helpers: {
+//       foo: function () { return 'FOO!'; },
+//       bar: function () { return 'BAR!'; }
+//   }
+// });
 
 //initialization
 require('dotenv').config()
-var mongodburl = process.env.mongodb 
+var mongodburl = process.env.mongodb || 'mongodb://localhost:27017/freereward'
 var MongoClient        = require('mongodb').MongoClient;
 var client  = redis.createClient();
 var csrfProtection = csrf({ cookie: true })

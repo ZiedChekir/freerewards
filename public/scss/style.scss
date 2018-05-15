@@ -50,6 +50,7 @@ body {
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+        background-position: center center;
         background-attachment: fixed; // background-image: rgba(0,0,0,0.8);
         #heading-content {
             text-align: center;
@@ -198,11 +199,16 @@ body {
         margin-left: auto;
         margin-right: auto;
     }
-    .card-offerwall-container {
-        width: 275px !important;
+    .card-mission {
+      //  width: 275px !important;
         height:370px !important;
        margin-top:5px;
        margin-bottom:5px;
+    }
+    .card-offerwall-container {
+        
+       margin-top:5px;
+       margin-bottom:20px;
     }
     .missionText{
         margin:20px;
