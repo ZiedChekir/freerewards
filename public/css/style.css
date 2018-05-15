@@ -6032,7 +6032,7 @@ header {
     font-size: 25px; }
 
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand',sans-serif;
   display: flex;
   flex-direction: column; }
   body .heading {
@@ -6054,34 +6054,41 @@ body {
       padding-top: 10%;
       font-family: Montserrat;
       color: white; }
-    body .heading .registerbtn {
-      border-radius: 20px;
-      background-color: #F71F3F;
-      border-color: #F71F3F;
-      transition: .5s;
-      border-width: 2px; }
-      body .heading .registerbtn:hover {
-        background-color: transparent;
+      body .heading #heading-content .siteTitle {
+        letter-spacing: 6px; }
+      body .heading #heading-content .registerbtn {
+        border-radius: 20px;
+        background-color: #F71F3F;
         border-color: #F71F3F;
+        transition: .5s;
+        border-width: 2px; }
+        body .heading #heading-content .registerbtn:hover {
+          background-color: transparent;
+          border-color: #F71F3F;
+          transition: .5s; }
+      body .heading #heading-content .loginbtn {
+        border-radius: 20px;
+        border-radius: 20px;
+        border-width: 2px;
         transition: .5s; }
-    body .heading .loginbtn {
-      border-radius: 20px;
-      border-radius: 20px;
-      border-width: 2px;
-      transition: .5s; }
-      body .heading .loginbtn:hover {
-        background-color: transparent;
-        transition: .5s; }
+        body .heading #heading-content .loginbtn:hover {
+          background-color: transparent;
+          transition: .5s; }
   body .external-offers {
     background-color: #f1f2e1; }
   body #about {
-    margin-top: 4%;
+    margin-top: 3.5%;
     margin-bottom: 4%; }
-    body #about h1 {
+    body #about .subTitle {
       width: 25%;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 4%; }
+      @media screen and (max-width: 600px) {
+        body #about .subTitle {
+          width: 50%; } }
+    body #about .introDesc {
+      padding: 0 40px; }
   body #hr {
     width: 80%;
     border-radius: 5px;
@@ -6089,7 +6096,6 @@ body {
   body .fas {
     color: #F71F3F; }
   body #win-coins {
-    height: 60vh;
     color: black;
     margin-top: 4%;
     margin-bottom: 7%; }
@@ -6142,8 +6148,13 @@ body {
     margin-bottom: 5vh;
     margin-left: auto;
     margin-right: auto; }
-  body .card-offerwall {
-    margin: 20px 20px; }
+  body .card-offerwall-container {
+    width: 275px !important;
+    height: 370px !important;
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  body .missionText {
+    margin: 20px; }
   body .card-prizes {
     margin: 30px 20px; }
   body .profile-btn {

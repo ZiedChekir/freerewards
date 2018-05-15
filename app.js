@@ -43,7 +43,7 @@ var RateLimit = require('express-rate-limit');
 
 //initialization
 require('dotenv').config()
-var mongodburl = process.env.mongodb
+var mongodburl = process.env.mongodb 
 var MongoClient        = require('mongodb').MongoClient;
 var client  = redis.createClient();
 var csrfProtection = csrf({ cookie: true })
