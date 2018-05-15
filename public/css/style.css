@@ -6098,11 +6098,14 @@ body {
     margin-top: 4%;
     margin-bottom: 7%; }
     body #win-coins h1 {
-      width: 50%;
+      text-align: center;
       margin-left: auto;
       margin-right: auto;
       padding-bottom: 4%;
       padding-top: 4%; }
+      @media screen and (max-width: 600px) {
+        body #win-coins h1 {
+          font-size: 28px; } }
     body #win-coins .row {
       text-align: center; }
     body #win-coins h4 {
