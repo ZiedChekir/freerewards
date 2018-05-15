@@ -661,41 +661,44 @@
 //     var sum1 = 0
 //     var sum2= 0
 // for(var i =0; i < n.length;i++){
-//     if(i< a)
-//         sum1 += Number(n[i])
-//     else
-//         sum2 += Number(n[i])
-// }
-// console.log(sum1)
-// console.log(sum2)
-//     console.log( sum1 == sum2)
-// }
-// var n1 = 1230
-// isLucky(n1)
-var a = [-1, 150, 190, 170, -1, -1, 160, 180]
-var previous = 0
-var actualSmall= Math.max(...a)
-var treeIndex = []
-var newArr = []
-for (let i = 0; i < a.length; i++) {  
+// //     if(i< a)
+// //         sum1 += Number(n[i])
+// //     else
+// //         sum2 += Number(n[i])
+// // }
+// // console.log(sum1)
+// // console.log(sum2)
+// //     console.log( sum1 == sum2)
+// // }
+// // var n1 = 1230
+// // isLucky(n1)
+// var a = [-1, 150, 190, 170, -1, -1, 160, 180]
+// var previous = 0
+// var actualSmall= Math.max(...a)
+// var treeIndex = []
+// var newArr = []
+// for (let i = 0; i < a.length; i++) {  
 
-    for (let k = 0; k < a.length; k++) {       
-        if(a[i] === -1){
-            if(treeIndex.indexOf(i) == -1){
-                treeIndex.push(i)
-                newArr.push(a[i])
-            }
-            break
-        }
-        if(previous < a[i] &&actualSmall > a[i] && a[i] != -1 ){
-            actualSmall = a[i]
-        }
-        if(i === a.length -1){
-            previous = actualSmall
-            newArr.push(previous)
-        }
+//     for (let k = 0; k < a.length; k++) {       
+//         if(a[i] === -1){
+//             if(treeIndex.indexOf(i) == -1){
+//                 treeIndex.push(i)
+//                 newArr.push(a[i])
+//             }
+//             break
+//         }
+//         if(previous < a[i] &&actualSmall > a[i] && a[i] != -1 ){
+//             actualSmall = a[i]
+//         }
+//         if(i === a.length -1){
+//             previous = actualSmall
+//             newArr.push(previous)
+//         }
     
-    }      
-}
-console.log(treeIndex)
-console.log(newArr)
+//     }      
+// }
+// console.log(treeIndex)
+// console.log(newArr)
+
+
+console.log('Wage war across the galaxy with three unique and powerful races. StarCraft II'.length)

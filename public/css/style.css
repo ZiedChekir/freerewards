@@ -6045,6 +6045,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-position: center center;
     background-attachment: fixed; }
     body .heading #heading-content {
       text-align: center;
@@ -6148,11 +6149,13 @@ body {
     margin-bottom: 5vh;
     margin-left: auto;
     margin-right: auto; }
-  body .card-offerwall-container {
-    width: 275px !important;
+  body .card-mission {
     height: 370px !important;
     margin-top: 5px;
     margin-bottom: 5px; }
+  body .card-offerwall-container {
+    margin-top: 5px;
+    margin-bottom: 20px; }
   body .missionText {
     margin: 20px; }
   body .card-prizes {
