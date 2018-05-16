@@ -29,8 +29,8 @@
             <div class="card card-prizes" style='width: 275px;height:520px;'>
                 <img class="card-img-top" src="{{this.imgPath}}" alt="Card image cap" width="260px" height="290px">
                 <div class="card-body">
-                    <h5 class="card-title">{{this.title}}</h5>
-                    <p class="card-text">{{this.description}}</p>
+                    <h5 class="card-title">{{truncate this.title 22}}</h5>
+                    <p class="card-text line-clamp">{{truncate this.description 80}}</p>
                     <p class="right">{{this.price}}
                         <img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
                     </p>
@@ -46,6 +46,17 @@
 
 
 
+
+<style>
+
+
+    .line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+         overflow: hidden;
+    }
+</style>
 
 
 
