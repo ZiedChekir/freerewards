@@ -700,15 +700,3 @@
 // console.log(treeIndex)
 // console.log(newArr)
 
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
-
-const msg = {
-    to: 'ziedchekir1@gmail.com',
-    from: 'noreply@freerewards.com',
-    subject: 'Freerewards Email Reconfirmation',
-    text: 'hello '  + ', please confirm your email by clicking this url1: '+'/confirm/' ,
-    html: '<strong>hello '  + '</strong>, <p>please confirm your email by clicking this url: <a>'+'/confirm/' +  + '</a> '+ '</p>',
-  };
-  
-  sgMail.send(msg);
