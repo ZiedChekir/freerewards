@@ -12,6 +12,29 @@ var Orders = require('../models/orders')
 router.get('/', function (req, res) {
 	games.find(function (err, aviableGames) {
 		res.render('prizes/games', {
+			helpers: {
+				truncate: function (str, len) {
+					if (str.length > len) {
+						var new_str = str.substr(0, len + 1);
+
+						while (new_str.length) {
+							var ch = new_str.substr(-1);
+							new_str = new_str.substr(0, -1);
+
+							if (ch == ' ') {
+								break;
+							}
+						}
+
+						if (new_str == '') {
+							new_str = str.substr(0, len);
+						}
+
+						return new_str.toLowerCase() + '...';
+					}
+					return str;
+				}
+			},
 			games: aviableGames
 		});
 	})
