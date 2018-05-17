@@ -158,8 +158,7 @@ app.use(function (req, res, next) {
 //console.log(req.headers['x-forwarded-for'])
 //console.log(req.ip)  
 
-if (process.env.NODE_ENV == 'production')
- {console.log('production mode is fucking on ')}
+
 res.locals.success= req.flash('success');
   res.locals.errors = req.flash('error');
 
