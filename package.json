@@ -10,6 +10,7 @@
     "dev": "set DEBUG=log-info,success & nodemon ./bin/wwws",
     "test": "snyk test",
     "pm2":"NODE_ENV=production pm2 start ./bin/wwws"
+
   },
   "dependencies": {
     "@sendgrid/mail": "^6.2.1",
