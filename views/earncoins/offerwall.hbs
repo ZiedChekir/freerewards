@@ -16,6 +16,7 @@
                         <p>{{this.title}}</p>
                         <p class="card-text line-clamp">{{truncate this.description 1900 }}</p>
                     </div>
+                    {{this.link}}
                     <button type="submit" onClick="window.open('{{this.link}}')" class="btn btn-success">Get {{this.coins}} coins</button>
 
                 </div>
