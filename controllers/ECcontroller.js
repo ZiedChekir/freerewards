@@ -69,18 +69,21 @@ module.exports = {
         }
     },
     POST_offerwall_mission_id: async function (req, res, next) {
+        console.log(req.params)
         let id = req.params.id
         let missionToPush
         let missionCoins = 0;
         try {
             let mission = await Missions.findOne({
-                id: id
+                missionId:id
             })
 
             let user = await Users.findOne({
                 _id: res.locals.user._id
             })
-            updateCoinsInTheParentUser(user.refferedBy, user._id, mission.coins)
+            console.log(mission)
+          
+           updateCoinsInTheParentUser(user.refferedBy, user._id, mission.coins)
             updateCurrentUserCoins(user, mission.coins)
             user.completedMissions.map(function (x) {
 
@@ -437,7 +440,7 @@ function updateCoinsInTheParentUser(refferedBy, thisUserId, coinsToAdd) {
 
                 if (refUser.refferedUsers[i].id.toString() == thisUserId.toString()) {
 
-                    refUser.refferedUsers[i].coins += coinsAfterPercentage
+                    refUser.refferedUsers[i]['coins'] += coinsAfterPercentage
 
                     refUser.save(function (err) {
                         if (err) return console.log(err)

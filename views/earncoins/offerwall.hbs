@@ -9,14 +9,14 @@
 
         {{#each missionsToDisplay}}
         <div class="card-mission col-sm-6 col-lg-3 col-md-4 ">
-            <form method="post" action="/earncoins/missions/{{this.id}}" onsubmit="return submitionOnce()">
+            <form method="post" action="/earncoins/missions/{{this.missionId}}" onsubmit="return submitionOnce()">
                 <div class="card card-offerwall" >
                     <img class="card-img-top" width="286px" height="180px" src="/images/missions/{{this.imgname}}" alt="Card image cap">
                     <div class="card-body">
                         <p>{{this.title}}</p>
                         <p class="card-text line-clamp">{{truncate this.description 1900 }}</p>
                     </div>
-                    {{this.link}}
+                
                     <button type="submit" onClick="window.open('{{this.link}}')" class="btn btn-success">Get {{this.coins}} coins</button>
 
                 </div>
