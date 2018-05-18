@@ -147,7 +147,8 @@ module.exports = {
             }).sort({
                 'viewsCount': 'asc'
             })
-            var video = videoArray[0]
+            var random = Math.random() * (videoArray.length);
+            var video = videoArray[random]
 
 
             res.render('earncoins/videos', {

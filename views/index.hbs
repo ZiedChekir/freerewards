@@ -54,7 +54,13 @@
 
 	</div>
 </section>
-<hr id="hr">
+{{!-- <hr id="hr"> --}}
+<section id="create-acc">
+	<div class="container">
+	<h2 class="title">Join the Comunity and start earning coins </h2>
+	<a class="btn btn-primary " href="/user/register">Create an account now !</a>
+	</div>
+</section>
 <section id="win-coins">
 	
 	<div class="container">
@@ -62,14 +68,17 @@
 		<h1  class="hideme subTitle">Win Coins With Easy Methods</h1>
 		<div class="row">
 			<div class="hideme  col-sm-12 col-md-4">
+				<div class="ECmethods">
 				<div class="circle">
 					<img width="90px" height="90px" src="/images/youtube (1).svg" alt=" coins">
 				</div>
 				<br>
 				<h4>Watch Videos</h4>
 				<p>Enjoy Watching gaming videos while you're earning coins.</p>
+				</div>
 			</div>
-			<div class="hideme col-sm-12 col-md-4">
+			<div class="hideme  col-sm-12 col-md-4">
+				<div class="ECmethods">
 				<div class="circle">
 					<img class="rounded-circle" width="90px" height="90px" src="/images/survey.jpg" alt=" coins">
 				</div>
@@ -77,6 +86,7 @@
 
 				<h4>Surveys & Missions</h4>
 				<p>We offer bunch of surveys. Complete them and recieve good amout of coins.</p>
+				</div>
 			</div>
 			{{!-- <div class="col col-3">
 				<div class="circle">
@@ -87,22 +97,152 @@
 				<h3>Complete missions</h3>
 			</div> --}}
 			<div class="hideme  col-sm-12 col-md-4">
+				<div class="ECmethods">
 				<div class="circle">
 					<img class="rounded-circle" width="90px" height="90px" src="/images/coupon.svg" alt=" coins">
 				</div>
 				<br>
 				<h4>Redeem Promo Code</h4>
 				<p>Subscribe to our youtube channel to recieve promo codes.</p>
+				</div>
 			</div>
 	</div>
 	</div>
 
 </section>
 
+<section id="gamelist">
+	<div class="container">
+		<h1  class="hideme subTitle">Popular Prizes</h1>
+		<div class="col-sm-12">
+	<div class=" row">
+	     <div class="card1 col-sm-12 col-lg-3 col-md-6 ">
+            <div class="card " style='width: 275px;height:400px;'>
+                <img class="card-img-top" src="/images/games/pubg.jpg" alt="Card image cap" width="260px" height="290px">
+                <div class="card-body">
+                    <h5 class="card-title">{{truncate "PlayerUnknown's Battlegrounds" 22}}</h5>
+                    {{!-- <p class="card-text line-clamp"></p> --}}
+					<div class="price-info">
+						<p class="left">4000
+							<img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+						</p>
+						<a  href="/prizes/PlayerUnknown's Battlegrounds" class="right btn btn-primary">Overview</a>
+					</div>
+                </div>
+            </div>
+        </div>
+		     <div class=" card1 col-sm-12 col-lg-3 col-md-4 ">
+            <div class="card" style='width: 275px;height:400px;'>
+                <img class="card-img-top" src="images/games/fifa18.jpg" alt="Card image cap" width="260px" height="290px">
+                <div class="card-body">
+                    <h5 class="card-title">{{truncate 'fifa 18' 22}}</h5>
+                    {{!-- <p class="card-text line-clamp"></p> --}}
+					<div class="price-info">
+						<p class="left">2600
+							<img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+						</p>
+						<a  href="/prizes/fifa 18" class="right btn btn-primary">Overview</a>
+					</div>
+                </div>
+            </div>
+        </div>
+		  <div class="card1 col-sm-12 col-lg-3 col-md-6 ">
+            <div class="card " style='width: 275px;height:400px;'>
+                <img class="card-img-top" src="/images/games/minecraft.jpg" alt="Card image cap" width="260px" height="290px">
+                <div class="card-body">
+                    <h5 class="card-title">{{truncate "minecraft" 22}}</h5>
+                    {{!-- <p class="card-text line-clamp"></p> --}}
+					<div class="price-info">
+						<p class="left">1800
+							<img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+						</p>
+						<a  href="/prizes/minecraft" class="right btn btn-primary">Overview</a>
+					</div>
+                </div>
+            </div>
+        </div>
+		  <div class="card1 col-sm-12 col-lg-3 col-md-6 ">
+			<a  href="/prizes/counter strike go" >
+            <div class="card" style='width: 275px;height:400px;'>
+                <img class="card-img-top" src="images/games/csgo.jpg" alt="Card image cap" width="260px" height="290px"></a>
+                <div class="card-body">
+                    <h5 class="card-title">{{truncate "counter strike go" 22}}</h5>
+                    {{!-- <p class="card-text line-clamp"></p> --}}
+					<div class="price-info">
+						<p class="left">2000
+							<img style="padding-bottom:8px;" class="right" width="17px" height="28px" src="/images/dollar.svg" alt=" coins">
+						</p>
+						<a  href="/prizes/counter strike go" class="right btn btn-primary">Overview</a>
+					</div>
+                </div>
+            </div>
+        </div>
+		</div>
+		</div>
+		<p class="see-more"><a id="prize-info-button" href="/prizes" class="btn btn-outline-primary btn-lg btn-block">See more games</a></p>
+		</div>
+</section>
+<section id="friends">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<h2 class="title" id="title">Reffer a friend</h2>
+						<p>You can share the invite friend url to reffer your friends.<br>
+							 You will earn 3% of their earnings forever and they will get 100 <img style="padding-bottom:8px;" class="" width="17px" height="28px" src="/images/dollar.svg" alt=" coins"> for free.</p>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<img src="/images/friend4.jpg" alt="">
+					</div>
+				</div>
+		</div>
+	
+</section>
+<section id="youtube">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<img src="/images/youtube1.jpg" alt="">
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<h2 class="title" id="title">Earn while watching</h2>
+						<p>With freereward, you can watch your favourite youtubers videos While Earning coins. We have twitch streams coming soon, so stay Tuned and don't miss this opportunity.</p>
+					</div>
+				</div>
+		</div>
+	
+</section>
 <style>
+	
 	.hideme{
-		opacity: 0;
+		//opacity: 0;
 	}
+
+ .price-info{
+	 display: inline;
+ }
+ .left{
+	 float:left;
+ }
+ .right{
+	 float:right;
+ }
+ .card:hover{
+	transition:.3s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+ }
+ .card:not(:hover){
+	 transition: .3s;
+ }
+ #prize-info-button{
+	 margin-top: 30px;
+ }
+/* .ECmethods{
+	 padding:10px 20px;
+	 border-style: solid;
+	 border-color: #FE4A49;
+	 border-radius: 10px;
+ }*/
 </style>
 
 {{!--

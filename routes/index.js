@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -24,15 +22,41 @@ sgMail.setApiKey(process.env.sendgridKey);
 
 router.get('/', function (req, res, next) {
   console.log(req.rateLimit)
-  res.render('index');
+  res.render('index', {
+    helpers: {
+      truncate: function (str, len) {
+        if (str.length > len) {
+          var new_str = str.substr(0, len + 1);
+
+          while (new_str.length) {
+            var ch = new_str.substr(-1);
+            new_str = new_str.substr(0, -1);
+
+            if (ch == ' ') {
+              break;
+            }
+          }
+
+          if (new_str == '') {
+            new_str = str.substr(0, len);
+          }
+
+          return new_str.toLowerCase() + '...';
+        }
+        return str;
+      }
+    },
+  });
 })
 router.get('/verify', function (req, res, next) {
   var userEmail = req.session.userEmail
-  if(userEmail)
-    res.render('verifyEmail',{userEmail:userEmail});
+  if (userEmail)
+    res.render('verifyEmail', {
+      userEmail: userEmail
+    });
   else
     res.redirect('/')
-  })
+})
 router.get('/confirm/:token', function (req, res, next) {
   EmailToken.findOne({
     token: req.params.token
@@ -55,7 +79,7 @@ router.get('/confirm/:token', function (req, res, next) {
             req.flash('success', 'email verified')
             res.redirect('/')
           })
-          
+
         }
       })
     }
@@ -70,7 +94,9 @@ router.get('/ref/:refferal', ensureLoggedOut, function (req, res, next) {
 router.get('/resendToken', ensureLoggedOut, function (req, res, next) {
   var userid = req.session.userId
   var email = req.session.userEmail
-  User.findOne({_id: userid}, function (err, user) {
+  User.findOne({
+    _id: userid
+  }, function (err, user) {
     if (err) return next(err)
     if (!user) {
       req.flash('error', 'user with the specified email is not found. Please Register!')
@@ -97,12 +123,12 @@ router.get('/resendToken', ensureLoggedOut, function (req, res, next) {
         to: email,
         from: 'noreply@freerewards.com',
         subject: 'Freerewards Email Reconfirmation',
-        text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + tokenToSendInstance.token,
-        html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/confirm/' + tokenToSendInstance.token + '</a> ' + new Date() + '</p>',
+        text: 'hello ' + user.name + ', please confirm your email by clicking this url1: ' + req.hostname + '/confirm/' + tokenToSendInstance.token,
+        html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>' + req.hostname + '/confirm/' + tokenToSendInstance.token + '</a> ' + new Date() + '</p>',
       };
-      
+
       sgMail.send(msg);
-      req.flash('success','Email verification was sent!')
+      req.flash('success', 'Email verification was sent!')
       res.redirect('/user/login')
     })
   })
@@ -153,19 +179,19 @@ router.post('/password/reset', function (req, res, next) {
             token: crypto.randomBytes(16).toString('hex')
           })
 
-         var t = await newToken.save().catch(function(err){
+          var t = await newToken.save().catch(function (err) {
             next(err)
           })
           token = t.token
         }
-        
+
 
         const msg = {
           to: email,
           from: 'noreply@freerewards.com',
           subject: 'Freerewards Email Reconfirmation',
-          text: 'hello ' + user.name + ', please confirm your email by clicking this url1: '+req.hostname+'/confirm/' + token,
-          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>'+req.hostname+'/password/reset/' + token + '</a> ' + new Date() + '</p>',
+          text: 'hello ' + user.name + ', please confirm your email by clicking this url1: ' + req.hostname + '/confirm/' + token,
+          html: '<strong>hello ' + user.name + '</strong>, <p>please confirm your email by clicking this url: <a>' + req.hostname + '/password/reset/' + token + '</a> ' + new Date() + '</p>',
         };
         sgMail.send(msg);
         req.flash('success', 'check you email to Reset your password')
@@ -225,7 +251,9 @@ router.post('/password/reset/:token', function (req, res, next) {
   })
 })
 router.get('/gene', function (req, res, next) {
-  Users.findOne({id:_id},function(reqq,rs){
+  Users.findOne({
+    id: _id
+  }, function (reqq, rs) {
     console.log(reqq)
   })
   res.redirect('/')
