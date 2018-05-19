@@ -5,35 +5,35 @@
     </div>
     {{#if missionsToDisplay}}
     <div class="row ">
-        <h4 class="col-sm-12 missionText" >Avialable Missions:</h4>
+        <h4 class="col-sm-12 missionText">Avialable Missions:</h4>
 
         {{#each missionsToDisplay}}
         <div class="card-mission col-sm-6 col-lg-3 col-md-4 ">
-            <form method="post" action="/earncoins/missions/{{this.missionId}}" onsubmit="return submitionOnce()">
-                <div class="card card-offerwall" >
-                    <img class="card-img-top" width="286px" height="180px" src="/images/missions/{{this.imgname}}" alt="Card image cap">
-                    <div class="card-body">
-                        <p>{{this.title}}</p>
-                        <p class="card-text line-clamp">{{truncate this.description 1900 }}</p>
-                    </div>
-                
-                    <button type="submit" onClick="window.open('{{this.link}}')" class="btn btn-success">Get {{this.coins}} coins</button>
 
+            <div class="card card-offerwall">
+                <img class="card-img-top" width="286px" height="180px" src="/images/missions/{{this.imgname}}" alt="Card image cap">
+                <div class="card-body">
+                    <p>{{this.title}}</p>
+                    <p class="card-text line-clamp">{{truncate this.description 1900 }}</p>
                 </div>
+
+                <button value="{{this.missionId}}#{{this.link}}" type="submit" onClick="postMissionToServer(this)" class="btn btn-success">Get {{this.coins}} coins </button>
+                {{!-- window.open('{{this.link}}') --}}
+            </div>
         </div>
         {{/each}}
 
-        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
         </form>
     </div>
     {{else}}
-    <h4  class="missionText">No Avialable Missions:</h4>
+    <h4 class="missionText">No Avialable Missions:</h4>
     {{/if}}
     <h4 class="missionText">Avialable Surveys:</h4>
 
     <div class="row">
         <div class="card-offerwall-container col-sm-12 col-lg-3 col-md-6">
-            <div id="personaly"class="card ">
+            <div id="personaly" class="card ">
                 <img class="card-img-top" width="320px" height="140px" src="/images/personaly.png" alt="Card image cap">
                 <div class="card-body external-offers">
                     <p>Personaly</p>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class=" card-offerwall-container col-sm-12 col-lg-3 col-md-6">
-            <div id="superrewards"class="card ">
+            <div id="superrewards" class="card ">
                 <img class="card-img-top" width="320px" height="140px" src="/images/superrewards.png" alt="Card image cap">
                 <div class="card-body external-offers">
                     <p>Superrewards</p>
@@ -80,7 +80,8 @@
             </div>
         </div>
     </div>
-    {{!-- <div id=" personalyBos" class="offerbox">
+    {{!--
+    <div id=" personalyBos" class="offerbox">
         <!-- Modal content -->
         <div class="offerbox-content">
             <span class="close">&times;</span>
@@ -100,7 +101,7 @@
         <!-- Modal content -->
         <div class="offerbox-content">
             <span class="close">&times;</span>
-         <iframe src="https://www.offertoro.com/ifr/show/15722/{{user.id}}/5538" frameborder="0" width="860" height="2400"></iframe>
+            <iframe src="https://www.offertoro.com/ifr/show/15722/{{user.id}}/5538" frameborder="0" width="860" height="2400"></iframe>
         </div>
     </div> --}}
 </div>
@@ -123,16 +124,16 @@
 <script>
     // Get the modal
     var modal = document.getElementById('offerbox');
-  /*  var superrewardBox = document.getElementById('superrewardsBox');
-    var kiwiwallBox = document.getElementById('kiwiwallBox');
-    var personalyBox = document.getElementById('personalyBox');
-    var offertoroBox = document.getElementById('offertoroBox');*/
+    /*  var superrewardBox = document.getElementById('superrewardsBox');
+      var kiwiwallBox = document.getElementById('kiwiwallBox');
+      var personalyBox = document.getElementById('personalyBox');
+      var offertoroBox = document.getElementById('offertoroBox');*/
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
- 
+
 
     //get the offer container
-   var kiwiwallCard = document.querySelector('#kiwiwall');
+    var kiwiwallCard = document.querySelector('#kiwiwall');
     var personalyCard = document.querySelector('#personaly')
     var offertoroCard = document.querySelector('#offertoro');
     var superrewardsCard = document.querySelector('#superrewards');
@@ -142,17 +143,17 @@
         $('#frame').html('<iframe src="https://wall.superrewards.com/super/offers?h=knslnxkiinl.242866040097&uid={{user._id}}" frameborder="0" width="728"height="2400" scrolling="no"></iframe>');
         modal.style.display = "block"
     });
-   kiwiwallCard.addEventListener("click", function (e) {
-               $('#frame').html('<iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/C7VBqqSt5qny2nUuEqInQeNd2HMaBLgT/{{user._id}}" frameborder="0" allowfullscreen></iframe>')
+    kiwiwallCard.addEventListener("click", function (e) {
+        $('#frame').html('<iframe width="750" height="1400" src="https://www.kiwiwall.com/wall/C7VBqqSt5qny2nUuEqInQeNd2HMaBLgT/{{user._id}}" frameborder="0" allowfullscreen></iframe>')
 
         modal.style.display = "block"
     });
-   offertoroCard.addEventListener("click", function (e) {
-       $('#frame').html('<iframe src="https://www.offertoro.com/ifr/show/15722/{{user._id}}/5538" frameborder="0" width="860" height="2400"></iframe> ');
+    offertoroCard.addEventListener("click", function (e) {
+        $('#frame').html('<iframe src="https://www.offertoro.com/ifr/show/15722/{{user._id}}/5538" frameborder="0" width="860" height="2400"></iframe> ');
         modal.style.display = "block"
     });
-   personalyCard.addEventListener("click", function (e) {
-       $('#frame').html('<iframe src="https://persona.ly/widget/?appid=71be87f1c5a691dc0b21d4e1212361d9&userid={{user._id}}" frameborder="0" width="728" height="2400" scrolling="no"></iframe>');
+    personalyCard.addEventListener("click", function (e) {
+        $('#frame').html('<iframe src="https://persona.ly/widget/?appid=71be87f1c5a691dc0b21d4e1212361d9&userid={{user._id}}" frameborder="0" width="728" height="2400" scrolling="no"></iframe>');
         modal.style.display = "block"
     });
 
@@ -168,18 +169,43 @@
             modal.style.display = "none";
         }
     }
-    
+
+</script>
+<script>
+
+    function postMissionToServer(element) {
+        var elArray = element.value.split('#')
+        var missionId = elArray[0]
+        var url = elArray[1]
+        window.open(url)
+        
+        var f = document.createElement("form");
+        var action = '/earncoins/missions/' + missionId;
+
+        f.setAttribute('method', 'post')
+        f.setAttribute('action', action)
+        f.setAttribute('onsubmit', 'return submitionOnce()')
+        var input = document.createElement('input')
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', '_csrf')
+        input.setAttribute('value', '{{csrfToken}}')
+
+        var s = document.createElement("input"); //input element, Submit button
+        s.setAttribute('type', "submit");
+        s.setAttribute('value', "Submit");
+        f.appendChild(input)
+        f.appendChild(s)
+        document.body.appendChild(f)
+        f.submit()
+    }
 </script>
 
-
 <style>
-
-
     .line-clamp {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
-         overflow: hidden;
+        overflow: hidden;
     }
 </style>
 
