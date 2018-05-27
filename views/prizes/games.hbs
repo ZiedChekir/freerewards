@@ -3,8 +3,8 @@
         <h3>Search:</h3>
         <form method="get" action='/prizes/search'>
             <div class="form-group">
-
-                <input type="text" class="form-control" name="search" id="search" placeholder="Search">
+{{searchInput}}
+                <input type="text" class="form-control" name="search" id="search" value="{{searchInput}}" placeholder="Search">
             </div>
                 
                 <select  class="custom-select mb-2 mr-sm-2 mb-sm-0" name="sort">

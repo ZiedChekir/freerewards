@@ -137,27 +137,29 @@ module.exports = {
 
 
     GET_videos: async function (req, res, next) {
-        var rateLimitNumber = 0
-        client.get('rl:' + req.ip, async function (err, reply) {
-            rateLimitNumber = reply
+        // var rateLimitNumber = 0
+        // client.get('rl:' + req.ip, async function (err, reply) {
+        //     rateLimitNumber = reply
 
-            console.log(rateLimitNumber)
-            if (rateLimitNumber >= (maxVideoRequest - 1)) {
-                return res.render('earncoins/videos')
-            }
+            // console.log(rateLimitNumber)
+            // if (rateLimitNumber >= (maxVideoRequest - 1)) {
+            //     return res.render('earncoins/videos')
+            // }
+
             let videoArray = await Videos.find({
                 $where: 'this.viewsCount < this.maxViews'
             }).sort({
                 'viewsCount': 'asc'
             })
-            var random = Math.random() * (videoArray.length);
+            
+            var random = Math.round(Math.random() * (videoArray.length + 1));
             var video = videoArray[random]
 
 
             res.render('earncoins/videos', {
                 video: video
             })
-        })
+        // })
     },
 
 

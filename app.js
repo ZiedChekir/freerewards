@@ -208,7 +208,7 @@ res.locals.success= req.flash('success');
   next();
 
 });
-app.use(limiter);
+// app.use(limiter);
 
 
 //----------------SET ROUTES----------------
