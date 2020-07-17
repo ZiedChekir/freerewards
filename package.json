@@ -65,7 +65,7 @@
     "rate-limit-redis": "^1.4.0",
     "redis": "^2.8.0",
     "referrer-policy": "^1.1.0",
-    "request": "^2.85.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "serve-favicon": "^2.4.5",
     "sha1": "^1.1.1",
