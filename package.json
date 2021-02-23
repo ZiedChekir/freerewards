@@ -48,7 +48,7 @@
     "ioredis": "^3.2.2",
     "jquery": "^3.3.1",
     "loadash": "^1.0.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "lodash.forown": "^4.4.0",
     "md5": "^2.2.1",
     "moment": "^2.20.1",
@@ -74,7 +74,7 @@
     "sweetalert": "^2.1.0",
     "tether": "^1.4.3",
     "voucher-code-generator": "^1.1.1",
-    "winston": "^3.0.0-rc3",
+    "winston": "^3.0.0",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
