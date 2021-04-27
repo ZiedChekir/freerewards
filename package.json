@@ -63,7 +63,7 @@
     "passport-auth0": "^0.6.1",
     "passport-local": "^1.0.0",
     "rate-limit-redis": "^1.4.0",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "referrer-policy": "^1.1.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
