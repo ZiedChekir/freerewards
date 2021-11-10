@@ -42,7 +42,7 @@
     "express-validator": "^4.3.0",
     "flash": "^1.1.0",
     "handlebars-helpers": "^0.10.0",
-    "hbs": "^4.0.1",
+    "hbs": "^4.0.2",
     "helmet": "^3.11.0",
     "helmet-csp": "^2.7.0",
     "ioredis": "^3.2.2",
