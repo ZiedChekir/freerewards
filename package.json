@@ -53,7 +53,7 @@
     "md5": "^2.2.1",
     "moment": "^2.20.1",
     "mongodb": "^3.0.2",
-    "mongoose": "^4.13.12",
+    "mongoose": "^5.7.3",
     "mongoose-ttl": "0.0.3",
     "mongration": "^1.0.0",
     "morgan": "^1.9.0",
@@ -74,7 +74,7 @@
     "sweetalert": "^2.1.0",
     "tether": "^1.4.3",
     "voucher-code-generator": "^1.1.1",
-    "winston": "^3.0.0-rc3",
+    "winston": "^3.3.0",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
